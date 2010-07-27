@@ -11,7 +11,7 @@ def read(*rnames):
 version = '0.2'
 
 long_description = (
-    read('uwosh', 'pfg', 'd2c', 'README.txt') +
+    read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n' +
     read('CHANGES.txt')
     + '\n' +
     'Contributors\n'
