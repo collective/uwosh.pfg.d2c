@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="uwosh.pfg.d2c.install" version="2"
+        handler="uwosh.pfg.d2c.exportimport.install"
+        title="Installing step for uwosh.pfg.d2c">
+    </import-step>
+</import-steps>

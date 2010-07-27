@@ -1,0 +1,26 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="uwosh.pfg.d2c">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <!-- Include the sub-packages that use their own configure.zcml files. -->
+    <include package=".content" />
+
+    <include package="archetypes.schemaextender" />
+    <adapter factory=".extender.ContentEntryExtender" />
+
+    <!-- Register the installation GenericSetup extension profile -->
+    <genericsetup:registerProfile
+      name="default"
+      title="PloneFormGen Save Data to Content"
+      directory="profiles/default"
+      description="A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+    <!-- -*- extra stuff goes here -*- -->
+
+</configure>
