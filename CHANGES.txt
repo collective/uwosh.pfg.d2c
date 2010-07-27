@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3 (2010-07-27)
+----------------
+
+ - fix the way I checked for FileFields so that anything that subclasses a
+   FileField won't try to get it's form value differently anymore.
+
 0.2 (2010-07-27)
 ----------------
 

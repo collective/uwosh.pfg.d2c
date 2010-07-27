@@ -31,7 +31,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         
         for field in self.fgFields():
             name = field.getName()
-            if isinstance(field, FileField):
+            if field.__class__ == FileField:
                 name += '_file'
             field.set(obj, REQUEST.form.get(name))
         
