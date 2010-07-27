@@ -8,25 +8,17 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.1'
+version = '0.2'
 
 long_description = (
-    read('uwosh', 'pfg', 'd2c', 'README.txt')
-    'Change history\n'
-    '**************\n'
-    + '\n' +
+    read('uwosh', 'pfg', 'd2c', 'README.txt') +
     read('CHANGES.txt')
-    + '\n' +
-    'Detailed Documentation\n'
-    '**********************\n'
     + '\n' +
     'Contributors\n'
     '************\n'
     + '\n' +
     read('CONTRIBUTORS.txt')
-    + '\n' +
-    'Download\n'
-    '********\n'
+    + '\n' 
     )
 
 tests_require=['zope.testing']

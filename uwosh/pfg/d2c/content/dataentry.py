@@ -8,10 +8,14 @@ from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
 
 
+FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
+FormSaveData2ContentEntrySchema.delField('title')
+FormSaveData2ContentEntrySchema.delField('description')
+
 class FormSaveData2ContentEntry(ATCTContent):
     implements(IFormSaveData2ContentEntry)
     
-    schema = ATContentTypeSchema.copy()
+    schema = FormSaveData2ContentEntrySchema
 
     meta_type = portal_type = 'FormSaveData2ContentEntry'
     archetype_name = 'Save Data to Content Entry'

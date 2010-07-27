@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2 (2010-07-27)
+----------------
+
+ - fix egg distro not including docs folder so the product wouldn't install
+ 
+ - fixed file fields not saving
+
 0.1 (2010-07-27)
 ------------------
 
