@@ -6,6 +6,9 @@ Changelog
 
  - fixed widgets not working correctly.
 
+ - memoize the call to get the fields just in case it gets slow
+ 
+
 0.3 (2010-07-27)
 ----------------
 

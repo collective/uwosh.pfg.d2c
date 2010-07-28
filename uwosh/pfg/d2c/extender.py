@@ -14,6 +14,8 @@ from Products.PloneFormGen.content.fields import HtmlTextField, NRBooleanField, 
     
 from archetypes.schemaextender.field import ExtensionField
 
+from plone.memoize.instance import memoize
+
 class XPlainTextField(ExtensionField, PlainTextField): pass
 class XTextField(ExtensionField, TextField): pass
 class XStringField(ExtensionField, StringField): pass
@@ -73,6 +75,7 @@ class ContentEntryExtender(object):
     def __init__(self, context):
         self.context = context
 
+    @memoize
     def getFields(self):
         form = aq_parent(aq_parent(aq_inner(self.context)))
         obj_fields = form.fgFields()
