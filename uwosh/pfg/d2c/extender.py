@@ -5,7 +5,7 @@ from Products.Archetypes.public import BooleanWidget
 from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_parent, aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
-    FixedPointField, FileField, LinesField, IntegerField
+    FixedPointField, FileField, LinesField, IntegerField, ObjectField
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
 from Products.PloneFormGen.content.likertField import LikertField
@@ -26,7 +26,23 @@ class XIntegerField(ExtensionField, IntegerField): pass
 class XLinesVocabularyField(ExtensionField, LinesVocabularyField): pass
 class XStringVocabularyField(ExtensionField, StringVocabularyField): pass
 
-class XLikertField(ExtensionField, LikertField): pass
+class XLikertField(ExtensionField, LikertField): 
+    """
+    override default methods which have bugs...
+    """
+    
+    def get(self, instance, **kwargs):
+        value = ObjectField.get(self, instance, **kwargs)
+        if not value:
+            return tuple()
+        else:
+            return value
+
+    def set(self, instance, value, **kwargs):
+        if type(value) in (str, unicode):
+            value = [v.strip() for v in value.split(',')]
+        ObjectField.set(self, instance, value, **kwargs)
+
 
 class XHtmlTextField(ExtensionField, HtmlTextField): pass
 class XNRBooleanField(ExtensionField, NRBooleanField): pass
@@ -35,6 +51,10 @@ extension_fields = [
     XTextField, XStringField, XDateTimeField, XFixedPointField, XFileField,
     XLinesField, XIntegerField, XLinesVocabularyField, XStringVocabularyField,
     XLikertField, XHtmlTextField, XNRBooleanField, XPlainTextField
+]
+
+extra_fields = [
+    'widget', 'questionSet', 'answerSet', 'validators'
 ]
 
 FIELDS = {}
@@ -55,13 +75,18 @@ class ContentEntryExtender(object):
 
     def getFields(self):
         form = aq_parent(aq_parent(aq_inner(self.context)))
-        orig_fields = form.fgFields()
+        obj_fields = form.fgFields()
         fields = []
         
-        for field in orig_fields:
+        for field in obj_fields:
             klassname = 'X' + field.__class__.__name__
             if FIELDS.has_key(klassname):
                 klass = FIELDS[klassname]
-                fields.append(klass(field.__name__, **field._properties))
+                newfield = klass(field.__name__, **field._properties)
+                for key in extra_fields:
+                    if hasattr(field, key):
+                        setattr(newfield, key, getattr(field, key))
+                        
+                fields.append(newfield)
             
         return fields

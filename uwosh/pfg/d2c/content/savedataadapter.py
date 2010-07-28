@@ -8,6 +8,8 @@ from Products.ATContentTypes.content.folder import ATFolderSchema, ATFolder
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from zope.interface import implements
 from Products.Archetypes.Field import FileField
+from Products.PloneFormGen.content.likertField import LikertField
+from Products.Archetypes.Field import ObjectField
 
 class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     """A form action adapter that will save form input data and 
@@ -33,7 +35,10 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
             name = field.getName()
             if field.__class__ == FileField:
                 name += '_file'
-            field.set(obj, REQUEST.form.get(name))
-        
+                file = REQUEST.form.get(name)
+                if file.filename:
+                    field.set(obj, file)
+            else:
+                field.set(obj, REQUEST.form.get(name))
         
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)

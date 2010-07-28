@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.4
+---
+
+ - fixed widgets not working correctly.
+
 0.3 (2010-07-27)
 ----------------
 
