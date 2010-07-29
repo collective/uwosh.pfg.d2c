@@ -6,6 +6,7 @@ Changelog
 
  - use id for Title
  
+ - allow avoiding security checks when creating content.
  
 
 0.4
