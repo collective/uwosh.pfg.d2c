@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.5
+---
+
+ - use id for Title
+ 
+ 
+
 0.4
 ---
 

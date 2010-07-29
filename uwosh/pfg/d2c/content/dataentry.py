@@ -23,4 +23,7 @@ class FormSaveData2ContentEntry(ATCTContent):
     security       = ClassSecurityInfo()
 
     
+    def Title(self):
+        return self.getId()
+    
 registerATCT(FormSaveData2ContentEntry, PROJECTNAME)
