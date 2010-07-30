@@ -4,6 +4,6 @@
 PROJECTNAME = 'uwosh.pfg.d2c'
 
 ADD_PERMISSIONS = {
-    'FormSaveData2ContentAdapter' : 'Add portal content',
-    'FormSaveData2ContentEntry' : 'Add portal content'
+    'FormSaveData2ContentAdapter' : 'uwosh.pfg.d2c: Add FormSaveData2ContentAdapter',
+    'FormSaveData2ContentEntry' : 'uwosh.pfg.d2c: Add FormSaveData2ContentEntry'
 }

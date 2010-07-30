@@ -68,9 +68,13 @@ try:
 except:
     pass
 
+# extra field attributes to copy over.
 extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators'
 ]
+
+# instance values to copy over
+instance_values_to_field = ['minval', 'maxval']
 
 FIELDS = {}
 
@@ -91,10 +95,11 @@ class ContentEntryExtender(object):
     @memoize
     def getFields(self):
         form = aq_parent(aq_parent(aq_inner(self.context)))
-        obj_fields = form.fgFields()
+        obj_fields = form._getFieldObjects()
         fields = []
         
-        for field in obj_fields:
+        for objfield in obj_fields:
+            field = objfield.fgField
             klassname = 'X' + field.__class__.__name__
             if FIELDS.has_key(klassname):
                 klass = FIELDS[klassname]
@@ -103,6 +108,11 @@ class ContentEntryExtender(object):
                     if hasattr(field, key):
                         setattr(newfield, key, getattr(field, key))
                         
+                for val in instance_values_to_field:
+                    if objfield.schema.has_key(val):
+                        valfield = objfield.schema.get(val)
+                        setattr(newfield, val, valfield.get(objfield))
+                
                 fields.append(newfield)
             
         return fields

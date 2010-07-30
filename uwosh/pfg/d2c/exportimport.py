@@ -6,6 +6,11 @@ def install(context):
         return
     
     site = context.getSite()
+    
+    qi = getToolByName(site, 'portal_quickinstaller')
+    if not qi.isProductInstalled('Products.PloneFormGen'):
+        qi.installProduct('Products.PloneFormGen')
+    
     types = getToolByName(site, 'portal_types')
     if 'FormFolder' in types.objectIds():
         folder = types['FormFolder']

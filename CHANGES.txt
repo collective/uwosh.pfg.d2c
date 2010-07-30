@@ -12,6 +12,9 @@ Changelog
 
  - make backward compatible to at least PloneFormGen 1.2.2 -- maybe older.
  
+ - added tests
+ 
+ - added permissions for adding content
 
 0.4
 ---

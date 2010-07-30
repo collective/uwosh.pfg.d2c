@@ -1,0 +1,189 @@
+Demonstrating using the save content adapter.
+
+What to test
+------------
+
+ - add adapter
+ 
+ - select adapter
+
+ - test adapter with all fields
+ 
+ - test adapter with(out) avoiding security checks
+
+
+First off, let's get setup.
+
+Being a doctest, we can tell a story here.
+
+First, we must perform some setup. We use the testbrowser that is shipped
+with Five, as this provides proper Zope 2 integration. Most of the 
+documentation, though, is in the underlying zope.testbrower package.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+    >>> portal_url = self.portal.absolute_url()
+
+The following is useful when writing and debugging testbrowser tests. It lets
+us see all error messages in the error_log.
+
+    >>> self.portal.error_log._ignored_exceptions = ()
+
+With that in place, we can go to the portal front page and log in. We will
+do this using the default user from PloneTestCase:
+
+    >>> from Products.PloneTestCase.setup import portal_owner, default_password
+    >>> browser.open(portal_url)
+
+We have the login portlet, so let's use that.
+
+    >>> browser.getControl(name='__ac_name').value = portal_owner
+    >>> browser.getControl(name='__ac_password').value = default_password
+    >>> browser.getControl(name='submit').click()
+
+Here, we set the value of the fields on the login form and then simulate a
+submit click.
+
+We then test that we are still on the portal front page:
+
+    >>> browser.url == portal_url
+    True
+
+And we ensure that we get the friendly logged-in message:
+
+    >>> "You are now logged in" in browser.contents
+    True
+      
+Add the form
+
+  >>> browser.open(self.portal.absolute_url())
+  >>> browser.getLink('Form Folder').click()
+  >>> browser.getControl(name="title").value = "test-form"
+  >>> browser.getControl(name="actionAdapter:list").value = []
+  >>> browser.getControl(name="form_submit").click()
+  >>> form = self.portal['test-form']
+  
+
+Add the adapter
+
+  >>> browser.getLink('Save Data to Content Adapter').click()
+  >>> browser.getControl(name="title").value = 'results'
+  >>> browser.getControl(name="form_submit").click()
+
+Enable the adapter
+
+  >>> open('/Users/nathan/output.html', 'w').write(browser.contents)
+  >>> browser.getLink(text="test-form").click()
+  >>> browser.getLink(text="Edit").click()
+  >>> browser.getControl(name="actionAdapter:list").value = ['results']
+  >>> browser.getControl(name="form_submit").click()
+  >>> adapter = form['results']
+  
+  
+Now, we'll add all interesting fields to the form.
+
+Checkbox
+
+  >>> browser.getLink(text="Checkbox Field").click()
+  >>> browser.getControl(name="title").value = 'checkbox'
+  >>> browser.getControl(name="form_submit").click()
+  
+Date/Time
+
+  >>> browser.getLink(text="Date/Time Field").click()
+  >>> browser.getControl(name="title").value = 'datetime'
+  >>> browser.getControl(name="form_submit").click()
+  
+Decimal Number
+  
+  >>> browser.getLink(text="Decimal Number Field").click()
+  >>> browser.getControl(name="title").value = 'decimal'
+  >>> browser.getControl(name="form_submit").click()
+  
+Lines Field
+
+  >>> browser.getLink(text="Lines Field").click()
+  >>> browser.getControl(name="title").value = 'lines'
+  >>> browser.getControl(name="form_submit").click()
+  
+Multi-select
+
+  >>> browser.getLink(text="Multi-Select Field").click()
+  >>> browser.getControl(name="title").value = 'mutli'
+  >>> browser.getControl(name="fgVocabulary:lines").value = ['one', 'two', 'three']
+  >>> browser.getControl(name="form_submit").click()
+  
+Password
+
+  >>> browser.getLink(text="Password Field").click()
+  >>> browser.getControl(name="title").value = 'password'
+  >>> browser.getControl(name="form_submit").click()
+  
+Rating
+
+  >>> browser.getLink(text="Rating-Scale Field").click()
+  >>> browser.getControl(name="title").value = 'rating'
+  >>> browser.getControl(name="form_submit").click()
+  
+Selection Field
+
+  >>> browser.getLink(text="Selection Field").click()
+  >>> browser.getControl(name="title").value = 'selection'
+  >>> browser.getControl(name="fgVocabulary:lines").value = ['one', 'two', 'three']
+  >>> browser.getControl(name="form_submit").click()
+  
+
+Fill out the fields and make sure they get saved.
+
+  >>> browser.getLink(text="test-form").click()
+  >>> browser.getLink(text="View").click()
+  
+  >>> browser.getControl(name="replyto").value = "foo@bar.com"
+  >>> browser.getControl(name="submit").value = "Hello"
+  >>> browser.getControl(name="comments").value = "This is awesome."
+  >>> browser.getControl(name="checkbox:boolean").value = True
+  
+  >>> browser.getControl(name="datetime_year").value = '2010'
+  >>> browser.getControl(name="datetime_month").value = '01'
+  >>> browser.getControl(name="datetime_day").value = '1'
+  >>> browser.getControl(name="datetime_hour").value = '01'
+  >>> browser.getControl(name="datetime_minute").value = '00'
+  >>> browser.getControl(name="datetime_ampm").value = 'PM'
+
+  >>> browser.getControl(name="decimal").value = "1.0"
+  >>> browser.getControl(name="lines").value = "hello"
+  >>> browser.getControl(name="multi:list").value = ['one', 'two']
+  >>> browser.getControl(name="password").value = "mypassword"
+  
+  >>> browser.getControl(name="rating.1:record").value = ['Strongly disagree']
+  >>> browser.getControl(name="rating.2:record").value = ['Strongly agree']
+  
+  >>> browser.getControl(name="selection").value = "one"
+  
+  >>> browser.getControl(name="form_submit").click()
+  
+
+Check that the results were saved and go to them.
+
+  >>> len(adapter.objectIds()) == 1
+  True
+  
+  >>> results = adapter.values()[0]
+  >>> browser.open(results.absolute_url())
+  
+  >>> 'foo@bar.com' in browser.contents
+  True
+  
+  >>> 'Hello' in browser.contents
+  True
+  
+  >>> 'This is awesome.' in browser.contents
+  True
+  
+  >>> results.getMulti()
+  ['one', 'two']
+  
+  >>> results.getRating()
+  {'' : ''}
+  

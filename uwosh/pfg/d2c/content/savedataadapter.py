@@ -72,7 +72,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
             elif field.__class__ == LikertField:
                 if type(value) in (str, unicode):
                     value = [v.strip() for v in value.split(',')]
-                ObjectField.set(field, obj, value, **kwargs)
+                ObjectField.set(field, obj, value)
             else:
                 field.set(obj, value)
         

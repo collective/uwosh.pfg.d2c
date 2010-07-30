@@ -4,7 +4,15 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="uwosh.pfg.d2c">
 
-    <five:registerPackage package="." initialize=".initialize" />
+    <permission
+      id="uwosh.pfg.d2c.AddAdapter"
+      title="uwosh.pfg.d2c: Add FormSaveData2ContentAdapter"
+    />
+    
+    <permission
+      id="uwosh.pfg.d2c.AddEntry"
+      title="uwosh.pfg.d2c: Add FormSaveData2ContentEntry"
+    />
 
     <!-- Include the sub-packages that use their own configure.zcml files. -->
     <include package=".content" />
