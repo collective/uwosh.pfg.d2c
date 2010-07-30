@@ -5,16 +5,16 @@ from Products.Archetypes.public import BooleanWidget
 from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_parent, aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
-    FixedPointField, FileField, LinesField, IntegerField, ObjectField
+    FixedPointField, FileField, LinesField, IntegerField, ObjectField, \
+    BooleanField
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
 from Products.PloneFormGen.content.likertField import LikertField
-from Products.PloneFormGen.content.fields import HtmlTextField, NRBooleanField, \
-    PlainTextField
-    
-from archetypes.schemaextender.field import ExtensionField
+from Products.PloneFormGen.content.fields import HtmlTextField, PlainTextField
 
+from archetypes.schemaextender.field import ExtensionField
 from plone.memoize.instance import memoize
+
 
 class XPlainTextField(ExtensionField, PlainTextField): pass
 class XTextField(ExtensionField, TextField): pass
@@ -24,6 +24,7 @@ class XFixedPointField(ExtensionField, FixedPointField): pass
 class XFileField(ExtensionField, FileField): pass
 class XLinesField(ExtensionField, LinesField): pass
 class XIntegerField(ExtensionField, IntegerField): pass
+class XBooleanField(ExtensionField, BooleanField): pass
 
 class XLinesVocabularyField(ExtensionField, LinesVocabularyField): pass
 class XStringVocabularyField(ExtensionField, StringVocabularyField): pass
@@ -47,13 +48,23 @@ class XLikertField(ExtensionField, LikertField):
 
 
 class XHtmlTextField(ExtensionField, HtmlTextField): pass
-class XNRBooleanField(ExtensionField, NRBooleanField): pass
-    
+
 extension_fields = [
     XTextField, XStringField, XDateTimeField, XFixedPointField, XFileField,
     XLinesField, XIntegerField, XLinesVocabularyField, XStringVocabularyField,
-    XLikertField, XHtmlTextField, XNRBooleanField, XPlainTextField
+    XLikertField, XHtmlTextField, XPlainTextField
 ]
+
+# XXX
+# begin backwards compatible imports
+# XXX
+try:
+    from Products.PloneFormGen.content.fields import NRBooleanField as BooleanField
+    class XNRBooleanField(ExtensionField, BooleanField): pass
+    extension_fields.append(XNRBooleanField)
+except:
+    pass
+
 
 extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators'

@@ -8,6 +8,7 @@ Changelog
  
  - allow avoiding security checks when creating content.
  
+ - conditionally include certain fields for backwards compatibility
 
 0.4
 ---
