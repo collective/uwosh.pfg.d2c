@@ -9,7 +9,6 @@ from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
     BooleanField
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
-from Products.PloneFormGen.content.likertField import LikertField
 from Products.PloneFormGen.content.fields import HtmlTextField, PlainTextField
 
 from archetypes.schemaextender.field import ExtensionField
@@ -28,31 +27,12 @@ class XBooleanField(ExtensionField, BooleanField): pass
 
 class XLinesVocabularyField(ExtensionField, LinesVocabularyField): pass
 class XStringVocabularyField(ExtensionField, StringVocabularyField): pass
-
-class XLikertField(ExtensionField, LikertField): 
-    """
-    override default methods which have bugs...
-    """
-    
-    def get(self, instance, **kwargs):
-        value = ObjectField.get(self, instance, **kwargs)
-        if not value:
-            return tuple()
-        else:
-            return value
-
-    def set(self, instance, value, **kwargs):
-        if type(value) in (str, unicode):
-            value = [v.strip() for v in value.split(',')]
-        ObjectField.set(self, instance, value, **kwargs)
-
-
 class XHtmlTextField(ExtensionField, HtmlTextField): pass
 
 extension_fields = [
     XTextField, XStringField, XDateTimeField, XFixedPointField, XFileField,
     XLinesField, XIntegerField, XLinesVocabularyField, XStringVocabularyField,
-    XLikertField, XHtmlTextField, XPlainTextField
+    XHtmlTextField, XPlainTextField
 ]
 
 # XXX
@@ -65,6 +45,28 @@ try:
 except:
     pass
 
+try:
+    from Products.PloneFormGen.content.likertField import LikertField
+
+    class XLikertField(ExtensionField, LikertField): 
+        """
+        override default methods which have bugs...
+        """
+
+        def get(self, instance, **kwargs):
+            value = ObjectField.get(self, instance, **kwargs)
+            if not value:
+                return tuple()
+            else:
+                return value
+
+        def set(self, instance, value, **kwargs):
+            if type(value) in (str, unicode):
+                value = [v.strip() for v in value.split(',')]
+            ObjectField.set(self, instance, value, **kwargs)
+    extension_fields.append(XLikertField)       
+except:
+    pass
 
 extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators'

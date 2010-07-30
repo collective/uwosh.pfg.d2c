@@ -8,7 +8,6 @@ from Products.ATContentTypes.content.folder import ATFolderSchema, ATFolder
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from zope.interface import implements
 from Products.Archetypes.Field import FileField
-from Products.PloneFormGen.content.likertField import LikertField
 from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
 

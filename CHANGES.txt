@@ -10,6 +10,9 @@ Changelog
  
  - conditionally include certain fields for backwards compatibility
 
+ - make backward compatible to at least PloneFormGen 1.2.2 -- maybe older.
+ 
+
 0.4
 ---
 
