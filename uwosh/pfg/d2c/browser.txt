@@ -85,81 +85,81 @@ Now, we'll add all interesting fields to the form.
 
 Checkbox
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Checkbox Field").click()
   >>> browser.getControl(name="title").value = 'checkbox'
   >>> browser.getControl(name="form_submit").click()
   
 Date/Time
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Date/Time Field").click()
   >>> browser.getControl(name="title").value = 'datetime'
   >>> browser.getControl(name="form_submit").click()
   
 Decimal Number
   
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Decimal Number Field").click()
   >>> browser.getControl(name="title").value = 'decimal'
   >>> browser.getControl(name="form_submit").click()
   
 Lines Field
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Lines Field").click()
   >>> browser.getControl(name="title").value = 'lines'
   >>> browser.getControl(name="form_submit").click()
   
-Multi-select
-
-  >>> browser.getLink(text="Multi-Select Field").click()
-  >>> browser.getControl(name="title").value = 'mutli'
-  >>> browser.getControl(name="fgVocabulary:lines").value = ['one', 'two', 'three']
-  >>> browser.getControl(name="form_submit").click()
-  
 Password
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Password Field").click()
   >>> browser.getControl(name="title").value = 'password'
   >>> browser.getControl(name="form_submit").click()
   
 Rating
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Rating-Scale Field").click()
   >>> browser.getControl(name="title").value = 'rating'
   >>> browser.getControl(name="form_submit").click()
   
 Selection Field
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Selection Field").click()
   >>> browser.getControl(name="title").value = 'selection'
-  >>> browser.getControl(name="fgVocabulary:lines").value = ['one', 'two', 'three']
+  >>> browser.getControl(name="fgVocabulary:lines").value = 'one\ntwo\nthree'
   >>> browser.getControl(name="form_submit").click()
   
 
 Fill out the fields and make sure they get saved.
 
+  >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="test-form").click()
   >>> browser.getLink(text="View").click()
   
   >>> browser.getControl(name="replyto").value = "foo@bar.com"
-  >>> browser.getControl(name="submit").value = "Hello"
+  >>> browser.getControl(name="topic").value = "Hello"
   >>> browser.getControl(name="comments").value = "This is awesome."
   >>> browser.getControl(name="checkbox:boolean").value = True
   
-  >>> browser.getControl(name="datetime_year").value = '2010'
-  >>> browser.getControl(name="datetime_month").value = '01'
-  >>> browser.getControl(name="datetime_day").value = '1'
-  >>> browser.getControl(name="datetime_hour").value = '01'
-  >>> browser.getControl(name="datetime_minute").value = '00'
-  >>> browser.getControl(name="datetime_ampm").value = 'PM'
+  >>> browser.getControl(name="datetime_year").value = ['2010']
+  >>> browser.getControl(name="datetime_month").value = ['01']
+  >>> browser.getControl(name="datetime_day").value = ['01']
+  >>> browser.getControl(name="datetime_hour").value = ['01']
+  >>> browser.getControl(name="datetime_minute").value = ['00']
+  >>> browser.getControl(name="datetime_ampm").value = ['PM']
 
   >>> browser.getControl(name="decimal").value = "1.0"
-  >>> browser.getControl(name="lines").value = "hello"
-  >>> browser.getControl(name="multi:list").value = ['one', 'two']
+  >>> browser.getControl(name="lines:lines").value = "hello"
   >>> browser.getControl(name="password").value = "mypassword"
   
   >>> browser.getControl(name="rating.1:record").value = ['Strongly disagree']
   >>> browser.getControl(name="rating.2:record").value = ['Strongly agree']
   
-  >>> browser.getControl(name="selection").value = "one"
+  >>> browser.getControl(name="selection").value = ["one"]
   
   >>> browser.getControl(name="form_submit").click()
   
@@ -169,8 +169,8 @@ Check that the results were saved and go to them.
   >>> len(adapter.objectIds()) == 1
   True
   
-  >>> results = adapter.values()[0]
-  >>> browser.open(results.absolute_url())
+  >>> result = adapter.values()[0]
+  >>> browser.open(result.absolute_url())
   
   >>> 'foo@bar.com' in browser.contents
   True
@@ -181,9 +181,55 @@ Check that the results were saved and go to them.
   >>> 'This is awesome.' in browser.contents
   True
   
-  >>> results.getMulti()
-  ['one', 'two']
+  >>> schema = result.Schema()
+  >>> schema.get('rating').get(result)
+  {'1': 'Strongly disagree', '2': 'Strongly agree'}
   
-  >>> results.getRating()
-  {'' : ''}
+
+Now let's make the form public and make sure it still creates the result when
+not logged in.
+
+  >>> browser.open(form.absolute_url())
+  >>> browser.getLink('Publish').click()
+  >>> browser.open(self.portal.absolute_url() + '/logout')
+  
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
+  >>> browser.getControl(name="topic").value = "Hello Again"
+  >>> browser.getControl(name="comments").value = "This is cool."
+  >>> browser.getControl(name="form_submit").click()
+  
+  >>> len(adapter.objectIds()) == 2
+  True
+  
+  
+let's login and make the adapter not avoid security permissions
+  
+  >>> browser.open(portal_url)
+  >>> browser.getControl(name='__ac_name').value = portal_owner
+  >>> browser.getControl(name='__ac_password').value = default_password
+  >>> browser.getControl(name='submit').click()
+  
+  >>> browser.open(adapter.absolute_url())
+  >>> browser.getLink("Edit").click()
+  >>> browser.getControl(name="avoidSecurityChecks:boolean").value = None
+  >>> browser.getControl(name="form_submit").click()
+  
+  
+We'll log out again and try submitting the form.
+
+  >>> browser.open(self.portal.absolute_url() + '/logout')
+
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
+  >>> browser.getControl(name="topic").value = "Hello Again"
+  >>> browser.getControl(name="comments").value = "This is cool."
+  >>> browser.getControl(name="form_submit").click()
+
+  >>> len(adapter.objectIds()) == 2
+  True
+  
+  
+  
+  
   

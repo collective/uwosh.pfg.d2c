@@ -14,7 +14,7 @@
       title="uwosh.pfg.d2c: Add FormSaveData2ContentEntry"
     />
 
-    <!-- Include the sub-packages that use their own configure.zcml files. -->
+    <five:registerPackage package="." initialize=".initialize" />
     <include package=".content" />
 
     <include package="archetypes.schemaextender" />
@@ -28,7 +28,5 @@
       description="A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-
-    <!-- -*- extra stuff goes here -*- -->
 
 </configure>

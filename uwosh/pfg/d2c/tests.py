@@ -37,7 +37,25 @@ def setup_product():
 
 setup_product()
 ptc.setupPloneSite(products=['PloneFormGen', 'uwosh.pfg.d2c'])
-        
+
+
+#
+# PFG throw redirect exceptions that make the test browser mad.
+#
+from zExceptions import Redirect
+from zope.testbrowser.browser import SubmitControl
+original_click = SubmitControl.click
+
+def redirect_exception_handling_click(self):
+    try:
+        original_click(self)
+    except Redirect, url:
+        # for some reason this exception never catches
+        self.browser.open(url)
+    except:
+        pass
+    
+SubmitControl.click = redirect_exception_handling_click
 
 class FunctionalTestCase(ptc.FunctionalTestCase):
     """We use this class for functional integration tests that use
