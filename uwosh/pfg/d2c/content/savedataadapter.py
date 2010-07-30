@@ -11,6 +11,13 @@ from Products.Archetypes.Field import FileField
 from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
 
+try:
+    from Products.PloneFormGen.content.likertField import LikertField
+except:
+    # just dummy field so we have something to compare field to on
+    # submission
+    class LikertField(object): pass
+    
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
         BooleanField('avoidSecurityChecks',
@@ -57,12 +64,16 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         
         for field in self.fgFields():
             name = field.getName()
+            value = REQUEST.form.get(name)
             if field.__class__ == FileField:
                 name += '_file'
-                file = REQUEST.form.get(name)
-                if file.filename:
-                    field.set(obj, file)
+                if value.filename:
+                    field.set(obj, value)
+            elif field.__class__ == LikertField:
+                if type(value) in (str, unicode):
+                    value = [v.strip() for v in value.split(',')]
+                ObjectField.set(field, obj, value, **kwargs)
             else:
-                field.set(obj, REQUEST.form.get(name))
+                field.set(obj, value)
         
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)
