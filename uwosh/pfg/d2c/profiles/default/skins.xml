@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_skins tool -->
+
+<object name="portal_skins">
+
+  <object name="uwosh_pfg_d2c_templates"
+    meta_type="Filesystem Directory View"
+    directory="uwosh.pfg.d2c:skins/uwosh_pfg_d2c_templates" />
+
+  <skin-path name="*">
+    <layer name="uwosh_pfg_d2c_templates" insert-after="custom" />
+  </skin-path>
+
+</object>

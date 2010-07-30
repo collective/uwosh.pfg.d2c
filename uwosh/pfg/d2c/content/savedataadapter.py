@@ -10,13 +10,6 @@ from zope.interface import implements
 from Products.Archetypes.Field import FileField
 from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
-
-try:
-    from Products.PloneFormGen.content.likertField import LikertField
-except:
-    # just dummy field so we have something to compare field to on
-    # submission
-    class LikertField(object): pass
     
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
@@ -69,10 +62,6 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                 name += '_file'
                 if value.filename:
                     field.set(obj, value)
-            elif field.__class__ == LikertField:
-                if type(value) in (str, unicode):
-                    value = [v.strip() for v in value.split(',')]
-                ObjectField.set(field, obj, value)
             else:
                 field.set(obj, value)
         

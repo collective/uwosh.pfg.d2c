@@ -16,6 +16,8 @@ Changelog
  
  - added permissions for adding content
  
+ - More fixes for the rating scale field. Should work as expected now.
+ 
 
 0.4
 ---

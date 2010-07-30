@@ -47,23 +47,35 @@ except:
 
 try:
     from Products.PloneFormGen.content.likertField import LikertField
+    def get_likert(self, instance, **kwargs):
+        value = ObjectField.get(self, instance, **kwargs)
+        if not value:
+            return {}
+        else:
+            return value
 
+    def set_likert(self, instance, value, **kwargs):
+        if type(value) in (str, unicode):
+            value = [v.strip() for v in value.split(',')]
+        elif type(value) in (tuple, list, set):
+            newval = {}
+            for i in range(0, len(value)):
+                newval[str(i+1)] = value[i]
+            value = newval
+                
+        ObjectField.set(self, instance, value, **kwargs)
+        
     class XLikertField(ExtensionField, LikertField): 
         """
         override default methods which have bugs...
         """
 
-        def get(self, instance, **kwargs):
-            value = ObjectField.get(self, instance, **kwargs)
-            if not value:
-                return tuple()
-            else:
-                return value
-
-        def set(self, instance, value, **kwargs):
-            if type(value) in (str, unicode):
-                value = [v.strip() for v in value.split(',')]
-            ObjectField.set(self, instance, value, **kwargs)
+        get = get_likert
+        set = set_likert
+            
+    # patch these methods to actually work.
+    LikertField.get = get_likert
+    LikertField.set = set_likert
     extension_fields.append(XLikertField)       
 except:
     pass

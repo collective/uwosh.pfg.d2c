@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+<body>
+
+    <metal:define define-macro="view">
+      <table class="likert listing"
+             tal:define="questions field/getQuestionSet;
+                         answers field/getAnswerSet;
+                         responses accessor">
+        <tr>
+          <th>&nbsp;</th>
+          <th tal:repeat="answer answers" tal:content="answer" />
+        </tr>
+        <tal:block tal:repeat="question questions">
+            <tr tal:define="row repeat/question/number;
+                            response python:responses.get(str(row), None)"
+                            tal:attributes="class python:test(repeat['question'].even(),'even','odd')">
+              <td tal:content="question" />
+              <td tal:repeat="answer answers" style="text-align: center">
+                <span tal:condition="python: response==answer"><b>X</b></span>
+              </td>
+            </tr>
+        </tal:block>
+      </table>
+    </metal:define>
+
+  <metal:define define-macro="edit">
+    <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+      <table metal:fill-slot="widget_body" class="likert listing"
+             tal:define="questions field/getQuestionSet;
+                         answers field/getAnswerSet;
+                         fid field/getName;
+                         responses python:request.form.get(fid, {});
+                         responses python: responses and responses or (accessor and accessor() or {});">
+        <tr>
+          <th>&nbsp;</th>
+          <th tal:repeat="answer answers" tal:content="answer" />
+        </tr>
+        <tal:block tal:repeat="question questions">
+            <tr tal:define="row repeat/question/number;
+                            response python:responses.get(str(row), None)"
+                            tal:attributes="class python:test(repeat['question'].even(),'even','odd')">
+              <td tal:content="question" />
+              <td tal:repeat="answer answers">
+                <input type="radio" tal:define="col repeat/answer/number" 
+                       tal:attributes="id string:${fid}_${row}_${col};
+                                       name string:${fid}.${row}:record;
+                                       value answer;
+                                       checked python:test(response==answer,'CHECKED',None);"
+                                       />
+              </td>
+            </tr>
+        </tal:block>
+      </table>
+    </metal:use>
+  </metal:define>
+</body>
+</html>
