@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.6 (2010-07-31)
+----------------
+
+ - added autoinclude entry point
+
+ - only use _finishConstruction method if it's available since in newer 
+   versions of CMFCore, it's not there.
+   
+
 0.5
 ---
 

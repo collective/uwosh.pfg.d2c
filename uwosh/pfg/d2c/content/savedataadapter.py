@@ -43,7 +43,11 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
             pt = getToolByName(self, 'portal_types')
             type_info = pt.getTypeInfo("FormSaveData2ContentEntry")
             ob = type_info._constructInstance(self, id)
-            return type_info._finishConstruction(ob)
+            # CMFCore compatibility
+            if hasattr(type_info, '_finishConstruction'):
+                return type_info._finishConstruction(ob)
+            else:
+                return ob
         else:
             self.invokeFactory("FormSaveData2ContentEntry", id)
             return self[id]
