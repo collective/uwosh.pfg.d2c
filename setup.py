@@ -11,9 +11,9 @@ def read(*rnames):
 version = '0.5'
 
 long_description = (
-    read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n' +
+    read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n\n' +
     read('CHANGES.txt')
-    + '\n' +
+    + '\n\n' +
     'Contributors\n'
     '************\n'
     + '\n' +
@@ -50,8 +50,11 @@ setup(name='uwosh.pfg.d2c',
                         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
-      test_suite = 'uwosh.pfg.d2c.tests.test_docs.test_suite',
+      test_suite = 'uwosh.pfg.d2c.tests',
       entry_points="""
       # -*- entry_points -*- 
+      
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
