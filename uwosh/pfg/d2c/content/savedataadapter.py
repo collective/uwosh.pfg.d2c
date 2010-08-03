@@ -68,5 +68,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                     field.set(obj, value)
             else:
                 field.set(obj, value)
+                
+        obj.reindexObject()
         
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)
