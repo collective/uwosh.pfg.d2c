@@ -25,5 +25,15 @@ class FormSaveData2ContentEntry(ATCTContent):
     
     def Title(self):
         return self.getId()
+        
+    security.declareProtected('View', 'getValue')
+    def getValue(self, field):
+        """
+        somewhat a replacement for the get generated methods.
+        """
+        schema = self.Schema()
+        field = schema.get(field)
+        return field.get(self)
+        
     
 registerATCT(FormSaveData2ContentEntry, PROJECTNAME)

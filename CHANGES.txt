@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.7 (2010-07-31)
+----------------
+
+ - added accessor method getValue for entry type.
+ 
+
 0.6 (2010-07-31)
 ----------------
 
