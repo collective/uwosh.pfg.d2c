@@ -6,7 +6,8 @@ from Products.ATContentTypes.content.base import ATCTContent
 from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
-
+from plone.memoize.instance import memoize
+from Acquisition import aq_parent
 
 FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
 FormSaveData2ContentEntrySchema.delField('title')
@@ -21,10 +22,14 @@ class FormSaveData2ContentEntry(ATCTContent):
     archetype_name = 'Save Data to Content Entry'
     
     security       = ClassSecurityInfo()
-
     
     def Title(self):
-        return self.getId()
+        field = self.getParentNode().getTitleField()
+        schema = self.Schema()
+        if schema.has_key(field):
+            return schema.get(field).get(self)
+        else:
+            return self.getId()
         
     security.declareProtected('View', 'getValue')
     def getValue(self, field):

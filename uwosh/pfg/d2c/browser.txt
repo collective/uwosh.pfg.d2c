@@ -34,21 +34,13 @@ With that in place, we can go to the portal front page and log in. We will
 do this using the default user from PloneTestCase:
 
     >>> from Products.PloneTestCase.setup import portal_owner, default_password
-    >>> browser.open(portal_url)
+    >>> browser.open(portal_url + '/login')
 
 We have the login portlet, so let's use that.
 
     >>> browser.getControl(name='__ac_name').value = portal_owner
     >>> browser.getControl(name='__ac_password').value = default_password
     >>> browser.getControl(name='submit').click()
-
-Here, we set the value of the fields on the login form and then simulate a
-submit click.
-
-We then test that we are still on the portal front page:
-
-    >>> browser.url == portal_url
-    True
 
 And we ensure that we get the friendly logged-in message:
 
@@ -61,7 +53,7 @@ Add the form
   >>> browser.getLink('Form Folder').click()
   >>> browser.getControl(name="title").value = "test-form"
   >>> browser.getControl(name="actionAdapter:list").value = []
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   >>> form = self.portal['test-form']
   
 
@@ -69,7 +61,7 @@ Add the adapter
 
   >>> browser.getLink('Save Data to Content Adapter').click()
   >>> browser.getControl(name="title").value = 'results'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
 
 Enable the adapter
 
@@ -77,7 +69,7 @@ Enable the adapter
   >>> browser.getLink(text="test-form").click()
   >>> browser.getLink(text="Edit").click()
   >>> browser.getControl(name="actionAdapter:list").value = ['results']
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   >>> adapter = form['results']
   
   
@@ -88,42 +80,42 @@ Checkbox
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Checkbox Field").click()
   >>> browser.getControl(name="title").value = 'checkbox'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Date/Time
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Date/Time Field").click()
   >>> browser.getControl(name="title").value = 'datetime'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Decimal Number
   
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Decimal Number Field").click()
   >>> browser.getControl(name="title").value = 'decimal'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Lines Field
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Lines Field").click()
   >>> browser.getControl(name="title").value = 'lines'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Password
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Password Field").click()
   >>> browser.getControl(name="title").value = 'password'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Rating
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Rating-Scale Field").click()
   >>> browser.getControl(name="title").value = 'rating'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 Selection Field
 
@@ -131,7 +123,7 @@ Selection Field
   >>> browser.getLink(text="Selection Field").click()
   >>> browser.getControl(name="title").value = 'selection'
   >>> browser.getControl(name="fgVocabulary:lines").value = 'one\ntwo\nthree'
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
 
 Fill out the fields and make sure they get saved.
@@ -161,7 +153,7 @@ Fill out the fields and make sure they get saved.
   
   >>> browser.getControl(name="selection").value = ["one"]
   
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Submit").click()
   
 
 Check that the results were saved and go to them.
@@ -197,7 +189,7 @@ not logged in.
   >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
   >>> browser.getControl(name="topic").value = "Hello Again"
   >>> browser.getControl(name="comments").value = "This is cool."
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Submit").click()
   
   >>> len(adapter.objectIds()) == 2
   True
@@ -205,7 +197,7 @@ not logged in.
   
 let's login and make the adapter not avoid security permissions
   
-  >>> browser.open(portal_url)
+  >>> browser.open(portal_url + '/login')
   >>> browser.getControl(name='__ac_name').value = portal_owner
   >>> browser.getControl(name='__ac_password').value = default_password
   >>> browser.getControl(name='submit').click()
@@ -213,7 +205,7 @@ let's login and make the adapter not avoid security permissions
   >>> browser.open(adapter.absolute_url())
   >>> browser.getLink("Edit").click()
   >>> browser.getControl(name="avoidSecurityChecks:boolean").value = None
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Save").click()
   
   
 We'll log out again and try submitting the form.
@@ -224,7 +216,7 @@ We'll log out again and try submitting the form.
   >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
   >>> browser.getControl(name="topic").value = "Hello Again"
   >>> browser.getControl(name="comments").value = "This is cool."
-  >>> browser.getControl(name="form_submit").click()
+  >>> browser.getControl("Submit").click()
 
   >>> len(adapter.objectIds()) == 2
   True

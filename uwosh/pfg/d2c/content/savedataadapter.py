@@ -10,6 +10,7 @@ from zope.interface import implements
 from Products.Archetypes.Field import FileField
 from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
+from Acquisition import aq_parent
     
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
@@ -22,7 +23,22 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                 anonymous users will most likely not be able to submit your
                 forms.
                 """,)
-        )
+        ),
+        StringField('titleField',
+            searchable=False,
+            required=False,
+            vocabulary='fieldVocabulary',
+            widget=SelectionWidget(
+                label='Title Field',
+                description="""
+                    Select a field to be used as the title of the entries.
+                    You will have to reindex previous form results for you
+                    to notice most changes. You can edit each form result to 
+                    force reindexing.
+                """
+            ),
+            default='id'
+        ),
     ))
 
 class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
@@ -70,5 +86,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                 field.set(obj, value)
                 
         obj.reindexObject()
+        
+    def fieldVocabulary(self):
+        return [field.getName() for field in self.fgFields()]
         
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)

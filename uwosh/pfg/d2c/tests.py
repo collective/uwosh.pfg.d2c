@@ -36,7 +36,7 @@ def setup_product():
 # PloneTestCase set up this product on installation.
 
 setup_product()
-ptc.setupPloneSite(products=['PloneFormGen', 'uwosh.pfg.d2c'])
+ptc.setupPloneSite(products=['uwosh.pfg.d2c'])
 
 
 #

@@ -1,10 +1,14 @@
 Changelog
 =========
 
-0.7 (2010-07-31)
+0.7 (2010-08-04)
 ----------------
 
  - added accessor method getValue for entry type.
+ 
+ - index object properly after values are set
+ 
+ - allow you to specify which field to use for the title
  
 
 0.6 (2010-07-31)
