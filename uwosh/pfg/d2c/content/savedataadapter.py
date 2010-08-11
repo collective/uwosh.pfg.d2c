@@ -11,6 +11,7 @@ from Products.Archetypes.Field import FileField
 from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
+from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
     
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
@@ -45,7 +46,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     """A form action adapter that will save form input data and 
        return it in csv- or tab-delimited format."""
 
-    implements(IFormSaveData2ContentAdapter)
+    implements(IFormSaveData2ContentAdapter, IPloneFormGenActionAdapter)
     schema = FormSaveData2ContentAdapterSchema
 
     meta_type = portal_type = 'FormSaveData2ContentAdapter'

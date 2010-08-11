@@ -12,4 +12,14 @@ The product adds a "Save Data to Content Adapter" item to the "Add new.." drop
 down for the PloneFormGen Form. Once enabled, when a user submits a form,
 a new content item is created with that data and located in the adapter.
 
+
+Warning
+-------
+
+Don't forgot to enable the adapter after it is added to the form!
+
+
+Compatibility
+-------------
+
 Compatible with versions of PloneFormGen >= 1.2.2 and Plone 3.x -> 4.0.
