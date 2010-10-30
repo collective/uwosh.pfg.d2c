@@ -12,7 +12,13 @@ from Products.Archetypes.Field import ObjectField
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
 from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
-    
+
+try:
+    from Products.DataGridField import DataGridField
+except:
+    class DataGridField:
+        pass
+
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
         BooleanField('avoidSecurityChecks',
@@ -79,6 +85,19 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         for field in self.fgFields():
             name = field.getName()
             value = REQUEST.form.get(name)
+            
+            if field.__class__ == DataGridField:
+                # clean up datagrid field for issues...
+                if type(value) in (tuple, set, list):
+                    newval = []
+                    for values in value:
+                        values = dict(values)
+                        if values.get('orderindex_', None) == 'template_row_marker':
+                            del values['orderindex_']
+                            
+                        newval.append(values)
+                    value = newval
+            
             if field.__class__ == FileField:
                 name += '_file'
                 if value.filename:

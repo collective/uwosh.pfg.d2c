@@ -85,6 +85,17 @@ extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators'
 ]
 
+# XXX
+# Conditional fields
+# XXXX
+try:
+    from Products.DataGridField import DataGridField
+    class XDataGridField(ExtensionField, DataGridField): pass
+    extension_fields.append(XDataGridField)
+    extra_fields.append('columns')
+except:
+    pass
+
 # instance values to copy over
 instance_values_to_field = ['minval', 'maxval']
 

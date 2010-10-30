@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.7 (unreleased)
+----------------
+
+  - add support for pfg datagridfield
+    [vangheem]
+  
+
 0.7 (2010-08-04)
 ----------------
 
