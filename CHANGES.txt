@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.7 (unreleased)
+0.8 (2010-10-30)
 ----------------
 
   - add support for pfg datagridfield
