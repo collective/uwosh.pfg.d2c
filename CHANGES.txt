@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.9 (unreleased)
+----------------
+
+  - fixed issue where it couldn't render the title viewlet if a
+    lines field was used for a the title field. Convert all value
+    fields to string for the title.
+    [vangheem]
+    
+
 0.8 (2010-10-30)
 ----------------
 

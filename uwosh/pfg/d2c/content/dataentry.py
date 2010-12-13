@@ -1,13 +1,10 @@
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.public import *
 from Products.ATContentTypes.content.base import registerATCT
 from uwosh.pfg.d2c.config import PROJECTNAME
 from Products.ATContentTypes.content.base import ATCTContent
 from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
-from plone.memoize.instance import memoize
-from Acquisition import aq_parent
 
 FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
 FormSaveData2ContentEntrySchema.delField('title')
@@ -27,7 +24,11 @@ class FormSaveData2ContentEntry(ATCTContent):
         field = self.getParentNode().getTitleField()
         schema = self.Schema()
         if schema.has_key(field):
-            return schema.get(field).get(self)
+            value = schema.get(field).get(self)
+            try:
+                return str(value)
+            except:
+                return value
         else:
             return self.getId()
         
