@@ -26,9 +26,14 @@ class FormSaveData2ContentEntry(ATCTContent):
         if schema.has_key(field):
             value = schema.get(field).get(self)
             try:
-                return str(value)
+                if not isinstance(value, basestring):
+                    # not of string type so convert it
+                    # This may not always work but might prevent some errors.
+                    value = str(value)
             except:
-                return value
+                pass
+            
+            return value
         else:
             return self.getId()
         
