@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.8'
+version = '1.0'
 
 long_description = (
     read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n\n' +

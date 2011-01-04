@@ -4,7 +4,7 @@ from Products.Archetypes.public import *
 from Products.ATContentTypes.content.base import registerATCT
 from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, FormAdapterSchema
 from uwosh.pfg.d2c.config import PROJECTNAME
-from Products.ATContentTypes.content.folder import ATFolderSchema, ATFolder
+from Products.ATContentTypes.content.folder import ATBTreeFolderSchema, ATBTreeFolder
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from zope.interface import implements
 from Products.Archetypes.Field import FileField
@@ -19,7 +19,7 @@ except:
     class DataGridField:
         pass
 
-FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
+FormSaveData2ContentAdapterSchema = ATBTreeFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
         BooleanField('avoidSecurityChecks',
             default=True,
@@ -48,7 +48,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
         ),
     ))
 
-class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
+class FormSaveData2ContentAdapter(ATBTreeFolder, FormActionAdapter):
     """A form action adapter that will save form input data and 
        return it in csv- or tab-delimited format."""
 
