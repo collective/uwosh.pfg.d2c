@@ -15,7 +15,7 @@ logger = getLogger('uwosh.pfg.d2c:upgrades')
 default_profile = 'profile-uwosh.pfg.d2c:default'
 
 def upgrade_to_0_5(context):
-    context.runImportStepFromProfile(default_profile, 'skins.xml')
+    context.runImportStepFromProfile(default_profile, 'skins')
 
 def upgrade_to_0_9(context, batch=1000, dryrun=False):
     """ find all btree-based folder below the context, potentially
