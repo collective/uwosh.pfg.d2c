@@ -12,11 +12,12 @@
     profile="uwosh.pfg.d2c:default"/>
                
   <gs:upgradeStep
-    title="Upgrade uwosh.pfg.d2c to 0.9"
+    title="Upgrade uwosh.pfg.d2c to 1.0"
     description="uwosh.pfg.d2c upgrade step"
     source="*"
-    destination="0.9"
-    handler=".upgrades.upgrade_to_0_9"
+    destination="1.0"
+    handler=".upgrades.upgrade_to_1_0"
     profile="uwosh.pfg.d2c:default"/>
+               
                
 </configure>

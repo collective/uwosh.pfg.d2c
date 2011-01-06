@@ -1,18 +1,14 @@
 Changelog
 =========
 
-1.0 - unreleased
----------------
+1.0 - 2011-01-06
+----------------
 
   - New saved data adapter derives from large (BTree) folder instead
     of regular ones to handle better large numbers of contained items.
     Upgrade step migrates from obsolete normal/slow folder storage to
     the new BTree storage.
     [nguyen]
-
-
-0.9 (unreleased)
-----------------
 
   - fixed issue where it couldn't render the title viewlet if a
     lines field was used for the title field. Convert all value

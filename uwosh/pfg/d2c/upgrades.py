@@ -17,7 +17,7 @@ default_profile = 'profile-uwosh.pfg.d2c:default'
 def upgrade_to_0_5(context):
     context.runImportStepFromProfile(default_profile, 'skins')
 
-def upgrade_to_0_9(context, batch=1000, dryrun=False):
+def upgrade_to_1_0(context, batch=1000, dryrun=False):
     """ find all btree-based folder below the context, potentially
         migrate them & provide some logging and statistics doing so """
     real = timer()          # real time
@@ -30,12 +30,12 @@ def upgrade_to_0_9(context, batch=1000, dryrun=False):
         trx.note('migrated %d btree-folders' % processed)
         trx.savepoint()
     cpi = checkpointIterator(checkPoint, batch)
-    portal = getToolByName(context, 'portal_url').getPortalObject()
-    for path, obj in findObjects(portal):
-        if isinstance(obj, FormSaveData2ContentAdapter):
-            if migrateD2C(obj):
-                processed += 1
-                cpi.next()
+    catalog = getToolByName(context, 'portal_catalog')
+    for brain in catalog(portal_type='FormSaveData2ContentAdapter'):
+	obj = brain.getObject()
+	migrateD2C(obj)
+	processed += 1
+	cpi.next()
 
     checkPoint()                # commit last batch
     if dryrun:
@@ -63,3 +63,4 @@ def migrateD2C(folder):
     if has('_objects'):
         delattr(folder, '_objects')
     return True
+
