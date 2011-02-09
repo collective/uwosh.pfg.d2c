@@ -13,11 +13,23 @@ new.." drop down for the PloneFormGen Form. Once enabled, when a user
 submits a form, a new content item is created with that data and
 located in the adapter.
 
+Upon save data adapter creation, user can choose to use any content type
+that has 'uwosh.pfg.d2c' configured as the 'product' in the FTI, to store
+the form submission. 
+
+So besides the original FormSaveData2ContentEntry, its clone types can
+also be used to store form data - whether added to types tool via code,
+genericsetup profile or by manually copying the FormSaveData2ContentEntry
+FTI in portal_types tool (and then renaming it appropriately).
+
+The type names can be translated simply by adding them to
+plone.po in the language-specific locale/LC_MESSAGES subdirectory.
+
 
 Warning
 -------
 
-Don't forgot to enable the adapter after it is added to the form!
+Don't forget to enable the adapter after it is added to the form!
 
 
 Compatibility
