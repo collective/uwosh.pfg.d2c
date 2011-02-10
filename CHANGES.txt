@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.1 - 2011-02-
+----------------
+
+   - New feature: A cloned FormSaveData2ContentEntry content type
+     can be used by entering its portal type here. This makes it possible
+     to apply different workflows, content rules etc. to content saved by
+     different forms. [saffe]
+
+
 1.0 - 2011-01-06
 ----------------
 
