@@ -64,3 +64,6 @@ def migrateD2C(folder):
         delattr(folder, '_objects')
     return True
 
+def upgrade_to_1_1(context):
+    context.runImportStepFromProfile(default_profile, 'propertiestool')
+

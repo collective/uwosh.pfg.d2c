@@ -64,12 +64,14 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
             i18n_domain="uwosh.pfg.d2c",
             label_msgid="label_savecontentadapter_entrytype",
             description_msgid="help_savecontentadapter_entrytype",
-
+            default="FormSaveData2ContentEntry",
             searchable = False,
+            mutator='setEntryType',
             required = False,
             widget = SelectionWidget(
-               label = 'Saved entry type',
-               description = """Portal type to use for the saved data. Leave empty to use the default."""
+               label = 'Saved entry content type',
+               description = """Portal type to use for the saved data. Leave as default if you're unsure of what this does."""
+                             """If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly."""
             ),
             vocabulary = 'entry_types'
         ),
@@ -89,26 +91,39 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     
     def entry_types(self):
         pt = getToolByName(self, 'portal_types')
-        derived_types = []
-        for t in pt.listTypeInfo():
-            if t.getProperty('product') == 'uwosh.pfg.d2c':
-               derived_types.append(t.getId())
-        derived_types.remove("FormSaveData2ContentAdapter")
+        derived_types = {}
+        for fti in pt.listTypeInfo():
+            if fti.getProperty('product') == 'uwosh.pfg.d2c':
+               derived_types[fti.getId()] = fti.getProperty('title')
+        if "FormSaveData2ContentAdapter" in derived_types: 
+            del derived_types["FormSaveData2ContentAdapter"]
         
-        return DisplayList(zip(derived_types,derived_types))
+        pprops = getToolByName(self, 'portal_properties')
+        site_props = pprops.site_properties
+        for type_name in site_props.getProperty('d2c_addable_types', []):
+            if type_name in pt.objectIds():
+                fti = pt[type_name]
+                derived_types[type_name] = fti.getProperty('title')
+
+        return DisplayList(derived_types.items())
+
+    def setEntryType(self, entry_type):
+        pt = getToolByName(self, 'portal_types')
+        type_info = pt.getTypeInfo(self.portal_type)
+        if entry_type not in type_info.allowed_content_types:
+            type_info.allowed_content_types = tuple(set(type_info.allowed_content_types) | set([entry_type]))
+
+        field = self.getField('entryType')
+        field.set(self, entry_type)
 
 
     def createEntry(self):
         id = self.generateUniqueId()
+        entrytype = self.getEntryType() or "FormSaveData2ContentEntry"
+
         if self.getAvoidSecurityChecks():
             pt = getToolByName(self, 'portal_types')
-
-            # TODO: use a select widget w/ vocab built
-            # from query for IFormSaveData2ContentEntry
-            entrytype = self.getEntryType()
-            entrytype = entrytype or "FormSaveData2ContentEntry"
             type_info = pt.getTypeInfo(entrytype)
-
             ob = type_info._constructInstance(self, id)
             # CMFCore compatibility
             if hasattr(type_info, '_finishConstruction'):
@@ -116,7 +131,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
             else:
                 return ob
         else:
-            self.invokeFactory("FormSaveData2ContentEntry", id)
+            self.invokeFactory(entrytype, id)
             return self[id]
     
     def onSuccess(self, fields, REQUEST=None, loopstop=False):

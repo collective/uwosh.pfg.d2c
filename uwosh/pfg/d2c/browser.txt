@@ -11,6 +11,8 @@ What to test
  
  - test adapter with(out) avoiding security checks
 
+ - test with creating different content types
+
 
 First off, let's get setup.
 
@@ -61,7 +63,7 @@ Add the adapter
 
   >>> browser.getLink('Save Data to Content Adapter').click()
   >>> browser.getControl(name="title").value = 'results'
-  >>> browser.getControl("Save").click()
+  >>> browser.getControl(name="form.button.save").click()
 
 Enable the adapter
 
@@ -205,7 +207,7 @@ let's login and make the adapter not avoid security permissions
   >>> browser.open(adapter.absolute_url())
   >>> browser.getLink("Edit").click()
   >>> browser.getControl(name="avoidSecurityChecks:boolean").value = None
-  >>> browser.getControl("Save").click()
+  >>> browser.getControl(name="form.button.save").click()
   
   
 We'll log out again and try submitting the form.
@@ -222,6 +224,112 @@ We'll log out again and try submitting the form.
   True
   
   
+Let's try out the functionality of saving as different content types.
+
+Login first...
+
+  >>> browser.open(portal_url + '/login')
+  >>> browser.getControl(name='__ac_name').value = portal_owner
+  >>> browser.getControl(name='__ac_password').value = default_password
+  >>> browser.getControl(name='submit').click()
   
-  
-  
+
+Next, let's copy the FormSaveData2ContentEntry entry first and use
+that.
+
+  >>> browser.open(self.portal.absolute_url() + '/portal_types/manage_main')
+  >>> browser.getControl(name="ids:list").value = ['FormSaveData2ContentEntry']
+  >>> browser.getControl(name="manage_copyObjects:method").click()
+  >>> browser.getControl(name="manage_pasteObjects:method").click()
+  >>> browser.open(self.portal.absolute_url() + '/portal_types/copy_of_FormSaveData2ContentEntry/manage_propertiesForm')
+  >>> browser.getControl(name="title:string").value = "My New D2C Content Type"
+  >>> browser.getControl(name="manage_editProperties:method").click()
+
+Now go to the save data adapter and see if the option for the new content type is there.
+
+  >>> browser.open(adapter.absolute_url())
+  >>> browser.getLink("Edit").click()
+  >>> "My New D2C Content Type" in browser.contents
+  True
+
+FormSaveData2ContentEntry should be the default value.
+
+  >>> browser.getControl(name="entryType").value
+  ['FormSaveData2ContentEntry']
+
+Okay, the new type is there. Let's use it now.
+
+  >>> browser.getControl(name="entryType").value = ["copy_of_FormSaveData2ContentEntry"]
+  >>> browser.getControl(name="form.button.save").click()
+
+Make sure it saved.
+
+  >>> "My New D2C Content Type" in browser.contents
+  True
+
+  >>> adapter.getEntryType()
+  'copy_of_FormSaveData2ContentEntry'
+
+Now that the type is selected, try and submit another form and make sure
+it is of the same type.
+
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "foo2@bar2.com"
+  >>> browser.getControl(name="topic").value = "Another One! Yay!"
+  >>> browser.getControl(name="comments").value = "Nice. a new content type"
+  >>> browser.getControl("Submit").click()
+
+  >>> len(adapter.objectIds())
+  3
+
+  >>> entry = adapter[adapter.objectIds()[-1]]
+  >>> entry.getField('replyto').get(entry)
+  'foo2@bar2.com'
+
+  >>> entry.portal_type
+  'copy_of_FormSaveData2ContentEntry'
+
+Now that we know it works with a copied content type, let's try with
+a plone standard type.
+
+  >>> browser.open(self.portal.absolute_url() + '/portal_properties/site_properties/manage_propertiesForm')
+  >>> browser.getControl(name="d2c_addable_types:lines").value = "Document\nNews Item"
+  >>> browser.getControl(name="manage_editProperties:method").click()
+
+Check that these types are available now.
+
+  >>> browser.open(adapter.absolute_url())
+  >>> browser.getLink("Edit").click()
+  >>> '<option value="News Item">News Item</option>' in browser.contents
+  True
+  >>> '<option value="Document">Page</option>' in browser.contents
+  True
+
+And select one.
+
+  >>> browser.getControl(name="entryType").value = ['Document']
+  >>> browser.getControl(name="form.button.save").click()
+
+  >>> adapter.getEntryType()
+  'Document'
+
+And submit the form...
+
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "nothing@nothing.com"
+  >>> browser.getControl(name="topic").value = "nothing"
+  >>> browser.getControl(name="comments").value = "nothing"
+  >>> browser.getControl("Submit").click()
+
+  >>> "Thanks for your input." in browser.contents
+  True
+
+  >>> len(adapter.objectIds())
+  4
+
+  >>> entry = adapter[adapter.objectIds()[-1]]
+  >>> entry.portal_type
+  'Document'
+
+ 
+
