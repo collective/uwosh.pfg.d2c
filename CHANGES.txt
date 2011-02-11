@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1 - 2011-02-
+1.1 - 2011-02-10
 ----------------
 
    - New feature: A cloned FormSaveData2ContentEntry content type
