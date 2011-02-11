@@ -13,6 +13,8 @@ new.." drop down for the PloneFormGen Form. Once enabled, when a user
 submits a form, a new content item is created with that data and
 located in the adapter.
 
+Saving Content
+--------------
 Upon save data adapter creation, user can choose to use any content type
 that has 'uwosh.pfg.d2c' configured as the 'product' in the FTI, to store
 the form submission. 

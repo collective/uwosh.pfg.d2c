@@ -98,13 +98,6 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         if "FormSaveData2ContentAdapter" in derived_types: 
             del derived_types["FormSaveData2ContentAdapter"]
         
-        pprops = getToolByName(self, 'portal_properties')
-        site_props = pprops.site_properties
-        for type_name in site_props.getProperty('d2c_addable_types', []):
-            if type_name in pt.objectIds():
-                fti = pt[type_name]
-                derived_types[type_name] = fti.getProperty('title')
-
         return DisplayList(derived_types.items())
 
     def setEntryType(self, entry_type):
