@@ -65,5 +65,5 @@ def migrateD2C(folder):
     return True
 
 def upgrade_to_1_1(context):
-    context.runImportStepFromProfile(default_profile, 'propertiestool')
+    pass
 
