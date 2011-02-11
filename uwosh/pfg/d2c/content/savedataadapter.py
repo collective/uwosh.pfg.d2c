@@ -28,10 +28,6 @@ except:
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
         BooleanField('avoidSecurityChecks',
-            i18n_domain="uwosh.pfg.d2c",
-            label_msgid="label_savecontentadapter_avoidsecuritychecks",
-            description_msgid="help_savecontentadapter_avoidsecuritychecks",
-
             default=True,
             widget=BooleanWidget(label="Avoid Security Checks",
                 description="""
@@ -39,12 +35,13 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                 data. You will almost always want this checked; otherwise,
                 anonymous users will most likely not be able to submit your
                 forms.
-                """,)
+                """,
+                i18n_domain="uwosh.pfg.d2c",
+                label_msgid="label_savecontentadapter_avoidsecuritychecks",
+                description_msgid="help_savecontentadapter_avoidsecuritychecks",
+            )
         ),
         StringField('titleField',
-            i18n_domain="uwosh.pfg.d2c",
-            label_msgid="label_savecontentadapter_title",
-            description_msgid="help_savecontentadapter_title",
             searchable=False,
             required=False,
             vocabulary='fieldVocabulary',
@@ -55,23 +52,26 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                     You will have to reindex previous form results for you
                     to notice most changes. You can edit each form result to 
                     force reindexing.
-                """
+                """,
+                i18n_domain="uwosh.pfg.d2c",
+                label_msgid="label_savecontentadapter_title",
+                description_msgid="help_savecontentadapter_title",
             ),
             default='id'
         ),
    
         StringField("entryType",
-            i18n_domain="uwosh.pfg.d2c",
-            label_msgid="label_savecontentadapter_entrytype",
-            description_msgid="help_savecontentadapter_entrytype",
-            default="FormSaveData2ContentEntry",
+            default=("FormSaveData2ContentEntry", "Save Data to Content Entry"),
             searchable = False,
-            mutator='setEntryType',
             required = False,
+            mutator='setEntryType',
             widget = SelectionWidget(
-               label = 'Saved entry content type',
-               description = """Portal type to use for the saved data. Leave as default if you're unsure of what this does."""
-                             """If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly."""
+                label = 'Saved entry content type',
+                description = """Portal type to use for the saved data. Leave as default if you're unsure of what this does."""
+                              """If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly.""",
+                i18n_domain="uwosh.pfg.d2c",
+                label_msgid="label_savecontentadapter_entrytype",
+                description_msgid="help_savecontentadapter_entrytype",
             ),
             vocabulary = 'entry_types'
         ),

@@ -16,8 +16,10 @@ msgstr ""
 "Language-Team: \n"
 
 msgid "FormSaveData2ContentEntry"
-msgstr "Oletustyyppi"
+msgstr "Lomaketietue"
 
-msgid "CustomSaveData2ContentEntry"
-msgstr "Mukautettu tyyppi"
+msgid "Save Data to Content Entry"
+msgstr "Lomaketietue"
 
+msgid "Save Data to Content Adapter"
+msgstr "Lomaketietuetallennin"

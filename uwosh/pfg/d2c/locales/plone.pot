@@ -17,5 +17,5 @@ msgstr ""
 msgid "FormSaveData2ContentEntry"
 msgstr ""
 
-msgid "CustomSaveData2ContentEntry"
+msgid "Save Data to Content Adapter"
 msgstr ""

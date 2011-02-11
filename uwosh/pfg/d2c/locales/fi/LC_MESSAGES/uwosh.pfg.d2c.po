@@ -19,7 +19,7 @@ msgid "label_savecontentadapter_avoidsecuritychecks"
 msgstr "Salli tallentimen käyttö kaikille käyttäjille"
 
 msgid "help_savecontentadapter_avoidsecuritychecks"
-msgstr "Sallitaanko tallentimeen käyttö myös kirjautumattomille käyttäjille (anonyymi). Muuten vain kirjautuneet käyttäjät voivat tallentaa lomakkeen tiedot tällä tallentimella."
+msgstr "Sallitaanko tallentimen käyttö myös kirjautumattomille (anonyymi-) käyttäjille. Muuten vain kirjautuneet käyttäjät voivat tallentaa lomakkeen tiedot tällä tallentimella."
 
 msgid "label_savecontentadapter_title"
 msgstr "Tallennetun lomaketietueen otsikko"
