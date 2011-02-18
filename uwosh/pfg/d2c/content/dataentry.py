@@ -6,6 +6,8 @@ from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
 
+from Products.CMFCore.Expression import getExprContext
+
 FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
 FormSaveData2ContentEntrySchema.delField('title')
 FormSaveData2ContentEntrySchema.delField('description')
@@ -21,6 +23,14 @@ class FormSaveData2ContentEntry(ATCTContent):
     security       = ClassSecurityInfo()
     
     def Title(self):
+
+        # expand title override
+        context = getExprContext(self, self)
+        value = self.getParentNode().getDynamicTitle(expression_context=context)
+        if value:
+           return value
+
+        # if not dynamic, then chosen field
         field = self.getParentNode().getTitleField()
         schema = self.Schema()
         if schema.has_key(field):

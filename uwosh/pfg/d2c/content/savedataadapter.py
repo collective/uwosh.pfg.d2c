@@ -1,29 +1,37 @@
 from AccessControl import ClassSecurityInfo
+from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
+
+from zope.interface import implements
 
 from Products.Archetypes.public import *
+from Products.Archetypes.Field import FileField, ObjectField
+from Products.Archetypes.utils import DisplayList
+
 from Products.ATContentTypes.content.base import registerATCT
-from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, FormAdapterSchema
-from uwosh.pfg.d2c.config import PROJECTNAME
+
 try:
     from Products.ATContentTypes.content.folder import ATBTreeFolderSchema as ATFolderSchema, ATBTreeFolder as ATFolder
 except:
     from Products.ATContentTypes.content.folder import ATFolderSchema, ATFolder
 
-from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
-from zope.interface import implements
-from Products.Archetypes.Field import FileField
-from Products.Archetypes.Field import ObjectField
-from Products.CMFCore.utils import getToolByName
-from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
-from Products.Archetypes.utils import DisplayList
 
-from uwosh.pfg.d2c import pfgMessageFactory as _
+from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, FormAdapterSchema
+from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
+from Products.PloneFormGen.config import EDIT_TALES_PERMISSION
+
+from Products.TALESField import TALESString
 
 try:
     from Products.DataGridField import DataGridField
 except:
     class DataGridField:
         pass
+
+from uwosh.pfg.d2c.config import PROJECTNAME
+from uwosh.pfg.d2c import pfgMessageFactory as _
+from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
+
 
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
@@ -74,6 +82,23 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                 description_msgid="help_savecontentadapter_entrytype",
             ),
             vocabulary = 'entry_types'
+        ),
+
+        TALESString('dynamicTitle',
+            schemata='overrides',
+            searchable=0,
+            required=0,
+            validators=('talesvalidator',),
+            default='',
+            write_permission=EDIT_TALES_PERMISSION,
+            read_permission=ModifyPortalContent,
+            isMetadata=True, # just to hide from base view
+            widget=StringWidget(label=_(u'label_dynamictitle_text', default=u"Dynamic title override"),
+                description=_(u'help_dynamictitle_text', default=u"""
+                    A TALES expression that will be evaluated to determine the title for entry
+                """),
+                size=70,
+            ),
         ),
     ))
 

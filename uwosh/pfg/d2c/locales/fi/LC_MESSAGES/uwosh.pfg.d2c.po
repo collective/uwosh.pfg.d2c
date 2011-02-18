@@ -33,3 +33,8 @@ msgstr "Tallennukseen käytettävä sisältötyyppi"
 msgid "help_savecontentadapter_entrytype"
 msgstr "Valitse sisältötyyppi jota haluat käyttää lomakkeella lähetettyjen tietojen tallentamiseen. Valitse \"Oletus\" jos et tiedä mitä tyyppiä käyttää."
 
+msgid "label_dynamictitle_text"
+msgstr "Nimekkeiden muodostamiseen käytetty TALES-lauseke"
+
+msgid "help_dynamictitle_text"
+msgstr "Lomakkeen kautta tallennettujen tietojen otsikko voidaan muodostaa ajonaikaisesti, tähän annetun TALES-lausekkeen mukaisesti."

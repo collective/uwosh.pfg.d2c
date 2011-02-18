@@ -31,3 +31,9 @@ msgstr ""
 
 msgid "help_savecontentadapter_entrytype"
 msgstr ""
+
+msgid "label_dynamictitle_text"
+msgstr ""
+
+msgid "help_dynamictitle_text"
+msgstr ""
