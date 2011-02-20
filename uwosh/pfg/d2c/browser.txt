@@ -63,6 +63,7 @@ Add the adapter
 
   >>> browser.getLink('Save Data to Content Adapter').click()
   >>> browser.getControl(name="title").value = 'results'
+  >>> browser.getControl(name="dynamicTitle").value = 'string:hello this is my title'
   >>> browser.getControl(name="form.button.save").click()
 
 Enable the adapter
@@ -173,6 +174,9 @@ Check that the results were saved and go to them.
   True
   
   >>> 'This is awesome.' in browser.contents
+  True
+  
+  >>> 'hello this is my title' in browser.contents
   True
   
   >>> schema = result.Schema()
