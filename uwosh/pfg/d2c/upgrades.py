@@ -67,3 +67,6 @@ def migrateD2C(folder):
 def upgrade_to_1_1(context):
     pass
 
+def upgrade_to_1_2(context):
+    pass
+    

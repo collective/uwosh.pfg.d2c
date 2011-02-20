@@ -48,7 +48,7 @@ setup(name='uwosh.pfg.d2c',
         'Products.PloneFormGen',
         'archetypes.schemaextender',
         'Products.TALESField'
-                        ],
+      ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
       test_suite = 'uwosh.pfg.d2c.tests',

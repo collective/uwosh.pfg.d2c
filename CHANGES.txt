@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2 - 2011-
----------------
+1.2 - 2011-02-20
+----------------
 
    - New feature: dynamic data entry title override via a TALES
      expression configurable in the save data adapter.
