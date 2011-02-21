@@ -3,7 +3,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
 
 from zope.interface import implements
-
+import zope.component.event
+from zope.event import notify
+from zope.component.event import objectEventNotify
 from Products.Archetypes.public import *
 from Products.Archetypes.Field import FileField, ObjectField
 from Products.Archetypes.utils import DisplayList
@@ -31,7 +33,7 @@ except:
 from uwosh.pfg.d2c.config import PROJECTNAME
 from uwosh.pfg.d2c import pfgMessageFactory as _
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
-
+from uwosh.pfg.d2c.events import FormSaveData2ContentEntryFinalizedEvent
 
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
     Schema((
@@ -151,6 +153,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         else:
             self.invokeFactory(entrytype, id)
             return self[id]
+
     
     def onSuccess(self, fields, REQUEST=None, loopstop=False):
         """
@@ -183,6 +186,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                 field.set(obj, value)
                 
         obj.reindexObject()
+        objectEventNotify(FormSaveData2ContentEntryFinalizedEvent(obj))
         
     def fieldVocabulary(self):
         return [field.getName() for field in self.fgFields()]
