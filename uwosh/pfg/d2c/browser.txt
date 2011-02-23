@@ -68,7 +68,6 @@ Add the adapter
 
 Enable the adapter
 
-  >>> open('/Users/nathan/output.html', 'w').write(browser.contents)
   >>> browser.getLink(text="test-form").click()
   >>> browser.getLink(text="Edit").click()
   >>> browser.getControl(name="actionAdapter:list").value = ['results']
@@ -292,3 +291,30 @@ it is of the same type.
 
   >>> entry.portal_type
   'copy_of_FormSaveData2ContentEntry'
+
+Set up an event subscriber to listen to FormSaveData2ContentEntryFinalizedEvent events.
+
+  >>> def entry_added_handler(obj, evt):
+  ...    print "received event: " + evt.__class__.__name__
+
+Add it to subscriber list:
+  
+  >>> import zope.component
+  >>> import zope.component.event
+  >>> gsm = zope.component.getGlobalSiteManager()
+  >>> from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
+  >>> from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntryFinalizedEvent
+  >>> from uwosh.pfg.d2c.events import FormSaveData2ContentEntryFinalizedEvent
+  >>> zope.component.provideHandler(entry_added_handler, [IFormSaveData2ContentEntry, IFormSaveData2ContentEntryFinalizedEvent])
+
+Fill in yet another entry form to fire an event. 
+
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "foo3@bar3.com"
+  >>> browser.getControl(name="topic").value = "..And yet another.."
+  >>> browser.getControl(name="comments").value = "We want to send an event"
+
+Our handler gets called when we submit it.
+
+  >>> browser.getControl("Submit").click()
+  received event: FormSaveData2ContentEntryFinalizedEvent
