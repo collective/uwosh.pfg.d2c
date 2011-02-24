@@ -1,3 +1,6 @@
+"""Implements a data content entry type for use by the save data adapter.
+"""
+
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.content.base import registerATCT
 from uwosh.pfg.d2c.config import PROJECTNAME
@@ -13,6 +16,8 @@ FormSaveData2ContentEntrySchema.delField('title')
 FormSaveData2ContentEntrySchema.delField('description')
 
 class FormSaveData2ContentEntry(ATCTContent):
+    "Multi-purpose content type used by the save data adapter to store form submissions"
+
     implements(IFormSaveData2ContentEntry)
     
     schema = FormSaveData2ContentEntrySchema
@@ -23,6 +28,7 @@ class FormSaveData2ContentEntry(ATCTContent):
     security       = ClassSecurityInfo()
     
     def Title(self):
+        "generate custom title from the selected form field or the given TALES expression override"
 
         # expand title override
         context = getExprContext(self, self)

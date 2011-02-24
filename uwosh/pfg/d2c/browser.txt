@@ -1,8 +1,5 @@
 Demonstrating using the save content adapter.
 
-What to test
-------------
-
  - add adapter
  
  - select adapter
@@ -13,8 +10,7 @@ What to test
 
  - test with creating different content types
 
-
-First off, let's get setup.
+ - event triggering
 
 Being a doctest, we can tell a story here.
 

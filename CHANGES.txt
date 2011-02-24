@@ -1,17 +1,30 @@
 Changelog
 =========
 
+1.2.1 - 2011-02-24
+------------------
+
+   - New functionality for product developers: uwosh.pfg.d2c now fires
+     a custom event upon a data content entry creation. Subscribe to:
+     uwosh.pfg.d2c.interfaces.IFormSaveData2ContentEntryFinalizedEvent
+     [saffe]
+
+   - Improved documentation & Sphinx docs [saffe]
+
+
 1.2 - 2011-02-20
 ----------------
 
    - New feature: dynamic data entry title override via a TALES
      expression configurable in the save data adapter.
 
+
 1.1.1 - 2011-02-11
 ------------------
 
    - fix translations
      [saffe]
+
 
 1.1 - 2011-02-10
 ----------------

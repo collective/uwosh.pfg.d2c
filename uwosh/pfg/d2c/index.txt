@@ -1,0 +1,75 @@
+Documentation for uwosh.pfg.d2c
+===============================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   README
+
+
+Configuration and setup
+-----------------------
+
+.config module
+^^^^^^^^^^^^^^
+
+.. automodule:: uwosh.pfg.d2c.config
+
+.. data:: PROJECTNAME
+.. data:: ADD_PERMISSIONS
+
+
+Interfaces
+----------
+
+.. autointerface:: uwosh.pfg.d2c.interfaces.IFormSaveData2ContentEntry
+.. autointerface:: uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter
+.. autointerface:: uwosh.pfg.d2c.interfaces.IFormSaveData2ContentEntryFinalizedEvent
+
+
+Content types
+-------------
+
+There are two content types defined in modules within the 'content' package:
+
+.content.dataentry module
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: uwosh.pfg.d2c.content.dataentry
+
+.. autoclass:: FormSaveData2ContentEntry
+   :members: Title, getValue
+
+
+.content.savedataadapter module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: uwosh.pfg.d2c.content.savedataadapter
+
+.. autoclass:: FormSaveData2ContentAdapter
+   :members: entry_types, setEntryType, createEntry, onSuccess, fieldVocabulary
+
+Events
+------
+
+.events module
+^^^^^^^^^^^^^^
+.. automodule:: uwosh.pfg.d2c.events
+   :members:
+
+
+Doctest usage examples 
+======================
+
+.. includedoc:: uwosh.pfg.d2c:/browser.txt
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

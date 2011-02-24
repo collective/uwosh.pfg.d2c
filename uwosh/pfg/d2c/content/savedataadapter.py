@@ -1,3 +1,6 @@
+"""Implements a PFG action adapter to save form submissions as content type instances.
+"""
+
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
@@ -105,8 +108,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
     ))
 
 class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
-    """A form action adapter that will save form input data and 
-       return it in csv- or tab-delimited format."""
+    """PFG save data adapter that saves form data to content objects"""
 
     implements(IFormSaveData2ContentAdapter, IPloneFormGenActionAdapter)
     schema = FormSaveData2ContentAdapterSchema
@@ -117,6 +119,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     security = ClassSecurityInfo()
     
     def entry_types(self):
+        "get a vocabulary of available FTI clones of FormSaveData2ContentEntry"
         pt = getToolByName(self, 'portal_types')
         derived_types = {}
         for fti in pt.listTypeInfo():
@@ -127,7 +130,9 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         
         return DisplayList(derived_types.items())
 
+
     def setEntryType(self, entry_type):
+        "add the selected entry type to allowed types if it isn't"
         pt = getToolByName(self, 'portal_types')
         type_info = pt.getTypeInfo(self.portal_type)
         if entry_type not in type_info.allowed_content_types:
@@ -138,6 +143,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
 
     def createEntry(self):
+        "create an entry of the chosen type"
         id = self.generateUniqueId()
         entrytype = self.getEntryType() or "FormSaveData2ContentEntry"
 
@@ -156,9 +162,9 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
     
     def onSuccess(self, fields, REQUEST=None, loopstop=False):
-        """
-        magic done here...
-        """
+        """Triggered on successful form submission. Creates a data content entry, adds
+           form contents to it, reindexes and sends an event to notify subscribers
+           of the new entry.""" 
 
         obj = self.createEntry()
         
@@ -189,6 +195,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         objectEventNotify(FormSaveData2ContentEntryFinalizedEvent(obj))
         
     def fieldVocabulary(self):
+        "An utility that provides a list of all form field names."
         return [field.getName() for field in self.fgFields()]
         
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)
