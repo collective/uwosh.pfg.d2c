@@ -1,3 +1,15 @@
+..
+  These docs require the following sphinx extensions:
+  
+  - sphinx.ext.autodoc 
+  - repoze.sphinx.autointerface
+  - collective.sphinx.includedoc
+
+  Note that some extensions are not yet upgraded for
+  Sphinx > 1.0. You may need to fix the add_directive
+  call in the setup function in their directive module 
+  to only pass the directive name and class.
+
 Documentation for uwosh.pfg.d2c
 ===============================
 
