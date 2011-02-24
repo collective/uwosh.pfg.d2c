@@ -16,7 +16,7 @@ Changelog
 ----------------
 
    - New feature: dynamic data entry title override via a TALES
-     expression configurable in the save data adapter.
+     expression configurable in the save data adapter. [saffe] [vangheem]
 
 
 1.1.1 - 2011-02-11
