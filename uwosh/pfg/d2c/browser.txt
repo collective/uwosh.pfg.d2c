@@ -314,3 +314,27 @@ Our handler gets called when we submit it.
 
   >>> browser.getControl("Submit").click()
   received event: FormSaveData2ContentEntryFinalizedEvent
+
+Let's add a TALES expression override to generate a custom entry title.
+
+  >>> browser.open(adapter.absolute_url())
+  >>> browser.getLink("Edit").click()
+  >>> browser.getControl(name="dynamicTitle").value = "object.getValue('replyto') + ': ' + object.getValue('topic')"
+  >>> browser.getControl(name="form.button.save").click()
+
+Log out again and submit to check that everything works anonymously.
+
+  >>> browser.open(self.portal.absolute_url() + "/logout")
+  >>> browser.open(form.absolute_url())
+  >>> browser.getControl(name="replyto").value = "anon@net.fi"
+  >>> browser.getControl(name="topic").value = "question"
+  >>> browser.getControl(name="comments").value = "This is question comment"
+  >>> browser.getControl("Submit").click()
+  >>> "anon@net.fi: question" in browser.contents
+  True
+
+  >>> len(adapter.objectIds()) == 4
+  True
+
+  >>> adapter.objectValues()[-1] == event.getSignups()[-1]
+  True
