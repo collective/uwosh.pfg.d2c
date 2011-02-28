@@ -11,3 +11,5 @@ class FormSaveData2ContentEntryFinalizedEvent(ObjectEvent):
    """
 
    implements(IFormSaveData2ContentEntryFinalizedEvent)
+
+   referrer_uid = None 
