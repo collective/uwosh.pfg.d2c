@@ -1,9 +1,5 @@
-from zope import schema
 from zope.interface import Interface, Attribute
 from zope.component.interfaces import IObjectEvent
-
-from zope.app.container.constraints import contains
-from zope.app.container.constraints import containers
 
 from uwosh.pfg.d2c import pfgMessageFactory as _
 
@@ -17,6 +13,6 @@ class IFormSaveData2ContentAdapter(Interface):
 
 
 class IFormSaveData2ContentEntryFinalizedEvent(IObjectEvent):
-   "an event sent when the entry is completed"
+    "an event sent when the entry is completed"
 
-   referrer_uid = Attribute("UID of http referrer object")
+    referrer_uid = Attribute("UID of http referrer object")
