@@ -330,11 +330,8 @@ Log out again and submit to check that everything works anonymously.
   >>> browser.getControl(name="topic").value = "question"
   >>> browser.getControl(name="comments").value = "This is question comment"
   >>> browser.getControl("Submit").click()
-  >>> "anon@net.fi: question" in browser.contents
+  received event: FormSaveData2ContentEntryFinalizedEvent
+
+  >>> len(adapter.objectIds()) == 5
   True
 
-  >>> len(adapter.objectIds()) == 4
-  True
-
-  >>> adapter.objectValues()[-1] == event.getSignups()[-1]
-  True
