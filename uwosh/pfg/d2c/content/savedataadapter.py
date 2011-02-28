@@ -192,7 +192,12 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                 field.set(obj, value)
                 
         obj.reindexObject()
-        objectEventNotify(FormSaveData2ContentEntryFinalizedEvent(obj))
+        
+        referrer_pth = REQUEST["HTTP_REFERER"].split('/')[3:]
+        referrer = self.restrictedTraverse(referrer_pth)
+        evt = FormSaveData2ContentEntryFinalizedEvent(obj)
+        evt.referrer_uid = referrer.UID()
+        objectEventNotify(evt)
         
     def fieldVocabulary(self):
         "An utility that provides a list of all form field names."
