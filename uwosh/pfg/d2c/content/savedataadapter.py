@@ -8,7 +8,6 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from zope.interface import implements
 import zope.component.event
 from zope.event import notify
-from zope.component.event import objectEventNotify
 from Products.Archetypes.public import *
 from Products.Archetypes.Field import FileField, ObjectField
 from Products.Archetypes.utils import DisplayList
@@ -197,7 +196,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         referrer = self.restrictedTraverse(referrer_pth)
         evt = FormSaveData2ContentEntryFinalizedEvent(obj)
         evt.referrer_uid = referrer.UID()
-        objectEventNotify(evt)
+        notify(evt)
         
     def fieldVocabulary(self):
         "An utility that provides a list of all form field names."
