@@ -56,7 +56,7 @@ setup(name='uwosh.pfg.d2c',
          docs = ['Sphinx',
             'z3c.recipe.sphinxdoc',
             'repoze.sphinx.autointerface',
-            'collective.sphinx.includedoc'
+            'collective.sphinx.includedoc >= 0.2'
          ],
       ),
       entry_points = """
