@@ -15,4 +15,4 @@ class IFormSaveData2ContentAdapter(Interface):
 class IFormSaveData2ContentEntryFinalizedEvent(IObjectEvent):
     "an event sent when the entry is completed"
 
-    referrer_uid = Attribute("UID of http referrer object")
+    referrer = Attribute("the referring content object")

@@ -10,6 +10,9 @@ class FormSaveData2ContentEntryFinalizedEvent(ObjectEvent):
       fired once after each data entry is fully created, making it more useful for the purpose.
    """
 
+   def __init__(self, object, referrer):
+      self.object = object
+      self.referrer = referrer
+
    implements(IFormSaveData2ContentEntryFinalizedEvent)
 
-   referrer_uid = None 
