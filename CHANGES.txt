@@ -1,6 +1,21 @@
 Changelog
 =========
 
+1.2.2 - 2011-03-03
+------------------
+
+   - Improved functionality for product developers: If user
+     arrives to the pfg form via a plone content object,
+     the referring content object is available
+     as 'referrer' attribute of the event dispatched
+     upon data entry content creation. [saffe]
+
+   - Bugfix: anonymous TALES title override did not always
+     work due to insufficient permissions. User is now
+     elevated to "Owner" in the current context, allowing for more 
+     useful TALES expressions. [saffe]
+
+
 1.2.1 - 2011-02-24
 ------------------
 
