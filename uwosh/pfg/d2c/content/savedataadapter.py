@@ -1,6 +1,7 @@
 """Implements a PFG action adapter to save form submissions as content type instances.
 """
 
+from urlparse import urlparse
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
@@ -191,12 +192,18 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                 field.set(obj, value)
                 
         obj.reindexObject()
-        
-        referrer_pth = REQUEST["HTTP_REFERER"].split('/')[3:]
-        referrer = self.restrictedTraverse(referrer_pth)
-        evt = FormSaveData2ContentEntryFinalizedEvent(obj)
-        evt.referrer_uid = referrer.UID()
+
+        # dispatch the event for others to use, with referrer
+
+        pth = urlparse(REQUEST["HTTP_REFERER"]).path
+        try:
+           referrer = self.restrictedTraverse(pth.strip('/').split('/'))
+        except:
+           referrer = None
+
+        evt = FormSaveData2ContentEntryFinalizedEvent(obj, referrer)
         notify(evt)
+
         
     def fieldVocabulary(self):
         "An utility that provides a list of all form field names."
