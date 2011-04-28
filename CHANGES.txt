@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.2.4 - unreleased
+------------------
+
+   - fix file fields to work with ones that aren't
+     required. [vangheem]
+
+
 1.2.3 - 2011-04-28
 ------------------
 
