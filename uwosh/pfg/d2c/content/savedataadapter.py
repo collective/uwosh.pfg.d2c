@@ -183,13 +183,11 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                             
                         newval.append(values)
                     value = newval
-            
-            if field.__class__ == FileField:
+            elif field.__class__ == FileField:
                 name += '_file'
-                if value.filename:
-                    field.set(obj, value)
-            else:
-                field.set(obj, value)
+                value = REQUEST.form.get(name)
+
+            field.set(obj, value)
                 
         obj.reindexObject()
 
