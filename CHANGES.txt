@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.4 - unreleased
+1.2.4 - 2011-04-29
 ------------------
 
    - fix file fields to work with ones that aren't
