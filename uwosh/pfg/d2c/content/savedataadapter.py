@@ -74,7 +74,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
         ),
    
         StringField("entryType",
-            default=("FormSaveData2ContentEntry", "Save Data to Content Entry"),
+            default="FormSaveData2ContentEntry",
             searchable = False,
             required = False,
             mutator='setEntryType',

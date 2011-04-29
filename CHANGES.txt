@@ -7,6 +7,7 @@ Changelog
    - fix file fields to work with ones that aren't
      required. [vangheem]
 
+   - incorrect default value fo entry type. [vangheem]
 
 1.2.3 - 2011-04-28
 ------------------
