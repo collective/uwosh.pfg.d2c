@@ -118,6 +118,8 @@ class ContentEntryExtender(object):
     @memoize
     def getFields(self):
         form = aq_parent(aq_parent(aq_inner(self.context)))
+        if not form:
+            return []
         obj_fields = form._getFieldObjects()
         fields = []
         
