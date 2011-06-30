@@ -1,19 +1,17 @@
 """Implements a PFG action adapter to save form submissions as content type instances.
 """
-
 from urlparse import urlparse
+
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
+from Products.Archetypes.public import BooleanField, BooleanWidget, \
+    StringField, StringWidget, FileField, Schema, SelectionWidget
+from Products.Archetypes.utils import DisplayList
+from Products.ATContentTypes.content.base import registerATCT
 
 from zope.interface import implements
-import zope.component.event
 from zope.event import notify
-from Products.Archetypes.public import *
-from Products.Archetypes.Field import FileField, ObjectField
-from Products.Archetypes.utils import DisplayList
-
-from Products.ATContentTypes.content.base import registerATCT
 
 try:
     from Products.ATContentTypes.content.folder import ATBTreeFolderSchema as ATFolderSchema, ATBTreeFolder as ATFolder
@@ -195,11 +193,12 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
         # dispatch the event for others to use, with referrer
 
-        pth = urlparse(REQUEST["HTTP_REFERER"]).path
         try:
-           referrer = self.restrictedTraverse(pth.strip('/').split('/'))
+            parse = urlparse(REQUEST["HTTP_REFERER"])
+            pth = getattr(parse, 'path', parse[2])
+            referrer = self.restrictedTraverse(pth.strip('/').split('/'), None)
         except:
-           referrer = None
+            referrer = None
 
         evt = FormSaveData2ContentEntryFinalizedEvent(obj, referrer)
         notify(evt)

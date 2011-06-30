@@ -49,3 +49,12 @@ that uses pre-1.0 D2C and you upgrade to Plone 4 and only then upgrade
 to 1.0+ D2C, the upgrade step that migrates D2C storage to BTree
 storage may not work.  We recommend that you first upgrade to 1.0+ D2C
 *then* upgrade to Plone 4.
+
+Windows
+~~~~~~~
+
+In order for this to work, you'll need to disable the schemaextender cache::
+
+  archetypes.schemaextender\archetypes\schemaextender\extender.py line 113
+  disable CACHE_ENABLED
+  
