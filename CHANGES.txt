@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.2.7 ~ unreleased
+------------------
+
+   - fixed max value validator.
+     [vangheem]
+     
+
 1.2.6 ~ 2011-06-30
 ------------------
 

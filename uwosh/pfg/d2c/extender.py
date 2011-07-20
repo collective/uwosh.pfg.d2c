@@ -1,7 +1,6 @@
 from zope.component import adapts
 from zope.interface import implements
 from archetypes.schemaextender.interfaces import ISchemaExtender
-from Products.Archetypes.public import BooleanWidget
 from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_parent, aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
@@ -14,6 +13,13 @@ from Products.PloneFormGen.content.fields import HtmlTextField, PlainTextField
 from archetypes.schemaextender.field import ExtensionField
 from plone.memoize.instance import memoize
 
+# extra field attributes to copy over.
+extra_fields = [
+    'widget', 'questionSet', 'answerSet', 'validators'
+]
+
+# instance values to copy over
+instance_values_to_field = ['minval', 'maxval', 'maxlength']
 
 class XPlainTextField(ExtensionField, PlainTextField): pass
 class XTextField(ExtensionField, TextField): pass
@@ -80,10 +86,7 @@ try:
 except:
     pass
 
-# extra field attributes to copy over.
-extra_fields = [
-    'widget', 'questionSet', 'answerSet', 'validators'
-]
+
 
 # XXX
 # Conditional fields
@@ -95,9 +98,6 @@ try:
     extra_fields.append('columns')
 except:
     pass
-
-# instance values to copy over
-instance_values_to_field = ['minval', 'maxval']
 
 FIELDS = {}
 
@@ -134,9 +134,8 @@ class ContentEntryExtender(object):
                         setattr(newfield, key, getattr(field, key))
                         
                 for val in instance_values_to_field:
-                    if objfield.schema.has_key(val):
-                        valfield = objfield.schema.get(val)
-                        setattr(newfield, val, valfield.get(objfield))
+                    if hasattr(field, val):
+                        setattr(newfield, val, getattr(field, val))
                 
                 fields.append(newfield)
             
