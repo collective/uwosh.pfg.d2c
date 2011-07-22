@@ -1,0 +1,14 @@
+Upgrading uwosh.pfg.d2c
+=======================
+
+If you were using an early version of D2C (pre-1.0) and you are
+upgrading to 1.0 or later, a significant difference is that 1.0 and on
+use BTrees as the basis for the D2C save data adapter, in order to
+work with large numbers of contained objects.
+
+If you encounter error messages relating to BTrees, you will want to
+go into the ZMI, portal_setup, Upgrades tab, choose the
+"uwosh.pfg.d2c:default" profile, and check at least the box for
+"Upgrade uwosh.pfg.d2c to 1.0" then press the Upgrade button.  That
+will upgrade all your old non-BTree D2C save data adapters to using
+BTrees. 

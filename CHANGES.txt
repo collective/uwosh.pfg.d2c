@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.2.8 ~ unreleased
+------------------
+
+   - Mention the BTree portal_setup upgrade step, in new
+     docs/UPGRADES.txt file
+     [tkimnguyen]
+     
+
 1.2.7 ~ 2011-07-20
 ------------------
 
