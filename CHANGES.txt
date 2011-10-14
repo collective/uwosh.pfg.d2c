@@ -7,6 +7,9 @@ Changelog
    - Mention the BTree portal_setup upgrade step, in new
      docs/UPGRADES.txt file
      [tkimnguyen]
+
+   - Add ability to easily add new types via edit form.
+     [vangheem]
      
 
 1.2.7 ~ 2011-07-20

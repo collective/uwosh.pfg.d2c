@@ -1,0 +1,20 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="uwosh.pfg.d2c">
+
+  <browser:page
+    name="add-d2c-type"
+    for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
+    class=".utils.AddD2CType"
+    permission="cmf.ModifyPortalContent"
+  />
+
+  <browser:page
+    name="delete-d2c-type"
+    for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
+    class=".utils.DeleteType"
+    permission="cmf.ModifyPortalContent"
+  />
+
+</configure>

@@ -83,6 +83,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                 i18n_domain="uwosh.pfg.d2c",
                 label_msgid="label_savecontentadapter_entrytype",
                 description_msgid="help_savecontentadapter_entrytype",
+                format='radio'
             ),
             vocabulary = 'entry_types'
         ),
@@ -148,6 +149,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         if self.getAvoidSecurityChecks():
             pt = getToolByName(self, 'portal_types')
             type_info = pt.getTypeInfo(entrytype)
+            if not type_info:
+                type_info = pt.getTypeInfo('FormSaveData2ContentEntry')
             ob = type_info._constructInstance(self, id)
             # CMFCore compatibility
             if hasattr(type_info, '_finishConstruction'):

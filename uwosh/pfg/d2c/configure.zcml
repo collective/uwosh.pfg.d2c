@@ -20,6 +20,7 @@
 
     <five:registerPackage package="." initialize=".initialize" />
     <include package=".content" />
+    <include package=".browser" />
 
     <include package="archetypes.schemaextender" />
     <adapter factory=".extender.ContentEntryExtender" />

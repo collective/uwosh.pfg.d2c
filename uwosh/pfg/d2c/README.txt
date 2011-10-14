@@ -58,3 +58,11 @@ In order for this to work, you'll need to disable the schemaextender cache::
   archetypes.schemaextender\archetypes\schemaextender\extender.py line 113
   disable CACHE_ENABLED
   
+
+TODO
+====
+
+- deletion error if existing items are there
+
+1. add image field to pfg/d2c
+2. add indexes easily.
