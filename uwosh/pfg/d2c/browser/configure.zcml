@@ -17,4 +17,20 @@
     permission="cmf.ModifyPortalContent"
   />
 
+  <browser:page
+    name="d2c-availabe-workflows"
+    for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
+    class=".utils.PlacefulWorkflow"
+    attribute="getAvailableWorkflows"
+    permission="cmf.ModifyPortalContent"
+  />
+
+  <browser:page
+    name="d2c-assign-workflow"
+    for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
+    class=".utils.PlacefulWorkflow"
+    attribute="assignWorkflowHere"
+    permission="cmf.ModifyPortalContent"
+  />
+
 </configure>

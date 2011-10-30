@@ -5,6 +5,7 @@ This module contains the tool of uwosh.pfg.d2c
 import os
 from setuptools import setup, find_packages
 
+
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
@@ -18,20 +19,20 @@ long_description = (
     '************\n'
     + '\n\n' +
     read('CONTRIBUTORS.txt')
-    + '\n' 
+    + '\n'
     )
 
-tests_require=['zope.testing']
+tests_require = ['zope.testing']
 
 setup(name='uwosh.pfg.d2c',
       version=version,
-      description="A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data.",
+      description="A PloneFormGen adapter that will save the data from a form "
+                  "to an actual content type. This way you can still use "
+                  "permissions, workflows, etc on the form data.",
       long_description=long_description,
-      # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         'Framework :: Plone',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='ploneformgen plone forms adapter uwosh',
@@ -49,19 +50,18 @@ setup(name='uwosh.pfg.d2c',
         'archetypes.schemaextender',
         'Products.TALESField',
       ],
-      tests_require = tests_require,
-      test_suite = 'uwosh.pfg.d2c.tests',
-      extras_require = dict(
-         tests = tests_require,
-         docs = ['Sphinx',
+      tests_require=tests_require,
+      test_suite='uwosh.pfg.d2c.tests',
+      extras_require=dict(
+         tests=tests_require,
+         docs=['Sphinx',
             'z3c.recipe.sphinxdoc',
             'repoze.sphinx.autointerface',
             'collective.sphinx.includedoc >= 0.2'
          ],
       ),
-      entry_points = """
-      # -*- entry_points -*- 
-      
+      entry_points="""
+      # -*- entry_points -*-
       [z3c.autoinclude.plugin]
       target = plone
       """,

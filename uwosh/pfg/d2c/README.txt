@@ -34,11 +34,20 @@ Warning
 Don't forget to enable the adapter after it is added to the form!
 
 
+Placeful Workflows
+------------------
+
+It is often very useful to assign a placeful workflow onto a 
+save data content type. Normally, this is rather cumbersome to
+do; however, d2c now provides a nice widget to make this sort
+of action automatic(automatically create missing workflow policy).
+
+
 Compatibility
 -------------
 
 Compatible with versions of PloneFormGen >= 1.2.2 and Plone 3.x ->
-4.0.
+4.x.
 
 Version 1.0 derives the new D2C saved data adapter from the BTree
 folder class.  This allows Plone 3.x sites to handle larger numbers of
@@ -58,11 +67,3 @@ In order for this to work, you'll need to disable the schemaextender cache::
   archetypes.schemaextender\archetypes\schemaextender\extender.py line 113
   disable CACHE_ENABLED
   
-
-TODO
-====
-
-- deletion error if existing items are there
-
-1. add image field to pfg/d2c
-2. add indexes easily.

@@ -1,16 +1,17 @@
 from Products.CMFCore.utils import getToolByName
 
+
 def install(context):
-    
+
     if not context.readDataFile('uwosh.pfg.d2c.txt'):
         return
-    
+
     site = context.getSite()
-    
+
     qi = getToolByName(site, 'portal_quickinstaller')
     if not qi.isProductInstalled('Products.PloneFormGen'):
         qi.installProduct('Products.PloneFormGen')
-    
+
     types = getToolByName(site, 'portal_types')
     if 'FormFolder' in types.objectIds():
         folder = types['FormFolder']

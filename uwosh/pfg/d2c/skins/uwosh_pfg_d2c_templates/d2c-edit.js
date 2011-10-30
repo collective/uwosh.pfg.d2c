@@ -56,5 +56,52 @@ $(document).ready(function(){
         })
         return false;  
     });
+
+    //var button = $('<button type="submit">Set Workflow Here</button>');
+    var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>Assign Workflow Here</span>:</label><br /></div>');
+    var button = $('<button>Assign Here</button>');
+    var content = $('.portaltype-formsavedata2contentadapter.template-base_view #content-core');
+    if($('.portaltype-formsavedata2contentadapter.template-base_view #contentActionMenus #policy').size() == 1){
+        $.ajax({
+            url: '@@d2c-availabe-workflows',
+            dataType: 'json',
+            success: function(data){
+                if(data.status == 'success'){
+                    var select = $('<select><option value="default">Default</option></select>');
+                    field.append(select);
+                    workflows = data.workflows;
+                    for(var i=0; i<workflows.length; i++){
+                        var workflow = workflows[i];
+                        var workflowele = $('<option value="' + workflow.id + '">' + workflow.title + '</option>');
+                        if(workflow.selected){
+                            workflowele[0].selected = true;
+                        }
+                        select.append(workflowele);
+                    }
+
+                    field.append(button);
+                    content.prepend(field);
+                }
+            }
+        });
+    }
+    button.click(function(){
+        $.ajax({
+            url: '@@d2c-assign-workflow',
+            type: 'POST',
+            data: {
+                id: $('#set-workflow-field select').val()
+            },
+            dataType: 'json',
+            success: function(data){
+                if(data.status == 'success'){
+                    
+                }else{
+                    alert("There was an error assigning workflow here.");
+                }
+            }
+        })
+        return false; 
+    });
 });
 })(jq)
