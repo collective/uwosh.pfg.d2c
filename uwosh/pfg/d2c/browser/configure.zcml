@@ -6,14 +6,24 @@
   <browser:page
     name="add-d2c-type"
     for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
-    class=".utils.AddD2CType"
+    class=".utils.ManageD2CTypes"
+    attribute="addD2CType"
     permission="cmf.ModifyPortalContent"
   />
 
   <browser:page
     name="delete-d2c-type"
     for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
-    class=".utils.DeleteType"
+    class=".utils.ManageD2CTypes"
+    attribute="deleteType"
+    permission="cmf.ModifyPortalContent"
+  />
+
+  <browser:page
+    name="has-d2c-type-permission"
+    for="uwosh.pfg.d2c.interfaces.IFormSaveData2ContentAdapter"
+    class=".utils.ManageD2CTypes"
+    attribute="hasPermission"
     permission="cmf.ModifyPortalContent"
   />
 
