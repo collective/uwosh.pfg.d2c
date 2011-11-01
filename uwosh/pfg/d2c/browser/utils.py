@@ -93,9 +93,11 @@ class PlacefulWorkflow(BrowserView):
     def _getAvailableWorkflows(self, placeful):
         pw = getToolByName(self.context, 'portal_workflow')
         config = placeful.getWorkflowPolicyConfig(self.context)
-        policy_id = config.getPolicyBelow()
-        if policy_id:
-            policy_id = policy_id.id
+        policy_id = None
+        if config:
+            policy_id = config.getPolicyBelow()
+            if policy_id:
+                policy_id = policy_id.id
         workflows = []
         for workflow in pw.objectValues():
             workflowpid = _builtin_policies.get(workflow.id, workflow.id)
@@ -121,6 +123,10 @@ class PlacefulWorkflow(BrowserView):
         workflow_id = id
         if id in _builtin_policies:
             id = _builtin_policies[id]
+
+        if not placeful.getWorkflowPolicyConfig(self.context):
+            factory = self.context.manage_addProduct['CMFPlacefulWorkflow']
+            factory.manage_addWorkflowPolicyConfig()
 
         types_tool = getToolByName(self.context, 'portal_types')
         # if policy not created yet, do it
