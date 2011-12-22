@@ -195,14 +195,10 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         obj.reindexObject()
 
         # dispatch the event for others to use, with referrer
-
-        try:
-            parse = urlparse(REQUEST["HTTP_REFERER"])
-            pth = getattr(parse, 'path', parse[2])
-            referrer = self.restrictedTraverse(pth.strip('/').split('/'), None)
-        except:
-            referrer = None
-
+        last_referer = REQUEST.form.get('last_referer', None)
+        parsed = urlparse(last_referer)
+        pth = getattr(parsed, 'path', parsed[2])
+        referrer = self.restrictedTraverse(pth.strip('/').split('/'), None)
         evt = FormSaveData2ContentEntryFinalizedEvent(obj, referrer)
         notify(evt)
 

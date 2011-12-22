@@ -8,6 +8,13 @@ Changelog
      onto a data adapter
      [vangheem]
 
+   - Correctly use the hidden 'last_referer' form field
+     to figure out where the user came to the form from.
+     IFormSaveData2ContentEntryFinalizedEvent subscribers
+     can access the referrer content object simply as
+     event.referrer.
+     [saffe]
+
 
 1.2.8 ~ 2011-10-28
 ------------------
