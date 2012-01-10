@@ -1,3 +1,4 @@
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 
 from logging import getLogger
@@ -73,3 +74,10 @@ def upgrade_to_1_2(context):
 
 def upgrade_to_1_3_0(context):
     context.runImportStepFromProfile(default_profile, 'jsregistry')
+    catalog = getToolByName(context, 'portal_catalog')
+    items = catalog(portal_type="FormSaveData2ContentEntry")
+    for item in items:
+        obj = item.getObject()
+        adapter = aq_parent(obj)
+        if adapter.portal_type == 'FormSaveData2ContentAdapter':
+            obj.setFormAdapter(adapter)

@@ -15,6 +15,14 @@ Changelog
      event.referrer.
      [saffe]
 
+   - set value of adapter on entry object so you can
+     move the object around
+     [vangheem]
+
+   - fire the object initialized event when data entry
+     object is created
+     [vangheem]
+
 
 1.2.8 ~ 2011-10-28
 ------------------

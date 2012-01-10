@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '1.2.8'
+version = '1.3.0'
 
 long_description = (
     read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n\n' +
@@ -49,6 +49,7 @@ setup(name='uwosh.pfg.d2c',
         'Products.PloneFormGen',
         'archetypes.schemaextender',
         'Products.TALESField',
+        'archetypes.referencebrowserwidget'
       ],
       tests_require=tests_require,
       test_suite='uwosh.pfg.d2c.tests',

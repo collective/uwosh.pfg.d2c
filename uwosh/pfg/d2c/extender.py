@@ -2,7 +2,7 @@ from zope.component import adapts
 from zope.interface import implements
 from archetypes.schemaextender.interfaces import ISchemaExtender
 from interfaces import IFormSaveData2ContentEntry
-from Acquisition import aq_parent, aq_inner
+from Acquisition import aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
     FixedPointField, FileField, LinesField, IntegerField, ObjectField, \
     BooleanField
@@ -21,19 +21,54 @@ extra_fields = [
 # instance values to copy over
 instance_values_to_field = ['minval', 'maxval', 'maxlength']
 
-class XPlainTextField(ExtensionField, PlainTextField): pass
-class XTextField(ExtensionField, TextField): pass
-class XStringField(ExtensionField, StringField): pass
-class XDateTimeField(ExtensionField, DateTimeField): pass        
-class XFixedPointField(ExtensionField, FixedPointField): pass
-class XFileField(ExtensionField, FileField): pass
-class XLinesField(ExtensionField, LinesField): pass
-class XIntegerField(ExtensionField, IntegerField): pass
-class XBooleanField(ExtensionField, BooleanField): pass
 
-class XLinesVocabularyField(ExtensionField, LinesVocabularyField): pass
-class XStringVocabularyField(ExtensionField, StringVocabularyField): pass
-class XHtmlTextField(ExtensionField, HtmlTextField): pass
+class XPlainTextField(ExtensionField, PlainTextField):
+    pass
+
+
+class XTextField(ExtensionField, TextField):
+    pass
+
+
+class XStringField(ExtensionField, StringField):
+    pass
+
+
+class XDateTimeField(ExtensionField, DateTimeField):
+    pass
+
+
+class XFixedPointField(ExtensionField, FixedPointField):
+    pass
+
+
+class XFileField(ExtensionField, FileField):
+    pass
+
+
+class XLinesField(ExtensionField, LinesField):
+    pass
+
+
+class XIntegerField(ExtensionField, IntegerField):
+    pass
+
+
+class XBooleanField(ExtensionField, BooleanField):
+    pass
+
+
+class XLinesVocabularyField(ExtensionField, LinesVocabularyField):
+    pass
+
+
+class XStringVocabularyField(ExtensionField, StringVocabularyField):
+    pass
+
+
+class XHtmlTextField(ExtensionField, HtmlTextField):
+    pass
+
 
 extension_fields = [
     XTextField, XStringField, XDateTimeField, XFixedPointField, XFileField,
@@ -45,14 +80,19 @@ extension_fields = [
 # begin backwards compatible imports
 # XXX
 try:
-    from Products.PloneFormGen.content.fields import NRBooleanField as BooleanField
-    class XNRBooleanField(ExtensionField, BooleanField): pass
+    from Products.PloneFormGen.content.fields import \
+        NRBooleanField as BooleanField
+
+    class XNRBooleanField(ExtensionField, BooleanField):
+        pass
+
     extension_fields.append(XNRBooleanField)
 except:
     pass
 
 try:
     from Products.PloneFormGen.content.likertField import LikertField
+
     def get_likert(self, instance, **kwargs):
         value = ObjectField.get(self, instance, **kwargs)
         if not value:
@@ -66,34 +106,34 @@ try:
         elif type(value) in (tuple, list, set):
             newval = {}
             for i in range(0, len(value)):
-                newval[str(i+1)] = value[i]
+                newval[str(i + 1)] = value[i]
             value = newval
-                
+
         ObjectField.set(self, instance, value, **kwargs)
-        
-    class XLikertField(ExtensionField, LikertField): 
+
+    class XLikertField(ExtensionField, LikertField):
         """
         override default methods which have bugs...
         """
 
         get = get_likert
         set = set_likert
-            
+
     # patch these methods to actually work.
     LikertField.get = get_likert
     LikertField.set = set_likert
-    extension_fields.append(XLikertField)       
+    extension_fields.append(XLikertField)
 except:
     pass
-
-
 
 # XXX
 # Conditional fields
 # XXXX
 try:
     from Products.DataGridField import DataGridField
-    class XDataGridField(ExtensionField, DataGridField): pass
+
+    class XDataGridField(ExtensionField, DataGridField):
+        pass
     extension_fields.append(XDataGridField)
     extra_fields.append('columns')
 except:
@@ -103,6 +143,7 @@ FIELDS = {}
 
 for klass in extension_fields:
     FIELDS[klass.__name__] = klass
+
 
 class ContentEntryExtender(object):
     """
@@ -117,26 +158,27 @@ class ContentEntryExtender(object):
 
     @memoize
     def getFields(self):
-        form = aq_parent(aq_parent(aq_inner(self.context)))
+        context = aq_inner(self.context)
+        form = context.getForm()
         if not form:
             return []
         obj_fields = form._getFieldObjects()
         fields = []
-        
+
         for objfield in obj_fields:
             field = objfield.fgField
             klassname = 'X' + field.__class__.__name__
-            if FIELDS.has_key(klassname):
+            if klassname in FIELDS:
                 klass = FIELDS[klassname]
                 newfield = klass(field.__name__, **field._properties)
                 for key in extra_fields:
                     if hasattr(field, key):
                         setattr(newfield, key, getattr(field, key))
-                        
+
                 for val in instance_values_to_field:
                     if hasattr(field, val):
                         setattr(newfield, val, getattr(field, val))
-                
+
                 fields.append(newfield)
-            
+
         return fields

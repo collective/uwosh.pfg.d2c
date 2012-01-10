@@ -1,5 +1,3 @@
-"""Implements a PFG action adapter to save form submissions as content type instances.
-"""
 from urlparse import urlparse
 
 from AccessControl import ClassSecurityInfo
@@ -14,14 +12,19 @@ from zope.interface import implements
 from zope.event import notify
 
 try:
-    from Products.ATContentTypes.content.folder import ATBTreeFolderSchema as ATFolderSchema, ATBTreeFolder as ATFolder
+    from Products.ATContentTypes.content.folder import \
+        ATBTreeFolderSchema as ATFolderSchema
+    from Products.ATContentTypes.content.folder import \
+        ATBTreeFolder as ATFolder
 except:
-    from Products.ATContentTypes.content.folder import ATFolderSchema, ATFolder
+    from Products.ATContentTypes.content.folder import ATFolderSchema
+    from Products.ATContentTypes.content.folder import ATFolder
 
-
-from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, FormAdapterSchema
+from Products.PloneFormGen.content.actionAdapter import FormActionAdapter
+from Products.PloneFormGen.content.actionAdapter import FormAdapterSchema
 from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
 from Products.PloneFormGen.config import EDIT_TALES_PERMISSION
+from Products.Archetypes.event import ObjectInitializedEvent
 
 from Products.TALESField import TALESString
 
@@ -36,8 +39,8 @@ from uwosh.pfg.d2c import pfgMessageFactory as _
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from uwosh.pfg.d2c.events import FormSaveData2ContentEntryFinalizedEvent
 
-FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.copy() + \
-    Schema((
+FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() +\
+    FormAdapterSchema.copy() + Schema((
         BooleanField('avoidSecurityChecks',
             default=True,
             widget=BooleanWidget(label="Avoid Security Checks",
@@ -61,7 +64,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
                 description="""
                     Select a field to be used as the title of the entries.
                     You will have to reindex previous form results for you
-                    to notice most changes. You can edit each form result to 
+                    to notice most changes. You can edit each form result to
                     force reindexing.
                 """,
                 i18n_domain="uwosh.pfg.d2c",
@@ -70,22 +73,25 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
             ),
             default='id'
         ),
-   
+
         StringField("entryType",
             default="FormSaveData2ContentEntry",
-            searchable = False,
-            required = False,
+            searchable=False,
+            required=False,
             mutator='setEntryType',
-            widget = SelectionWidget(
-                label = 'Saved entry content type',
-                description = """Portal type to use for the saved data. Leave as default if you're unsure of what this does."""
-                              """If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly.""",
+            widget=SelectionWidget(
+                label='Saved entry content type',
+                description="Portal type to use for the saved data. Leave as "
+                            "default if you're unsure of what this does."
+                            "If you select a plone standard type, you must "
+                            "make sure the field names are the same in order "
+                            "for the data to store correctly.",
                 i18n_domain="uwosh.pfg.d2c",
                 label_msgid="label_savecontentadapter_entrytype",
                 description_msgid="help_savecontentadapter_entrytype",
                 format='radio'
             ),
-            vocabulary = 'entry_types'
+            vocabulary='entry_types'
         ),
 
         TALESString('dynamicTitle',
@@ -96,15 +102,18 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + FormAdapterSchema.co
             default='',
             write_permission=EDIT_TALES_PERMISSION,
             read_permission=ModifyPortalContent,
-            isMetadata=True, # just to hide from base view
-            widget=StringWidget(label=_(u'label_dynamictitle_text', default=u"Dynamic title override"),
-                description=_(u'help_dynamictitle_text', default=u"""
-                    A TALES expression that will be evaluated to determine the title for entry
-                """),
+            isMetadata=True,  # just to hide from base view
+            widget=StringWidget(label=_(u'label_dynamictitle_text',
+                                        default=u"Dynamic title override"),
+                description=_(u'help_dynamictitle_text',
+                              default=u"A TALES expression that will be "
+                                      u"evaluated to determine the title "
+                                      u"for entry"),
                 size=70,
             ),
         ),
     ))
+
 
 class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     """PFG save data adapter that saves form data to content objects"""
@@ -116,19 +125,18 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     archetype_name = 'Save Data to Content Adapter'
 
     security = ClassSecurityInfo()
-    
+
     def entry_types(self):
         "get a vocabulary of available FTI clones of FormSaveData2ContentEntry"
         pt = getToolByName(self, 'portal_types')
         derived_types = {}
         for fti in pt.listTypeInfo():
             if fti.getProperty('product') == 'uwosh.pfg.d2c':
-               derived_types[fti.getId()] = fti.getProperty('title')
-        if "FormSaveData2ContentAdapter" in derived_types: 
+                derived_types[fti.getId()] = fti.getProperty('title')
+        if "FormSaveData2ContentAdapter" in derived_types:
             del derived_types["FormSaveData2ContentAdapter"]
-        
-        return DisplayList(derived_types.items())
 
+        return DisplayList(derived_types.items())
 
     def setEntryType(self, entry_type):
         "add the selected entry type to allowed types if it isn't"
@@ -139,7 +147,6 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
         field = self.getField('entryType')
         field.set(self, entry_type)
-
 
     def createEntry(self):
         "create an entry of the chosen type"
@@ -161,18 +168,20 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
             self.invokeFactory(entrytype, id)
             return self[id]
 
-    
     def onSuccess(self, fields, REQUEST=None, loopstop=False):
-        """Triggered on successful form submission. Creates a data content entry, adds
-           form contents to it, reindexes and sends an event to notify subscribers
-           of the new entry.""" 
+        """
+        Triggered on successful form submission. Creates a data content entry,
+        adds form contents to it, reindexes and sends an event to notify
+        subscribers of the new entry.
+        """
 
         obj = self.createEntry()
-        
+        obj.setFormAdapter(self)
+
         for field in self.fgFields():
             name = field.getName()
             value = REQUEST.form.get(name)
-            
+
             if field.__class__ == DataGridField:
                 # clean up datagrid field for issues...
                 if type(value) in (tuple, set, list):
@@ -181,7 +190,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                         values = dict(values)
                         if values.get('orderindex_', None) == 'template_row_marker':
                             del values['orderindex_']
-                            
+
                         newval.append(values)
                     value = newval
             if field.__class__ == FileField:
@@ -191,8 +200,9 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                     field.set(obj, value)
             else:
                 field.set(obj, value)
-                
+
         obj.reindexObject()
+        notify(ObjectInitializedEvent(obj))
 
         # dispatch the event for others to use, with referrer
         last_referer = REQUEST.form.get('last_referer', None)
@@ -202,9 +212,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         evt = FormSaveData2ContentEntryFinalizedEvent(obj, referrer)
         notify(evt)
 
-        
     def fieldVocabulary(self):
         "An utility that provides a list of all form field names."
         return [field.getName() for field in self.fgFields()]
-        
+
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)

@@ -101,7 +101,7 @@ $(document).ready(function(){
                     field.append(button);
                     content.prepend(field);
                 }else{
-                    alert('An error occurred trying to get available workflows. "' + data.msg + '"');
+                    console.log('An error occurred trying to get available workflows. "' + data.msg + '"');
                 }
             }
         });
