@@ -41,7 +41,7 @@ class FormSaveData2ContentEntry(ATCTContent):
             adapter = self.getParentNode()
 
         form = adapter.getParentNode()
-        if form.portal_type != 'FormFolder':
+        if getattr(form, 'portal_type', None) != 'FormFolder':
             form = None
         return form
 
@@ -55,7 +55,8 @@ class FormSaveData2ContentEntry(ATCTContent):
             if len(res) > 0:
                 return res[0].getObject()
         adapter = self.getParentNode()
-        if adapter.portal_type != 'FormSaveData2ContentAdapter':
+        if getattr(adapter, 'portal_type', None) != \
+                            'FormSaveData2ContentAdapter':
             adapter = None
         return adapter
 
