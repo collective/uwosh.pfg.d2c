@@ -213,6 +213,6 @@ Changelog
  - fixed file fields not saving
 
 0.1 (2010-07-27)
-------------------
+----------------
 
  - initial release
