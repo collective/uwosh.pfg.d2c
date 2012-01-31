@@ -12,6 +12,7 @@ from Products.ATContentTypes.content.base import ATCTContent
 from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
+from plone.memoize import instance
 
 from Products.CMFCore.Expression import getExprContext
 
@@ -35,6 +36,7 @@ class FormSaveData2ContentEntry(ATCTContent):
 
     security = ClassSecurityInfo()
 
+    @instance.memoize
     def getForm(self):
         adapter = self.getFormAdapter()
         if adapter is None:
@@ -119,4 +121,12 @@ class FormSaveData2ContentEntry(ATCTContent):
         schema = self.Schema()
         field = schema.get(field)
         return field.get(self)
+
+    security.declarePrivate('findFieldObjectByName')
+    def findFieldObjectByName(self, name):
+        """ Just an alias to the form method
+        """
+        return self.getForm().findFieldObjectByName(name)
+
+
 registerATCT(FormSaveData2ContentEntry, PROJECTNAME)
