@@ -12,6 +12,8 @@ from Products.PloneFormGen.content.fields import HtmlTextField, PlainTextField
 
 from archetypes.schemaextender.field import ExtensionField
 from plone.memoize.instance import memoize
+from AccessControl import ClassSecurityInfo
+from Products.Archetypes.public import DisplayList
 
 # extra field attributes to copy over.
 extra_fields = [
@@ -63,7 +65,34 @@ class XLinesVocabularyField(ExtensionField, LinesVocabularyField):
 
 
 class XStringVocabularyField(ExtensionField, StringVocabularyField):
-    pass
+    security  = ClassSecurityInfo()
+
+    security.declarePublic('Vocabulary')
+    def Vocabulary(self, content_instance=None):
+        """
+        Returns a DisplayList.
+        """
+        # if there's a TALES override, return it as a DisplayList,
+        # otherwise, build the DisplayList from fgVocabulary
+
+        fieldContainer = content_instance.findFieldObjectByName(self.__name__)
+
+        try:
+            vl = fieldContainer.getFgTVocabulary()
+        except AttributeError:
+            vl = None
+        if vl is not None:
+            return DisplayList(data=vl)
+
+        res = DisplayList()
+        for line in fieldContainer.fgVocabulary:
+            lsplit = line.split('|')
+            if len(lsplit) == 2:
+                key, val = lsplit
+            else:
+                key, val = (lsplit[0], lsplit[0])
+            res.add(key, val)
+        return res
 
 
 class XHtmlTextField(ExtensionField, HtmlTextField):

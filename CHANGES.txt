@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.3.3 ~ unreleased
+------------------
+
+   - Fixed issue with vocabulary field
+     [vangheem]
+
+
 1.3.2 ~ 2012-01-31
 ------------------
 
