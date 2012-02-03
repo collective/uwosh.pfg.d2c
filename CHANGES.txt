@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0a1 ~ unreleased
+2.0a1 ~ 2012-02-03
 ------------------
 
    - Fixed issue with vocabulary field

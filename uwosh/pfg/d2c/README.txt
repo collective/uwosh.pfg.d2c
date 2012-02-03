@@ -27,6 +27,13 @@ FTI in portal_types tool (and then renaming it appropriately).
 The type names can be translated simply by adding them to
 plone.po in the language-specific locale/LC_MESSAGES subdirectory.
 
+Upgrading to 2.0
+----------------
+
+You must run the upgrade step in the add/remove product control panel
+in order for you to successfully upgrade to 2.0 otherwise, your
+data adapter will not display it's contents properly.
+
 
 Warning
 -------
