@@ -25,6 +25,11 @@ from Products.PloneFormGen.content.actionAdapter import FormAdapterSchema
 from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
 from Products.PloneFormGen.config import EDIT_TALES_PERMISSION
 from Products.Archetypes.event import ObjectInitializedEvent
+from plone.folder.interfaces import IOrderable
+from plone.app.folder.folder import IATUnifiedFolder
+from Products.ATContentTypes.interfaces import IATFolder
+from Products.ATContentTypes.content.schemata import NextPreviousAwareSchema
+from Products.ATContentTypes.content.schemata import finalizeATCTSchema
 
 from Products.TALESField import TALESString
 
@@ -39,7 +44,8 @@ from uwosh.pfg.d2c import pfgMessageFactory as _
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from uwosh.pfg.d2c.events import FormSaveData2ContentEntryFinalizedEvent
 
-FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() +\
+FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
+    NextPreviousAwareSchema.copy() + \
     FormAdapterSchema.copy() + Schema((
         BooleanField('avoidSecurityChecks',
             default=True,
@@ -113,18 +119,25 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() +\
             ),
         ),
     ))
+finalizeATCTSchema(FormAdapterSchema)
 
 
 class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     """PFG save data adapter that saves form data to content objects"""
 
-    implements(IFormSaveData2ContentAdapter, IPloneFormGenActionAdapter)
+    implements(IFormSaveData2ContentAdapter,
+               IPloneFormGenActionAdapter,
+               IATUnifiedFolder,
+               IATFolder,
+               IOrderable)
     schema = FormSaveData2ContentAdapterSchema
 
     meta_type = portal_type = 'FormSaveData2ContentAdapter'
     archetype_name = 'Save Data to Content Adapter'
 
     security = ClassSecurityInfo()
+
+    _ordering = u''
 
     def entry_types(self):
         "get a vocabulary of available FTI clones of FormSaveData2ContentEntry"

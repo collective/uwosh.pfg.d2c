@@ -81,3 +81,15 @@ def upgrade_to_1_3_0(context):
         adapter = aq_parent(obj)
         if adapter.portal_type == 'FormSaveData2ContentAdapter':
             obj.setFormAdapter(adapter)
+
+
+def upgrade_to_2_0(context):
+    catalog = getToolByName(context, 'portal_catalog')
+    for brain in catalog(portal_type='FormSaveData2ContentAdapter'):
+        obj = brain.getObject()
+        if obj._ordering == 'unordered':
+            obj.setOrdering(u'')
+        order = obj.getOrdering()
+        for id in obj._tree:
+            if id not in order._order():
+                order.notifyAdded(id)

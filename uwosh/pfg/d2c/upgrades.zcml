@@ -42,5 +42,13 @@
     destination="1.3"
     handler=".upgrades.upgrade_to_1_3_0"
     profile="uwosh.pfg.d2c:default"/>
+
+  <gs:upgradeStep
+    title="Upgrade uwosh.pfg.d2c to 2.0"
+    description="uwosh.pfg.d2c upgrade step"
+    source="*"
+    destination="2.0"
+    handler=".upgrades.upgrade_to_2_0"
+    profile="uwosh.pfg.d2c:default"/>
                
 </configure>
