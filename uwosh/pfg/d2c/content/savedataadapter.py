@@ -30,6 +30,7 @@ from plone.app.folder.folder import IATUnifiedFolder
 from Products.ATContentTypes.interfaces import IATFolder
 from Products.ATContentTypes.content.schemata import NextPreviousAwareSchema
 from Products.ATContentTypes.content.schemata import finalizeATCTSchema
+from Products.CMFCore.permissions import View
 
 from Products.TALESField import TALESString
 
@@ -138,6 +139,17 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
     security = ClassSecurityInfo()
 
     _ordering = u''
+
+    security.declareProtected(View, 'getNextPreviousParentValue')
+    def getNextPreviousParentValue(self):
+        """ If the parent node is also an IATFolder and has next/previous
+            navigation enabled, then let this folder have it enabled by
+            default as well """
+        parent = self.getParentNode()
+        if IATFolder.providedBy(parent):
+            return parent.getNextPreviousEnabled()
+        else:
+            return False
 
     def entry_types(self):
         "get a vocabulary of available FTI clones of FormSaveData2ContentEntry"

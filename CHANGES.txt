@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.0a2 ~ unreleased
+------------------
+
+* Add getNextPreviousParentValue method to fix issue
+  when adding adapter to form.
+  [vangheem]
+
 2.0a1 ~ 2012-02-03
 ------------------
 
