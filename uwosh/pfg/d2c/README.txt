@@ -13,6 +13,7 @@ new.." drop down for the PloneFormGen Form. Once enabled, when a user
 submits a form, a new content item is created with that data and
 located in the adapter.
 
+
 Saving Content
 --------------
 Upon save data adapter creation, user can choose to use any content type
@@ -26,6 +27,7 @@ FTI in portal_types tool (and then renaming it appropriately).
 
 The type names can be translated simply by adding them to
 plone.po in the language-specific locale/LC_MESSAGES subdirectory.
+
 
 Upgrading to 2.0
 ----------------

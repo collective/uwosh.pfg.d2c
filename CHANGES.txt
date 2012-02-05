@@ -4,232 +4,238 @@ Changelog
 2.0a2 ~ unreleased
 ------------------
 
-* Add getNextPreviousParentValue method to fix issue
+- Add getNextPreviousParentValue method to fix issue
   when adding adapter to form.
   [vangheem]
+
 
 2.0a1 ~ 2012-02-03
 ------------------
 
-   - Fixed issue with vocabulary field
-     [vangheem]
+- Fixed issue with vocabulary field
+  [vangheem]
 
-   - Providing ordering support for data adapter
-     folder and enable next/previous navigation.
-     [vangheem]
+- Providing ordering support for data adapter
+  folder and enable next/previous navigation.
+  [vangheem]
+
 
 1.3.2 ~ 2012-01-31
 ------------------
 
-   - add alias to form findFieldObjectByName method on
-     data entry type. This fixes selection widgets on
-     content objects that were moved out of the adapter
-     directory. 
+- add alias to form findFieldObjectByName method on
+  data entry type. This fixes selection widgets on
+  content objects that were moved out of the adapter
+  directory. 
+
 
 1.3.1 ~ 2012-01-10
 ------------------
 
-   - safely check portal type when finding related form
-     [vangheem]
+- safely check portal type when finding related form
+  [vangheem]
 
 
 1.3.0 ~ 2012-01-10
 ------------------
 
-   - Add ability to easily assign a placeful workflow
-     onto a data adapter
-     [vangheem]
+- Add ability to easily assign a placeful workflow
+  onto a data adapter
+  [vangheem]
 
-   - Correctly use the hidden 'last_referer' form field
-     to figure out where the user came to the form from.
-     IFormSaveData2ContentEntryFinalizedEvent subscribers
-     can access the referrer content object simply as
-     event.referrer.
-     [saffe]
+- Correctly use the hidden 'last_referer' form field
+  to figure out where the user came to the form from.
+  IFormSaveData2ContentEntryFinalizedEvent subscribers
+  can access the referrer content object simply as
+  event.referrer.
+  [saffe]
 
-   - set value of adapter on entry object so you can
-     move the object around
-     [vangheem]
+- set value of adapter on entry object so you can
+  move the object around
+  [vangheem]
 
-   - fire the object initialized event when data entry
-     object is created
-     [vangheem]
+- fire the object initialized event when data entry
+  object is created
+  [vangheem]
 
 
 1.2.8 ~ 2011-10-28
 ------------------
 
-   - Mention the BTree portal_setup upgrade step, in new
-     docs/UPGRADES.txt file
-     [tkimnguyen]
+- Mention the BTree portal_setup upgrade step, in new
+  docs/UPGRADES.txt file
+  [tkimnguyen]
 
-   - Add ability to easily add new types via edit form.
-     [vangheem]
-     
+- Add ability to easily add new types via edit form.
+  [vangheem]
+
 
 1.2.7 ~ 2011-07-20
 ------------------
 
-   - fixed max value validator.
-     [vangheem]
+- fixed max value validator.
+  [vangheem]
      
 
 1.2.6 ~ 2011-06-30
 ------------------
 
-   - Fix use of urlparse for python 2.4
+- Fix use of urlparse for python 2.4
 
 1.2.5 - 2011-06-01
 ------------------
 
-   - Fix issue where in some cases object could not acquire to
-     parent form.
-     [vangheem]
+- Fix issue where in some cases object could not acquire to
+  parent form.
+  [vangheem]
 
 
 1.2.4 - 2011-04-29
 ------------------
 
-   - fix file fields to work with ones that aren't
-     required. [vangheem]
+- fix file fields to work with ones that aren't
+  required. [vangheem]
 
-   - incorrect default value fo entry type. [vangheem]
+- incorrect default value fo entry type. [vangheem]
+
 
 1.2.3 - 2011-04-28
 ------------------
 
-   - File fields are now working. [vangheem]
+- File fields are now working. [vangheem]
 
 1.2.2 - 2011-03-03
 ------------------
 
-   - Improved functionality for product developers: If user
-     arrives to the pfg form via a plone content object,
-     the referring content object is available
-     as 'referrer' attribute of the event dispatched
-     upon data entry content creation. [saffe]
+- Improved functionality for product developers: If user
+  arrives to the pfg form via a plone content object,
+  the referring content object is available
+  as 'referrer' attribute of the event dispatched
+  upon data entry content creation. [saffe]
 
-   - Bugfix: anonymous TALES title override did not always
-     work due to insufficient permissions. User is now
-     elevated to "Owner" in the current context, allowing for more 
-     useful TALES expressions. [saffe]
+- Bugfix: anonymous TALES title override did not always
+  work due to insufficient permissions. User is now
+  elevated to "Owner" in the current context, allowing for more 
+  useful TALES expressions. [saffe]
 
 
 1.2.1 - 2011-02-24
 ------------------
 
-   - New functionality for product developers: uwosh.pfg.d2c now fires
-     a custom event upon a data content entry creation. Subscribe to:
-     uwosh.pfg.d2c.interfaces.IFormSaveData2ContentEntryFinalizedEvent
-     [saffe]
+- New functionality for product developers: uwosh.pfg.d2c now fires
+  a custom event upon a data content entry creation. Subscribe to:
+  uwosh.pfg.d2c.interfaces.IFormSaveData2ContentEntryFinalizedEvent
+  [saffe]
 
-   - Improved documentation & Sphinx docs [saffe]
+- Improved documentation & Sphinx docs [saffe]
 
 
 1.2 - 2011-02-20
 ----------------
 
-   - New feature: dynamic data entry title override via a TALES
-     expression configurable in the save data adapter. [saffe] [vangheem]
+- New feature: dynamic data entry title override via a TALES
+  expression configurable in the save data adapter. [saffe] [vangheem]
 
 
 1.1.1 - 2011-02-11
 ------------------
 
-   - fix translations
-     [saffe]
+- fix translations
+  [saffe]
 
 
 1.1 - 2011-02-10
 ----------------
 
-   - New feature: Any FTI clone of FormSaveData2ContentEntry type can be
-     selected in the save adapter as the data content entry type to use.
-     This makes it possible to apply different workflows, content rules
-     etc. to content saved by different forms. [saffe]
+- New feature: Any FTI clone of FormSaveData2ContentEntry type can be
+  selected in the save adapter as the data content entry type to use.
+  This makes it possible to apply different workflows, content rules
+  etc. to content saved by different forms. [saffe]
 
 
 1.0 - 2011-01-06
 ----------------
 
-  - New saved data adapter derives from large (BTree) folder instead
-    of regular ones to handle better large numbers of contained items.
-    Upgrade step migrates from obsolete normal/slow folder storage to
-    the new BTree storage.
-    [nguyen]
+- New saved data adapter derives from large (BTree) folder instead
+  of regular ones to handle better large numbers of contained items.
+  Upgrade step migrates from obsolete normal/slow folder storage to
+  the new BTree storage.
+  [nguyen]
 
-  - fixed issue where it couldn't render the title viewlet if a
-    lines field was used for the title field. Convert all value
-    fields to string for the title.
-    [vangheem]
+- fixed issue where it couldn't render the title viewlet if a
+  lines field was used for the title field. Convert all value
+  fields to string for the title.
+  [vangheem]
     
 
 0.8 (2010-10-30)
 ----------------
 
-  - add support for pfg datagridfield
-    [vangheem]
+- add support for pfg datagridfield
+  [vangheem]
   
 
 0.7 (2010-08-04)
 ----------------
 
- - added accessor method getValue for entry type.
- 
- - index object properly after values are set
- 
- - allow you to specify which field to use for the title
+- added accessor method getValue for entry type.
+
+- index object properly after values are set
+
+- allow you to specify which field to use for the title
  
 
 0.6 (2010-07-31)
 ----------------
 
- - added autoinclude entry point
+- added autoinclude entry point
 
- - only use _finishConstruction method if it's available since in newer 
-   versions of CMFCore, it's not there.
+- only use _finishConstruction method if it's available since in newer 
+  versions of CMFCore, it's not there.
    
 
 0.5
 ---
 
- - use id for Title
- 
- - allow avoiding security checks when creating content.
- 
- - conditionally include certain fields for backwards compatibility
+- use id for Title
 
- - make backward compatible to at least PloneFormGen 1.2.2 -- maybe older.
- 
- - added tests
- 
- - added permissions for adding content
- 
- - More fixes for the rating scale field. Should work as expected now.
+- allow avoiding security checks when creating content.
+
+- conditionally include certain fields for backwards compatibility
+
+- make backward compatible to at least PloneFormGen 1.2.2 -- maybe older.
+
+- added tests
+
+- added permissions for adding content
+
+- More fixes for the rating scale field. Should work as expected now.
  
 
 0.4
 ---
 
- - fixed widgets not working correctly.
+- fixed widgets not working correctly.
 
- - memoize the call to get the fields just in case it gets slow
+- memoize the call to get the fields just in case it gets slow
  
 
 0.3 (2010-07-27)
 ----------------
 
- - fix the way I checked for FileFields so that anything that subclasses a
-   FileField won't try to get it's form value differently anymore.
+- fix the way I checked for FileFields so that anything that subclasses a
+  FileField won't try to get it's form value differently anymore.
+
 
 0.2 (2010-07-27)
 ----------------
 
- - fix egg distro not including docs folder so the product wouldn't install
- 
- - fixed file fields not saving
+- fix egg distro not including docs folder so the product wouldn't install
+
+- fixed file fields not saving
+
 
 0.1 (2010-07-27)
 ----------------
 
- - initial release
+- initial release
