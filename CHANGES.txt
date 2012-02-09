@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.0a3 ~ 2012-02-09
+------------------
+
+- do not cache form instance because it loses acquisition.
+  [vangheem]
+
+
 2.0a2 ~ 2012-02-04
 ------------------
 

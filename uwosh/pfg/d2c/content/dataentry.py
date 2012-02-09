@@ -36,7 +36,6 @@ class FormSaveData2ContentEntry(ATCTContent):
 
     security = ClassSecurityInfo()
 
-    @instance.memoize
     def getForm(self):
         adapter = self.getFormAdapter()
         if adapter is None:
