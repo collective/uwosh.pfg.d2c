@@ -8,6 +8,11 @@ Changelog
   for the getValue method
   [vangheem]
 
+- placeful workflow change widget should be on
+  edit page
+  [vangheem]
+
+
 2.0a3 ~ 2012-02-09
 ------------------
 

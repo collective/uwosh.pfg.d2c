@@ -74,11 +74,10 @@ $(document).ready(function(){
         return false;  
     });
 
-    //var button = $('<button type="submit">Set Workflow Here</button>');
     var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>Assign Workflow Here</span>:</label><br /></div>');
     var button = $('<button>Assign Here</button>');
-    var content = $('.portaltype-formsavedata2contentadapter.template-base_view #content-core');
-    if($('.portaltype-formsavedata2contentadapter.template-base_view #archetypes-fieldname-avoidSecurityChecks').size() == 1){
+    var content = $('#fieldset-default');
+    if($('.portaltype-formsavedata2contentadapter.template-base_edit #archetypes-fieldname-avoidSecurityChecks').size() == 1){
         $('#kss-spinner').show();
         $.ajax({
             url: '@@d2c-availabe-workflows',
