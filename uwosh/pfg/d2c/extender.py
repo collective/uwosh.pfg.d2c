@@ -208,6 +208,8 @@ class ContentEntryExtender(object):
                     if hasattr(field, val):
                         setattr(newfield, val, getattr(field, val))
 
+                if hasattr(objfield, 'getRequired'):
+                    newfield.required = objfield.getRequired()
                 fields.append(newfield)
 
         return fields

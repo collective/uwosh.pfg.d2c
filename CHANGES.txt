@@ -12,6 +12,9 @@ Changelog
   edit page
   [vangheem]
 
+- Make required on pfg field work on extender field.
+  [vangheem]
+
 
 2.0a3 ~ 2012-02-09
 ------------------
