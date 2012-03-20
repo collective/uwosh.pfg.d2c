@@ -76,3 +76,12 @@ In order for this to work, you'll need to disable the schemaextender cache::
   archetypes.schemaextender\archetypes\schemaextender\extender.py line 113
   disable CACHE_ENABLED
   
+
+Finding created d2c object on request
+-------------------------------------
+Sometimes you need to know what object you just created was to
+redirect or perhaps do extra processing. D2C sets values on the request
+environ so you can get that information::
+
+    REQUEST.environ['d2c-obj-created-url']
+    REQUEST.environ['d2c-obj-created-uid']

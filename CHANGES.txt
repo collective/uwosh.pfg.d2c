@@ -15,6 +15,9 @@ Changelog
 - Make required on pfg field work on extender field.
   [vangheem]
 
+- add values to request object for created d2c object
+  [vangheem]
+
 
 2.0a3 ~ 2012-02-09
 ------------------

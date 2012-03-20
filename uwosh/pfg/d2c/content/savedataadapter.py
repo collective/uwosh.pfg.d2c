@@ -237,6 +237,11 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         evt = FormSaveData2ContentEntryFinalizedEvent(obj, referrer)
         notify(evt)
 
+        # set values on request so others can know what object was
+        # just created
+        REQUEST.environ['d2c-obj-created-url'] = obj.absolute_url()
+        REQUEST.environ['d2c-obj-created-uid'] = obj.UID()
+
     def fieldVocabulary(self):
         "An utility that provides a list of all form field names."
         return [field.getName() for field in self.fgFields()]
