@@ -119,6 +119,17 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
                 size=70,
             ),
         ),
+        BooleanField('niceIds',
+            default=False,
+            widget=BooleanWidget(label="Nice Ids",
+                description="""Generate nice ids from the title field.
+                If this is unchecked, the object id will be generated
+                from the date of creation.""",
+                i18n_domain="uwosh.pfg.d2c",
+                label_msgid="label_savecontentadapter_niceIds",
+                description_msgid="help_savecontentadapter_niceIds",
+            )
+        ),
     ))
 finalizeATCTSchema(FormAdapterSchema)
 
@@ -225,6 +236,10 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                     field.set(obj, value)
             else:
                 field.set(obj, value)
+
+        # rename id now...
+        if self.getNiceIds():
+            obj._renameAfterCreation(check_auto_id=False)
 
         obj.reindexObject()
         notify(ObjectInitializedEvent(obj))

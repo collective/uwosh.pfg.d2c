@@ -7,6 +7,10 @@ Changelog
 - be able to specify file fields as images fields.
   [vangheem]
 
+- be able to create nice ids from title
+  [vangheem]
+
+
 2.0b1 ~ 2012-03-20
 ------------------
 
