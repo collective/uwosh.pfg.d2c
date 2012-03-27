@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1b1 ~ unreleased
+2.1b1 ~ 2012-03-27
 ------------------
 
 - be able to specify file fields as images fields.
