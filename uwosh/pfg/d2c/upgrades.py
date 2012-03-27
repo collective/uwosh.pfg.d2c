@@ -7,6 +7,7 @@ from Acquisition import aq_base
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base as BTreeFolder
 from folderutils import timer, checkpointIterator
 from transaction import get
+from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 
 logger = getLogger('uwosh.pfg.d2c:upgrades')
 default_profile = 'profile-uwosh.pfg.d2c:default'
@@ -97,3 +98,13 @@ def upgrade_to_2_0(context):
 
 def upgrade_to_2_1(context):
     context.runImportStepFromProfile(default_profile, 'browserlayer')
+
+
+def upgrade_image_scales(context):
+    catalog = getToolByName(context, 'portal_catalog')
+    for brain in catalog(
+            object_provides=IFormSaveData2ContentEntry.__identifier__):
+        obj = brain.getObject()
+        for field in obj.Schema().fields():
+            if field.getType() == 'uwosh.pfg.d2c.extender.XImageField':
+                field.set(obj, field.get(obj))

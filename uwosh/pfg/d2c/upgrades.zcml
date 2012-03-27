@@ -57,6 +57,15 @@
     source="*"
     destination="2.1"
     handler=".upgrades.upgrade_to_2_1"
-    profile="uwosh.pfg.d2c:default"/>
+    profile="uwosh.pfg.d2c:default" />
+
+  <gs:upgradeStep
+    title="uwosh.pfg.d2c Create missing image scales"
+    description="uwosh.pfg.d2c create missing image scales"
+    source="*"
+    destination="images-scales"
+    handler=".upgrades.upgrade_image_scales"
+    profile="uwosh.pfg.d2c:default" />
+
 
 </configure>

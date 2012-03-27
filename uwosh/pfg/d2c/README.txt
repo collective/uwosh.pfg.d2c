@@ -88,6 +88,17 @@ or for original
 
     http://site.com/path/to/object/image_myimage
 
+
+Upgrade old should-be d2c images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, make sure you select that the field is an image in the corresponding
+ploneformgen form.
+
+Then, go to the zmi, portal_setup, upgrades tab, select `uwosh.pfg.d2c:default`,
+click to show old and select the image-scales upgrade to run.
+
+
 Windows
 ~~~~~~~
 
