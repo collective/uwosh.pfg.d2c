@@ -1,19 +1,36 @@
 from zope.component import adapts
 from zope.interface import implements
 from archetypes.schemaextender.interfaces import ISchemaExtender
+from archetypes.schemaextender.interfaces import IBrowserLayerAwareExtender
 from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
     FixedPointField, FileField, LinesField, IntegerField, ObjectField, \
-    BooleanField
+    BooleanField, ImageField
+from Products.Archetypes import atapi
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
-from Products.PloneFormGen.content.fields import HtmlTextField, PlainTextField
+from Products.PloneFormGen.content.fields import HtmlTextField, \
+    PlainTextField, FGFileField
 
 from archetypes.schemaextender.field import ExtensionField
 from plone.memoize.instance import memoize
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import DisplayList
+from uwosh.pfg.d2c.interfaces import ILayer
+
+try:
+    import plone.app.imaging
+    IMAGE_SIZES = None
+except:
+    IMAGE_SIZES = {'large': (768, 768),
+                   'preview': (400, 400),
+                   'mini': (200, 200),
+                   'thumb': (128, 128),
+                   'tile': (64, 64),
+                   'icon': (32, 32),
+                   'listing': (16, 16)}
+
 
 # extra field attributes to copy over.
 extra_fields = [
@@ -64,8 +81,13 @@ class XLinesVocabularyField(ExtensionField, LinesVocabularyField):
     pass
 
 
+class XImageField(ExtensionField, ImageField):
+    _properties = ImageField._properties.copy()
+    _properties.update({'sizes': IMAGE_SIZES})
+
+
 class XStringVocabularyField(ExtensionField, StringVocabularyField):
-    security  = ClassSecurityInfo()
+    security = ClassSecurityInfo()
 
     security.declarePublic('Vocabulary')
     def Vocabulary(self, content_instance=None):
@@ -198,7 +220,14 @@ class ContentEntryExtender(object):
             field = objfield.fgField
             klassname = 'X' + field.__class__.__name__
             if klassname in FIELDS:
-                klass = FIELDS[klassname]
+                if 'XFileField' == klassname:
+                    isImField = objfield.getField('isImage')
+                    if isImField.get(objfield):
+                        klass = XImageField
+                    else:
+                        klass = FIELDS[klassname]
+                else:
+                    klass = FIELDS[klassname]
                 newfield = klass(field.__name__, **field._properties)
                 for key in extra_fields:
                     if hasattr(field, key):
@@ -213,3 +242,25 @@ class ContentEntryExtender(object):
                 fields.append(newfield)
 
         return fields
+
+
+class PFGFileFieldExtender(object):
+
+    adapts(FGFileField)
+    implements(IBrowserLayerAwareExtender)
+
+    layer = ILayer
+
+    fields = [
+        XBooleanField('isImage',
+            widget=atapi.BooleanWidget(
+                label=u"Is Image",
+                description=u"Only to be used for d2c generated types")
+        )
+    ]
+
+    def __init__(self, context):
+        self.context = context
+
+    def getFields(self):
+        return self.fields

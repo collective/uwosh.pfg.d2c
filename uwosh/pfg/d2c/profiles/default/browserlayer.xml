@@ -1,0 +1,4 @@
+<layers>
+    <layer name="uwosh.pfg.d2c" 
+           interface="uwosh.pfg.d2c.interfaces.ILayer" />
+</layers>

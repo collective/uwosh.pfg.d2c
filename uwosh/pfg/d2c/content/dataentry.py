@@ -130,5 +130,32 @@ class FormSaveData2ContentEntry(ATCTContent):
         """
         return self.getForm().findFieldObjectByName(name)
 
+    def __bobo_traverse__(self, REQUEST, name):
+        """
+        Transparent access to image scales of image fields
+        on content.
+        """
+        if name.startswith('image_'):
+            name = name[len('image_'):]
+            split = name.rsplit('_', 1)
+            if len(split) == 2:
+                # has scale with it
+                fieldname, scale = split
+            else:
+                fieldname = name
+                scale = None
+            field = self.getField(fieldname)
+            image = None
+            if field:
+                if scale is None:
+                    image = field.getScale(self)
+                else:
+                    if scale in field.getAvailableSizes(self):
+                        image = field.getScale(self, scale=scale)
+            if image is not None and not isinstance(image, basestring):
+                # image might be None or '' for empty images
+                return image
+
+        return ATCTContent.__bobo_traverse__(self, REQUEST, name)
 
 registerATCT(FormSaveData2ContentEntry, PROJECTNAME)

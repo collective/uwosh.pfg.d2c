@@ -68,6 +68,26 @@ to 1.0+ D2C, the upgrade step that migrates D2C storage to BTree
 storage may not work.  We recommend that you first upgrade to 1.0+ D2C
 *then* upgrade to Plone 4.
 
+
+D2C Form Images
+---------------
+
+Since D2C 2.1, there has been the ability for PFG file fields to behave
+like plone image fields with scales. Just select the 'Is Image' checkbox
+in the PFG file field settings.
+
+To access scales for an image, you must construct a url like::
+
+    http://site.com/path/to/object/image_fieldid_scalename
+
+Example::
+
+    http://site.com/path/to/object/image_myimage_large
+
+or for original
+
+    http://site.com/path/to/object/image_myimage
+
 Windows
 ~~~~~~~
 

@@ -93,3 +93,7 @@ def upgrade_to_2_0(context):
         for id in obj._tree:
             if id not in order._order():
                 order.notifyAdded(id)
+
+
+def upgrade_to_2_1(context):
+    context.runImportStepFromProfile(default_profile, 'browserlayer')

@@ -24,13 +24,16 @@
 
     <include package="archetypes.schemaextender" />
     <adapter factory=".extender.ContentEntryExtender" />
+    <adapter factory=".extender.PFGFileFieldExtender" 
+      provides="archetypes.schemaextender.interfaces.ISchemaExtender"
+      name="uwosh.pfg.d2c.filefieldextender" />
     
     <cmf:registerDirectory name="uwosh_pfg_d2c_templates" />
 
     <!-- Register the installation GenericSetup extension profile -->
     <genericsetup:registerProfile
       name="default"
-      title="PloneFormGen Save Data to Content"
+      title="PloneFormGen Save Data to Content(d2c)"
       directory="profiles/default"
       description="A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"

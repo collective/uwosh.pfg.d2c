@@ -1,8 +1,11 @@
 Changelog
 =========
 
-2.0b2 ~ unreleased
+2.1b1 ~ unreleased
 ------------------
+
+- be able to specify file fields as images fields.
+  [vangheem]
 
 2.0b1 ~ 2012-03-20
 ------------------

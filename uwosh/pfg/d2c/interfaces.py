@@ -14,3 +14,7 @@ class IFormSaveData2ContentEntryFinalizedEvent(IObjectEvent):
     "an event sent when the entry is completed"
 
     referrer = Attribute("the referring content object")
+
+
+class ILayer(Interface):
+    pass
