@@ -146,7 +146,8 @@ class FormSaveData2ContentEntry(ATCTContent):
                 scale = None
             field = self.getField(fieldname)
             image = None
-            if field:
+            if field and \
+                    field.getType() == 'uwosh.pfg.d2c.extender.XImageField':
                 if scale is None:
                     image = field.getScale(self)
                 else:

@@ -107,4 +107,8 @@ def upgrade_image_scales(context):
         obj = brain.getObject()
         for field in obj.Schema().fields():
             if field.getType() == 'uwosh.pfg.d2c.extender.XImageField':
-                field.set(obj, field.get(obj))
+                try:
+                    field.set(obj, field.get(obj))
+                except IOError:
+                    # bad image...
+                    pass

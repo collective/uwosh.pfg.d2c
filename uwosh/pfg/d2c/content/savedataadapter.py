@@ -31,6 +31,7 @@ from Products.ATContentTypes.interfaces import IATFolder
 from Products.ATContentTypes.content.schemata import NextPreviousAwareSchema
 from Products.ATContentTypes.content.schemata import finalizeATCTSchema
 from Products.CMFCore.permissions import View
+from Acquisition import aq_parent, aq_inner
 
 from Products.TALESField import TALESString
 
@@ -213,6 +214,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
         obj = self.createEntry()
         obj.setFormAdapter(self)
+        form = aq_parent(aq_inner(self))
 
         for field in self.fgFields():
             name = field.getName()
@@ -230,6 +232,10 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                         newval.append(values)
                     value = newval
             if field.__class__ == FileField:
+                fieldobj = form.findFieldObjectByName(name)
+                isImField = fieldobj and fieldobj.getField('isImage')
+                if isImField and isImField.get(fieldobj):
+                    field = obj.getField(name)
                 name += '_file'
                 value = REQUEST.form.get(name)
                 if hasattr(value, 'filename') and value.filename:
