@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1b3 ~ unreleased
+2.1b3 ~ 2012-04-03
 ------------------
 
 - provide setValue method for content types.

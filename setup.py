@@ -9,10 +9,10 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '2.1b2'
+version = '2.1b3'
 
 long_description = (
-    read('uwosh', 'pfg', 'd2c', 'README.txt') + '\n\n' +
+    read('README.txt') + '\n\n' +
     read('CHANGES.txt')
     + '\n\n' +
     'Contributors\n'
