@@ -116,3 +116,16 @@ environ so you can get that information::
 
     REQUEST.environ['d2c-obj-created-url']
     REQUEST.environ['d2c-obj-created-uid']
+
+
+Content object methods
+----------------------
+
+getValue(fieldid, default=None)
+    get the value of a field
+setValue(fieldid, value)
+    set the value for a field
+getForm()
+    get connected pfg form
+getFormAdapter()
+    get connected pfg content adapter

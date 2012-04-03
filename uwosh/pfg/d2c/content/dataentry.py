@@ -124,6 +124,12 @@ class FormSaveData2ContentEntry(ATCTContent):
         else:
             return default
 
+    security.declareProtected('Modify portal content', 'setValue')
+    def setValue(self, field, value):
+        field = self.getField(field)
+        if field:
+            field.set(self, value)
+
     security.declarePrivate('findFieldObjectByName')
     def findFieldObjectByName(self, name):
         """ Just an alias to the form method

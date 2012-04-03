@@ -3,7 +3,17 @@ from zope.component.interfaces import IObjectEvent
 
 
 class IFormSaveData2ContentEntry(Interface):
-    pass
+    def getValue(fieldid, default=None):
+        """get the value of a field"""
+
+    def setValue(fieldid, value):
+        """set the value for a field"""
+
+    def getForm():
+        """get connected pfg form"""
+
+    def getFormAdapter():
+        """get the form adapter"""
 
 
 class IFormSaveData2ContentAdapter(Interface):
