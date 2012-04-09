@@ -45,6 +45,7 @@ from uwosh.pfg.d2c.config import PROJECTNAME
 from uwosh.pfg.d2c import pfgMessageFactory as _
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentAdapter
 from uwosh.pfg.d2c.events import FormSaveData2ContentEntryFinalizedEvent
+from uwosh.pfg.d2c.utils import executeAsManager
 
 FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
     NextPreviousAwareSchema.copy() + \
@@ -125,7 +126,8 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
             widget=BooleanWidget(label="Nice Ids",
                 description="""Generate nice ids from the title field.
                 If this is unchecked, the object id will be generated
-                from the date of creation.""",
+                from the date of creation. Respects avoid security
+                checks setting.""",
                 i18n_domain="uwosh.pfg.d2c",
                 label_msgid="label_savecontentadapter_niceIds",
                 description_msgid="help_savecontentadapter_niceIds",
@@ -180,7 +182,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         pt = getToolByName(self, 'portal_types')
         type_info = pt.getTypeInfo(self.portal_type)
         if entry_type not in type_info.allowed_content_types:
-            type_info.allowed_content_types = tuple(set(type_info.allowed_content_types) | set([entry_type]))
+            type_info.allowed_content_types = \
+                tuple(set(type_info.allowed_content_types) | set([entry_type]))
 
         field = self.getField('entryType')
         field.set(self, entry_type)
@@ -226,7 +229,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                     newval = []
                     for values in value:
                         values = dict(values)
-                        if values.get('orderindex_', None) == 'template_row_marker':
+                        if values.get('orderindex_', None) == \
+                                'template_row_marker':
                             del values['orderindex_']
 
                         newval.append(values)
@@ -245,7 +249,11 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
         # rename id now...
         if self.getNiceIds():
-            obj._renameAfterCreation(check_auto_id=False)
+            if self.getAvoidSecurityChecks():
+                executeAsManager(self, obj._renameAfterCreation,
+                    check_auto_id=False)
+            else:
+                obj._renameAfterCreation(check_auto_id=False)
 
         obj.reindexObject()
         notify(ObjectInitializedEvent(obj))

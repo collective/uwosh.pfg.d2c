@@ -4,10 +4,8 @@ from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from AccessControl import getSecurityManager
-from AccessControl.SecurityManagement import newSecurityManager
-from AccessControl.SecurityManagement import setSecurityManager
-from AccessControl.User import UnrestrictedUser as BaseUnrestrictedUser
 from Products.CMFCore.permissions import ManagePortal
+from uwosh.pfg.d2c.utils import executeAsManager
 try:
     import json
 except:
@@ -77,15 +75,6 @@ _builtin_policies = {
     'plone_workflow': 'old-plone',
     'one_state_workflow': 'one-state'
 }
-
-
-class UnrestrictedUser(BaseUnrestrictedUser):
-    """Unrestricted user that still has an id.
-    """
-    def getId(self):
-        """Return the ID of the user.
-        """
-        return self.getUserName()
 
 
 class PlacefulWorkflow(BrowserView):
@@ -164,31 +153,6 @@ class PlacefulWorkflow(BrowserView):
             return json.dumps({'status': 'error',
                                'msg': 'Not a valid workflow.'})
 
-        self.executeAsManager(self.setWorkflowPolicy, placeful, id)
+        executeAsManager(self.context, self.setWorkflowPolicy, placeful, id)
 
         return json.dumps({'status': 'success'})
-
-    def executeAsManager(self, function, *args, **kwargs):
-        sm = getSecurityManager()
-        try:
-            try:
-                tmp_user = UnrestrictedUser(
-                  sm.getUser().getId(),
-                   '', ['Manager'],
-                   ''
-                )
-
-                # Act as user of the portal
-                acl = getToolByName(self.context, 'acl_users')
-                tmp_user = tmp_user.__of__(acl)
-                newSecurityManager(None, tmp_user)
-
-                # Call the function
-                return function(*args, **kwargs)
-
-            except:
-                # If special exception handlers are needed, run them here
-                raise
-        finally:
-            # Restore the old security manager
-            setSecurityManager(sm)

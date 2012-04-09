@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.1b4 ~ unreleased
+------------------
+
+- respect avoid security checks for renaming Ids
+  [vangheem]
+
 2.1b3 ~ 2012-04-03
 ------------------
 
