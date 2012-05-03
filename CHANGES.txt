@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1b4 ~ unreleased
+2.1.0 ~ 2012-05-03
 ------------------
 
 - respect avoid security checks for renaming Ids
