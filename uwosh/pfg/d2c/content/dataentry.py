@@ -12,7 +12,7 @@ from Products.ATContentTypes.content.base import ATCTContent
 from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
-from plone.memoize import instance
+from zope.app.component.hooks import getSite
 
 from Products.CMFCore.Expression import getExprContext
 
@@ -51,7 +51,7 @@ class FormSaveData2ContentEntry(ATCTContent):
         if uid is None:
             return uid
         else:
-            catalog = getToolByName(self, 'uid_catalog')
+            catalog = getToolByName(getSite(), 'uid_catalog')
             res = catalog(UID=uid)
             if len(res) > 0:
                 return res[0].getObject()
