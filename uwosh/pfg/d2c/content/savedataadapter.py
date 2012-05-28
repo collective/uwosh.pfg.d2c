@@ -165,8 +165,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         else:
             return False
 
+    # get a vocabulary of available FTI clones of FormSaveData2ContentEntry
     def entry_types(self):
-        "get a vocabulary of available FTI clones of FormSaveData2ContentEntry"
         pt = getToolByName(self, 'portal_types')
         derived_types = {}
         for fti in pt.listTypeInfo():
@@ -177,8 +177,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
         return DisplayList(derived_types.items())
 
+    # add the selected entry type to allowed types if it isn't
     def setEntryType(self, entry_type):
-        "add the selected entry type to allowed types if it isn't"
         pt = getToolByName(self, 'portal_types')
         type_info = pt.getTypeInfo(self.portal_type)
         if entry_type not in type_info.allowed_content_types:
@@ -188,7 +188,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         field = self.getField('entryType')
         field.set(self, entry_type)
 
-    def createEntry(self):
+    def _createEntry(self):
         "create an entry of the chosen type"
         id = self.generateUniqueId()
         entrytype = self.getEntryType() or "FormSaveData2ContentEntry"
@@ -215,7 +215,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         subscribers of the new entry.
         """
 
-        obj = self.createEntry()
+        obj = self._createEntry()
         obj.setFormAdapter(self)
         form = aq_parent(aq_inner(self))
 
@@ -271,8 +271,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         REQUEST.environ['d2c-obj-created-url'] = obj.absolute_url()
         REQUEST.environ['d2c-obj-created-uid'] = obj.UID()
 
+    # An utility that provides a list of all form field names.
     def fieldVocabulary(self):
-        "An utility that provides a list of all form field names."
         return [field.getName() for field in self.fgFields()]
 
 registerATCT(FormSaveData2ContentAdapter, PROJECTNAME)
