@@ -195,6 +195,10 @@ FIELDS = {}
 for klass in extension_fields:
     FIELDS[klass.__name__] = klass
 
+INVALID_TYPES = (
+    'FGFieldsetStart',
+    'FGFieldsetEnd')
+
 
 class ContentEntryExtender(object):
     """
@@ -218,6 +222,8 @@ class ContentEntryExtender(object):
 
         for objfield in obj_fields:
             field = objfield.fgField
+            if objfield.aq_base.__class__.__name__ in INVALID_TYPES:
+                continue
             klassname = 'X' + field.__class__.__name__
             if klassname in FIELDS:
                 if 'XFileField' == klassname:
