@@ -18,6 +18,7 @@ from Products.PloneTestCase.layer import onsetup
 
 ztc.installProduct('PloneFormGen')
 
+
 @onsetup
 def setup_product():
     """Set up the package and its dependencies.
@@ -46,6 +47,7 @@ from zExceptions import Redirect
 from zope.testbrowser.browser import SubmitControl
 original_click = SubmitControl.click
 
+
 def redirect_exception_handling_click(self):
     try:
         original_click(self)
@@ -54,8 +56,8 @@ def redirect_exception_handling_click(self):
         self.browser.open(url)
     except:
         pass
-    
 SubmitControl.click = redirect_exception_handling_click
+
 
 class FunctionalTestCase(ptc.FunctionalTestCase):
     """We use this class for functional integration tests that use
@@ -69,9 +71,10 @@ class FunctionalTestCase(ptc.FunctionalTestCase):
         self.portal.portal_membership.addMember(
             'contributor', 'secret', roles, []
         )
-        
+
     def beforeTearDown(self):
         pass
+
 
 def test_suite():
     return unittest.TestSuite([
