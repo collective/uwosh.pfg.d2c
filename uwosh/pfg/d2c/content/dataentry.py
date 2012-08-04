@@ -14,6 +14,10 @@ from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
 
 from Products.CMFCore.Expression import getExprContext
+try:
+    from zope.component.hooks import getSite
+except ImportError:
+    from zope.app.component.hooks import getSite
 
 FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
 FormSaveData2ContentEntrySchema.delField('title')
@@ -50,7 +54,9 @@ class FormSaveData2ContentEntry(ATCTContent):
         if uid is None:
             return uid
         else:
-            catalog = getToolByName(self, 'uid_catalog')
+            catalog = getToolByName(self, 'uid_catalog', None)
+            if catalog is None:
+                catalog = getToolByName(getSite(), 'uid_catalog')
             res = catalog(UID=uid)
             if len(res) > 0:
                 return res[0].getObject()
