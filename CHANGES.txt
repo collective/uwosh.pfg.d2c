@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.1.5 ~ 2012-08-04
+------------------
+
+- fallback to using getSite if current item
+  fails with getToolByName. This will fix using
+  d2c along with versioning.
+
 2.1.4 ~ 2012-07-05
 ------------------
 
