@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="pfg.donationfield">
+
+  <head><title></title></head>
+
+  <body>
+
+    <metal:view_macro define-macro="view">
+        <span metal:define-macro="string-field-view"
+            tal:attributes="id string:parent-fieldname-$fieldName"
+            tal:define="value accessor">
+            $<span metal:define-slot="inside"
+                  tal:replace="python:value and ('%.2f' % float(value)) or ''">string</span>
+        </span>
+    </metal:view_macro>
+
+    <metal:define define-macro="edit">
+      <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+        <metal:fill fill-slot="widget_body">
+          <tal:block tal:define="helper nocall:context/@@pfg.donationform-field-helper;
+                                 levels python:helper.listFgDonationLevels(field.fgDonationLevels);
+                                 level_field string:${fieldName}_level;
+                                 amount_field string:${fieldName}_amount;
+                                 current_value python:helper.requestValue(field.fgCost, fieldName);
+                                 stored_value accessor|nothing;
+                                 current_value python: current_value and current_value or stored_value;
+                                 level_values python:[l[0] for l in levels];">
+            <div id="levels" tal:condition="levels">
+              <p i18n:translate=""
+                 class="formHelp">Please consider supporting us at one of the following levels.</p>
+              <p>
+                <tal:levels tal:repeat="level levels">
+                  <tal:defines tal:define="amount python:level[0];
+                                           formatted_amount python:helper.formatAmount(amount);
+                                           label python:level[1]">
+                    <input type="radio"
+                           tal:attributes="value amount;
+                                           name level_field;
+                                           checked python:(current_value == amount) and 'checked' or None"/>
+                    <span tal:condition="label" tal:replace="string:$$${formatted_amount} - ${label}"/><span tal:condition="not:label" tal:replace="string:$$${formatted_amount}"/><br/>
+                  </tal:defines>
+                </tal:levels>
+              </p>
+            </div>
+            <p id="amount-input">
+              <input type="radio" value = ""
+                     tal:condition="levels"
+                     tal:attributes="name level_field;
+                                     checked python:(current_value not in level_values) and 'checked' or None"/>
+              <span onclick="jq(this).parent().children('input').click()"
+                    tal:omit-tag="not:levels">
+              <span tal:condition="levels" i18n:translate="">Or enter a donation amount:</span>
+              $<input type="text"
+                      size="4"
+                      tal:attributes="name amount_field;
+                                      value python:current_value and ('%.2f' % float(current_value)) or ''" />
+              </span>
+            </p>
+            <p tal:condition="field/fgAllowRecurringPayments">
+              <input type="checkbox"
+                     tal:attributes="name string:${fieldName}_recurring;
+                                     checked python:fieldName + '_recurring' in request.form and 'checked' or None"/>
+              <tal:block i18n:translate="">Make this donation once a month</tal:block>
+              <tal:block tal:define="recurForever field/fgRecurForever|python:False"
+                         tal:condition="not:recurForever"
+                         i18n:translate="">
+                for a total of
+                <input type="text" size="2"
+                       tal:attributes="name string:${fieldName}_occurrences;
+                                       value python:request.form.get(fieldName + '_occurrences', '12')"
+                       i18n:name="value_occurrences"/>
+                months.
+              </tal:block>
+            </p>
+          </tal:block>
+        </metal:fill>
+      </metal:use>
+    </metal:define>
+
+    <metal:define define-macro="search">
+      <metal:field use-macro="here/donationfield_widget/macros/edit"/>
+    </metal:define>
+  </body>
+
+</html>

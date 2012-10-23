@@ -18,6 +18,7 @@ from plone.memoize.instance import memoize
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import DisplayList
 from uwosh.pfg.d2c.interfaces import ILayer
+from uwosh.pfg.d2c.widgets import DonationWidget
 
 try:
     import plone.app.imaging
@@ -34,7 +35,8 @@ except:
 
 # extra field attributes to copy over.
 extra_fields = [
-    'widget', 'questionSet', 'answerSet', 'validators'
+    'widget', 'questionSet', 'answerSet', 'validators', 'fgDonationLevels',
+    'fgCost', 'fgRecurForever', 'fgAllowRecurringPayments'
 ]
 
 # instance values to copy over
@@ -200,6 +202,11 @@ INVALID_TYPES = (
     'FGFieldsetEnd')
 
 
+CUSTOM_WIDGETS_FOR_MACROS = {
+    'donationfield_widget': DonationWidget
+}
+
+
 class ContentEntryExtender(object):
     """
     We use this because it's a nice way to dynamically add fields
@@ -226,6 +233,7 @@ class ContentEntryExtender(object):
                 continue
             klassname = 'X' + field.__class__.__name__
             if klassname in FIELDS:
+                macro = getattr(getattr(field, 'widget', None), 'macro', None)
                 if 'XFileField' == klassname:
                     isImField = objfield.getField('isImage')
                     if isImField.get(objfield):
@@ -246,6 +254,13 @@ class ContentEntryExtender(object):
                 if hasattr(objfield, 'getRequired'):
                     newfield.required = objfield.getRequired()
                 fields.append(newfield)
+
+                if macro in CUSTOM_WIDGETS_FOR_MACROS:
+                    widget = CUSTOM_WIDGETS_FOR_MACROS[macro](
+                        label=field.widget.label,
+                        description=field.widget.description,
+                        macro=macro)
+                    field.widget = widget
 
         return fields
 

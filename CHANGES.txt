@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.2.0 ~ unreleased
+------------------
+
+- provide support for pfg.donationform donation field
+
+
 2.1.6 ~ 2012-10-01
 ------------------
 

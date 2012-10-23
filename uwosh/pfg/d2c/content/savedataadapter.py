@@ -220,6 +220,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         form = aq_parent(aq_inner(self))
 
         for field in self.fgFields():
+            widget_macro = getattr(getattr(field, 'widget', None), 'macro', None)
             name = field.getName()
             value = REQUEST.form.get(name)
 
@@ -235,6 +236,12 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
                         newval.append(values)
                     value = newval
+            elif widget_macro == 'donationfield_widget':
+                # need to get the value from different request variables
+                value = REQUEST.form.get('%s_level' % name)
+                if not value:
+                    value = REQUEST.form.get('%s_amount' % name)
+
             if field.__class__ == FileField:
                 fieldobj = form.findFieldObjectByName(name)
                 isImField = fieldobj and fieldobj.getField('isImage')
