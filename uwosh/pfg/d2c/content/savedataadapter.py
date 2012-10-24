@@ -25,9 +25,7 @@ from Products.PloneFormGen.content.actionAdapter import FormAdapterSchema
 from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
 from Products.PloneFormGen.config import EDIT_TALES_PERMISSION
 from Products.Archetypes.event import ObjectInitializedEvent
-from plone.folder.interfaces import IOrderable
-from plone.app.folder.folder import IATUnifiedFolder
-from Products.ATContentTypes.interfaces import IATFolder
+from Products.ATContentTypes.interface import IATFolder
 from Products.ATContentTypes.content.schemata import NextPreviousAwareSchema
 from Products.ATContentTypes.content.schemata import finalizeATCTSchema
 from Products.CMFCore.permissions import View
@@ -142,9 +140,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
     implements(IFormSaveData2ContentAdapter,
                IPloneFormGenActionAdapter,
-               IATUnifiedFolder,
-               IATFolder,
-               IOrderable)
+               IATFolder)
     schema = FormSaveData2ContentAdapterSchema
 
     meta_type = portal_type = 'FormSaveData2ContentAdapter'
