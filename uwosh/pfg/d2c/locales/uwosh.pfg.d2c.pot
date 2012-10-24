@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-10-24 13:40+0000\n"
+"POT-Creation-Date: 2012-10-24 15:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,28 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: uwosh.pfg.d2c\n"
+
+msgid "A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
+msgstr ""
+
+#: ../profiles/default/types/FormSaveData2ContentAdapter.xml
+msgid "A form action adapter that will save form input data to a content type."
+msgstr ""
+
+#: ../profiles/default/types/FormSaveData2ContentEntry.xml
+msgid "An entry for the content data adapter."
+msgstr ""
+
+msgid "PloneFormGen Save Data to Content (d2c)"
+msgstr ""
+
+#: ../profiles/default/types/FormSaveData2ContentAdapter.xml
+msgid "Save Data to Content Adapter"
+msgstr ""
+
+#: ../profiles/default/types/FormSaveData2ContentEntry.xml
+msgid "Save Data to Content Entry"
+msgstr ""
 
 #. Default: "A TALES expression that will be evaluated to determine the title for entry"
 #: ../content/savedataadapter.py:113

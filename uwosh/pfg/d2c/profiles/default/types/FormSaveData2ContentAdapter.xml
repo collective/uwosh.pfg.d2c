@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <object name="FormSaveData2ContentAdapter"
    meta_type="Factory-based Type Information with dynamic views"
-   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">Save Data to Content Adapter</property>
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   i18n:domain="uwosh.pfg.d2c">
+ <property name="title" i18n:translate="">Save Data to Content Adapter</property>
  <property
-    name="description">A form action adapter that will save form input data to a content type.</property>
+    name="description" i18n:translate="">A form action adapter that will save form input data to a content type.</property>
  <property name="content_icon">FormAction.gif</property>
  <property name="content_meta_type">FormSaveData2ContentAdapter</property>
  <property name="product">uwosh.pfg.d2c</property>
