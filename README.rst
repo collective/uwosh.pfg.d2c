@@ -49,7 +49,7 @@ Placeful Workflows
 It is often very useful to assign a placeful workflow onto a 
 save data content type. Normally, this is rather cumbersome to
 do; however, d2c now provides a nice widget to make this sort
-of action automatic(automatically create missing workflow policy).
+of action automatic (automatically create missing workflow policy).
 
 
 Compatibility
