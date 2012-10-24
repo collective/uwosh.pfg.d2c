@@ -50,16 +50,15 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
     FormAdapterSchema.copy() + Schema((
         BooleanField('avoidSecurityChecks',
             default=True,
-            widget=BooleanWidget(label="Avoid Security Checks",
-                description="""
-                Avoid checking if the user has permission to create the content
-                data. You will almost always want this checked; otherwise,
-                anonymous users will most likely not be able to submit your
-                forms.
-                """,
-                i18n_domain="uwosh.pfg.d2c",
-                label_msgid="label_savecontentadapter_avoidsecuritychecks",
-                description_msgid="help_savecontentadapter_avoidsecuritychecks",
+            widget=BooleanWidget(
+                label=_("label_savecontentadapter_avoidsecuritychecks",
+                        default=u"Avoid Security Checks"),
+                description=_('help_savecontentadapter_avoidsecuritychecks',
+                              default=u"Avoid checking if the user has permission to create the content "
+                                      u"data. You will almost always want this checked; otherwise, "
+                                      u"anonymous users will most likely not be able to submit your "
+                                      u"forms."
+                              ),
             )
         ),
         StringField('titleField',
@@ -67,16 +66,14 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
             required=False,
             vocabulary='fieldVocabulary',
             widget=SelectionWidget(
-                label='Title Field',
-                description="""
-                    Select a field to be used as the title of the entries.
-                    You will have to reindex previous form results for you
-                    to notice most changes. You can edit each form result to
-                    force reindexing.
-                """,
-                i18n_domain="uwosh.pfg.d2c",
-                label_msgid="label_savecontentadapter_title",
-                description_msgid="help_savecontentadapter_title",
+                label=_(u'label_savecontentadapter_title',
+                        default="Title Field"),
+                description=_('help_savecontentadapter_title',
+                              default=u"Select a field to be used as the title of the entries. "
+                                      u"You will have to reindex previous form results for you "
+                                      u"to notice most changes. You can edit each form result to "
+                                      u"force reindexing."
+                             ),
             ),
             default='id'
         ),
@@ -87,15 +84,16 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
             required=False,
             mutator='setEntryType',
             widget=SelectionWidget(
-                label='Saved entry content type',
-                description="Portal type to use for the saved data. Leave as "
-                            "default if you're unsure of what this does."
-                            "If you select a plone standard type, you must "
-                            "make sure the field names are the same in order "
-                            "for the data to store correctly.",
-                i18n_domain="uwosh.pfg.d2c",
-                label_msgid="label_savecontentadapter_entrytype",
-                description_msgid="help_savecontentadapter_entrytype",
+                label=_('label_savecontentadapter_entrytype',
+                        default=u'Saved entry content type'
+                        ),
+                description=_('help_savecontentadapter_entrytype',
+                              default=u"Portal type to use for the saved data. Leave as "
+                                      u"default if you're unsure of what this does. "
+                                      u"If you select a plone standard type, you must "
+                                      u"make sure the field names are the same in order "
+                                      u"for the data to store correctly."
+                              ),
                 format='radio'
             ),
             vocabulary='entry_types'
@@ -121,14 +119,15 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
         ),
         BooleanField('niceIds',
             default=False,
-            widget=BooleanWidget(label="Nice Ids",
-                description="""Generate nice ids from the title field.
-                If this is unchecked, the object id will be generated
-                from the date of creation. Respects avoid security
-                checks setting.""",
-                i18n_domain="uwosh.pfg.d2c",
-                label_msgid="label_savecontentadapter_niceIds",
-                description_msgid="help_savecontentadapter_niceIds",
+            widget=BooleanWidget(
+                label=_('label_savecontentadapter_niceIds',
+                        default=u"Nice Ids"),
+                description=_("help_savecontentadapter_niceIds",
+                              default=u"Generate nice ids from the title field. "
+                                      u"If this is unchecked, the object id will be generated "
+                                      u"from the date of creation. Respects avoid security "
+                                      u"checks setting."
+                            ),                
             )
         ),
     ))

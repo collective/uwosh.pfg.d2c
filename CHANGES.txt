@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.3.0 ~ Unreleased
+------------------
+
+- fixed a typo in the main configure.zcml [keul]
+- refactoring of all the i18n generation and structure,
+  now i18ndude compatible  [keul]
+- restored compatibility with Plone 3.3 [keul]
+
 2.2.0 ~ 2012-10-23
 ------------------
 

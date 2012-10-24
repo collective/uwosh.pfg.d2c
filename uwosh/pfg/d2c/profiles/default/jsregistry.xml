@@ -3,5 +3,5 @@
  <javascript cacheable="True" compression="safe" conditionalcomment=""
     cookable="True" enabled="True" id="d2c-edit.js"
     expression="python:not context.restrictedTraverse('@@plone_portal_state').anonymous()"
-    authenticated="True" inline="False" />
+    inline="False" />
 </object>
