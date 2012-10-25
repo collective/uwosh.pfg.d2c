@@ -75,6 +75,9 @@ Since D2C 2.1, there has been the ability for PFG file fields to behave
 like plone image fields with scales. Just select the 'Is Image' checkbox
 in the PFG file field settings.
 
+Rember to use "image" as id for the image field to use it in views like
+folder summary. 
+
 To access scales for an image, you must construct a url like::
 
     http://site.com/path/to/object/image_fieldid_scalename
