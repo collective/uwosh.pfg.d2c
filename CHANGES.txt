@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.3.0 ~ Unreleased
-------------------
+2.3.0b1 ~ 2012-10-25
+--------------------
 
 - fixed a typo in the main configure.zcml [keul]
 - refactoring of all the i18n generation and structure,
