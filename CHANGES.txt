@@ -9,6 +9,7 @@ Changelog
   now i18ndude compatible  [keul]
 - restored compatibility with Plone 3.3 [keul]
 - fixed an issue with the "Add new type" popup if you press "cancel" [keul]
+- fixed issues when adding new save data types [keul]
 
 2.2.0 ~ 2012-10-23
 ------------------
