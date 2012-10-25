@@ -13,6 +13,8 @@ Changelog
 - some usability issues and bugs fixed in the JavaScript widget [keul]
 - removed dependency on archetypes.referencebrowserwidget (not used anywhere)
   [keul]
+- generated contents now implements the "tag" method, so can be called from
+  a folder summary view [keul]
 
 2.2.0 ~ 2012-10-23
 ------------------

@@ -13,6 +13,7 @@ from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
 from zope.interface import implements
 
+from Products.CMFCore import permissions
 from Products.CMFCore.Expression import getExprContext
 try:
     from zope.component.hooks import getSite
@@ -117,7 +118,7 @@ class FormSaveData2ContentEntry(ATCTContent):
         else:
             return self.getId()
 
-    security.declareProtected('View', 'getValue')
+    security.declareProtected(permissions.View, 'getValue')
     def getValue(self, field, default=None):
         """
         somewhat a replacement for the get generated methods.
@@ -129,7 +130,7 @@ class FormSaveData2ContentEntry(ATCTContent):
         else:
             return default
 
-    security.declareProtected('Modify portal content', 'setValue')
+    security.declareProtected(permissions.ModifyPortalContent, 'setValue')
     def setValue(self, field, value):
         field = self.getField(field)
         if field:
@@ -141,20 +142,25 @@ class FormSaveData2ContentEntry(ATCTContent):
         """
         return self.getForm().findFieldObjectByName(name)
 
+    security.declareProtected(permissions.View, 'tag')
+    def tag(self, **kwargs):
+        """
+         Just in case the form has a File field called image and marked
+        "as image"
+        """
+        import pdb;pdb.set_trace()
+        image = self.getField('image')
+        if image and image.__class__.__name__=='XImageField':
+            return self.getField('image').tag(self, **kwargs)
+
     def __bobo_traverse__(self, REQUEST, name):
         """
         Transparent access to image scales of image fields
         on content.
         """
         if name.startswith('image_'):
-            name = name[len('image_'):]
-            split = name.rsplit('_', 1)
-            if len(split) == 2:
-                # has scale with it
-                fieldname, scale = split
-            else:
-                fieldname = name
-                scale = None
+            fieldname = 'image'
+            scale = name[len('image_'):]
             field = self.getField(fieldname)
             image = None
             if field and \
