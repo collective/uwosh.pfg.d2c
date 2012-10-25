@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <object name="FormSaveData2ContentEntry"
    meta_type="Factory-based Type Information with dynamic views"
-   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">Save Data to Content Entry</property>
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   i18n:domain="uwosh.pfg.d2c">
+ <property name="title" i18n:translate="">Save Data to Content Entry</property>
  <property
-    name="description">An entry for a the content data adapter.</property>
+    name="description" i18n:translate="">An entry for the content data adapter.</property>
  <property name="content_icon">FormAction.gif</property>
  <property name="content_meta_type">FormSaveData2ContentEntry</property>
  <property name="product">uwosh.pfg.d2c</property>

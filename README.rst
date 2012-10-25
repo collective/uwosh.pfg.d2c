@@ -25,8 +25,7 @@ also be used to store form data - whether added to types tool via code,
 genericsetup profile or by manually copying the FormSaveData2ContentEntry
 FTI in portal_types tool (and then renaming it appropriately).
 
-The type names can be translated simply by adding them to
-plone.po in the language-specific locale/LC_MESSAGES subdirectory.
+The type names can be translated using the product's domain.
 
 
 Upgrading to 2.0
@@ -49,7 +48,7 @@ Placeful Workflows
 It is often very useful to assign a placeful workflow onto a 
 save data content type. Normally, this is rather cumbersome to
 do; however, d2c now provides a nice widget to make this sort
-of action automatic(automatically create missing workflow policy).
+of action automatic (automatically create missing workflow policy).
 
 
 Compatibility
@@ -75,6 +74,9 @@ D2C Form Images
 Since D2C 2.1, there has been the ability for PFG file fields to behave
 like plone image fields with scales. Just select the 'Is Image' checkbox
 in the PFG file field settings.
+
+Rember to use "image" as id for the image field to use it in views like
+folder summary. 
 
 To access scales for an image, you must construct a url like::
 

@@ -1,6 +1,21 @@
 Changelog
 =========
 
+2.3.0 ~ Unreleased
+------------------
+
+- fixed a typo in the main configure.zcml [keul]
+- refactoring of all the i18n generation and structure,
+  now i18ndude compatible [keul]
+- restored compatibility with Plone 3.3 [keul]
+- fixed an issue with the "Add new type" popup if you press "cancel" [keul]
+- fixed issues when adding new save data types [keul]
+- some usability issues and bugs fixed in the JavaScript widget [keul]
+- removed dependency on archetypes.referencebrowserwidget (not used anywhere)
+  [keul]
+- generated contents now implements the "tag" method, so can be called from
+  a folder summary view [keul]
+
 2.2.1 ~ unreleased
 ------------------
 

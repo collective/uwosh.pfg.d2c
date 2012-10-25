@@ -1,91 +1,89 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: 2012-10-24 15:10+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2011-02-09 08:46+0200\n"
+"Last-Translator: Luca Fabbri <keul@redturtle.it>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: uwosh.pfg.d2c\n"
+"Domain: DOMAIN\n"
+"Report-Msgid-Bugs-To: \n"
 
 msgid "A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
-msgstr ""
+msgstr "Un adattatore per PloneFormGen che salva i dati del form su un contenuto reale. In questo modo è ancora possibile usare i permessi, worfklow, etc sui dati."
 
 #: ../profiles/default/types/FormSaveData2ContentAdapter.xml
 msgid "A form action adapter that will save form input data to a content type."
-msgstr ""
+msgstr "Un adattatore che salverà i dati del form in un contenuto"
 
 #: ../profiles/default/types/FormSaveData2ContentEntry.xml
 msgid "An entry for the content data adapter."
-msgstr ""
+msgstr "Un elemento per l'adattatore di salvataggio dati"
 
 msgid "PloneFormGen Save Data to Content (d2c)"
-msgstr ""
+msgstr "PloneFormGen Salva Dati su Contenuto (d2c)"
 
 #: ../profiles/default/types/FormSaveData2ContentAdapter.xml
 msgid "Save Data to Content Adapter"
-msgstr ""
+msgstr "Adattatore Salva Dati su Contenuto"
 
 #: ../profiles/default/types/FormSaveData2ContentEntry.xml
 msgid "Save Data to Content Entry"
-msgstr ""
+msgstr "Elemento del Salva Dati su Contenuto"
 
 #. Default: "A TALES expression that will be evaluated to determine the title for entry"
 #: ../content/savedataadapter.py:113
 msgid "help_dynamictitle_text"
-msgstr ""
+msgstr "Un'espressione TALES che verrà valutata per determinare il titolo dell'elemento"
 
 #. Default: "Avoid checking if the user has permission to create the content data. You will almost always want this checked; otherwise, anonymous users will most likely not be able to submit your forms."
 #: ../content/savedataadapter.py:56
 msgid "help_savecontentadapter_avoidsecuritychecks"
-msgstr ""
+msgstr "Evita la verifica se l'utente ha i permessi per creare contenuti. Nella maggior parte dei casi vorrai mantenere questo comportamento; in caso contrario gli utenti anonimi non potranno usare il form."
 
 #. Default: "Portal type to use for the saved data. Leave as default if you're unsure of what this does. If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly."
 #: ../content/savedataadapter.py:90
 msgid "help_savecontentadapter_entrytype"
-msgstr ""
+msgstr "Tipo di contenuto da usare per i dati salvati. Lascia il default se non sei sicuro di cosa fare qui. Se selezioni un tipo Plone standard, devi essere certo che i nomi dei campi siano nello stesso ordine per memorizzarli correttamente."
 
 #. Default: "Generate nice ids from the title field. If this is unchecked, the object id will be generated from the date of creation. Respects avoid security checks setting."
 #: ../content/savedataadapter.py:125
 msgid "help_savecontentadapter_niceIds"
-msgstr ""
+msgstr "Genera id leggibili partendo dal titolo. Se questo è deselezionato gli id dei contenuti saranno generati partendo dalla data di creazione. Rispetta l'impostazione di verifica della sicurezza."
 
 #. Default: "Select a field to be used as the title of the entries. You will have to reindex previous form results for you to notice most changes. You can edit each form result to force reindexing."
 #: ../content/savedataadapter.py:71
 msgid "help_savecontentadapter_title"
-msgstr ""
+msgstr "Seleziona un campo che sarà usato come titolo degli elementi generati. Dovrai reindicizzare i contenuti già creati per sentire gli effetti della modifica. Puoi modificare ogni contenuti per forzarne l'indicizzazione."
 
 #. Default: "Dynamic title override"
 #: ../content/savedataadapter.py:111
 msgid "label_dynamictitle_text"
-msgstr ""
+msgstr "Sostituizione dinamica del titolo"
 
 #. Default: "Avoid Security Checks"
 #: ../content/savedataadapter.py:54
 msgid "label_savecontentadapter_avoidsecuritychecks"
-msgstr ""
+msgstr "Evita i controlli di sicurezza"
 
 #. Default: "Saved entry content type"
 #: ../content/savedataadapter.py:87
 msgid "label_savecontentadapter_entrytype"
-msgstr ""
+msgstr "Tipo di contenuto dei dati salvati"
 
 #. Default: "Nice Ids"
 #: ../content/savedataadapter.py:123
 msgid "label_savecontentadapter_niceIds"
-msgstr ""
+msgstr "Id leggibili"
 
 #. Default: "Title Field"
 #: ../content/savedataadapter.py:69
 msgid "label_savecontentadapter_title"
-msgstr ""
+msgstr "Campo Titolo"
 

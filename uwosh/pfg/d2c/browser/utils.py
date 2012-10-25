@@ -106,7 +106,7 @@ class PlacefulWorkflow(BrowserView):
         if not placeful:
             return json.dumps({'status': 'error',
                                'msg': 'placeful workflow not installed'})
-        return self.executeAsManager(self._getAvailableWorkflows, placeful)
+        return executeAsManager(self.context, self._getAvailableWorkflows, placeful)
 
     def setWorkflowPolicy(self, placeful, id):
         workflow_id = id
