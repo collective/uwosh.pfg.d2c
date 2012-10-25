@@ -81,7 +81,7 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
         StringField("entryType",
             default="FormSaveData2ContentEntry",
             searchable=False,
-            required=False,
+            required=True,
             mutator='setEntryType',
             widget=SelectionWidget(
                 label=_('label_savecontentadapter_entrytype',
@@ -170,7 +170,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         if "FormSaveData2ContentAdapter" in derived_types:
             del derived_types["FormSaveData2ContentAdapter"]
 
-        return DisplayList(derived_types.items())
+        return DisplayList([(t[0], _(t[1])) for t in derived_types.items()])
 
     # add the selected entry type to allowed types if it isn't
     def setEntryType(self, entry_type):

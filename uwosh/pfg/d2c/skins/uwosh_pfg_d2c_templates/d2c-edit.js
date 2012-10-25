@@ -50,27 +50,29 @@ $(document).ready(function(){
 
     submitbtn.click(function(){
         var name = prompt("Please enter a name for the type.");
-        $('#kss-spinner').show();
-        $.ajax({
-            url : '@@add-d2c-type',
-            data : {
-                name: name
-            },
-            type: 'POST',
-            dataType: 'json',
-            success: function(data){
-                $('#kss-spinner').hide();
-                if(data.status == 'success'){
-                    var input = $('<input type="radio" value="' + data.id + '" name="entryType" class="noborder blurrable" /> ');
-                    radios.append(input);
-                    input[0].checked = true;
-                    radios.append(' <label> ' + data.title + linkhtml + '</label>');
-                    radios.append('<br />');
-                }else{
-                    alert('An error occurred trying to add. "' + data.msg + '"');
-                }
-            }
-        })
+		if (name) {
+	        $('#kss-spinner').show();
+	        $.ajax({
+	            url : '@@add-d2c-type',
+	            data : {
+	                name: name
+	            },
+	            type: 'POST',
+	            dataType: 'json',
+	            success: function(data){
+	                $('#kss-spinner').hide();
+	                if(data.status == 'success'){
+	                    var input = $('<input type="radio" value="' + data.id + '" name="entryType" class="noborder blurrable" /> ');
+	                    radios.append(input);
+	                    input[0].checked = true;
+	                    radios.append(' <label> ' + data.title + linkhtml + '</label>');
+	                    radios.append('<br />');
+	                }else{
+	                    alert('An error occurred trying to add. "' + data.msg + '"');
+	                }
+	            }
+	        })			
+		}
         return false;  
     });
 
@@ -126,4 +128,4 @@ $(document).ready(function(){
         return false; 
     });
 });
-})(jq)
+})(jQuery)

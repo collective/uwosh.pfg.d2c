@@ -25,8 +25,7 @@ also be used to store form data - whether added to types tool via code,
 genericsetup profile or by manually copying the FormSaveData2ContentEntry
 FTI in portal_types tool (and then renaming it appropriately).
 
-The type names can be translated simply by adding them to
-plone.po in the language-specific locale/LC_MESSAGES subdirectory.
+The type names can be translated using the product's domain.
 
 
 Upgrading to 2.0
