@@ -3,7 +3,7 @@ $(document).ready(function(){
     var linkhtml = ' ( <a href="#" class="delete-d2c">X</a> )';
     var form = $('<form><input type="submit" name="submit" value="Add New Type" /></form>');
     var submitbtn = form.find('input');
-    var widget = $('.template-base_edit.portaltype-formsavedata2contentadapter .kssattr-atfieldname-entryType');
+    var widget = $('.template-base_edit .kssattr-atfieldname-entryType');
     var radios = widget.find('#entryType');
     if(widget.size() == 1){
         $.ajax({
@@ -79,7 +79,7 @@ $(document).ready(function(){
     var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>Assign Workflow Here</span>:</label><br /></div>');
     var button = $('<button>Assign Here</button>');
     var content = $('#fieldset-default');
-    if($('.portaltype-formsavedata2contentadapter.template-base_edit #archetypes-fieldname-avoidSecurityChecks').size() == 1){
+    if($('#archetypes-fieldname-avoidSecurityChecks').size() == 1){
         $('#kss-spinner').show();
         $.ajax({
             url: '@@d2c-availabe-workflows',
