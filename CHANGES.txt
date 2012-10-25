@@ -15,12 +15,8 @@ Changelog
   [keul]
 - generated contents now implements the "tag" method, so can be called from
   a folder summary view [keul]
-
-2.2.1 ~ unreleased
-------------------
-
 - fix handling when getting image field fails
-
+  [vangheem]
 
 2.2.0 ~ 2012-10-23
 ------------------
