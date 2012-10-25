@@ -6,10 +6,11 @@ Changelog
 
 - fixed a typo in the main configure.zcml [keul]
 - refactoring of all the i18n generation and structure,
-  now i18ndude compatible  [keul]
+  now i18ndude compatible [keul]
 - restored compatibility with Plone 3.3 [keul]
 - fixed an issue with the "Add new type" popup if you press "cancel" [keul]
 - fixed issues when adding new save data types [keul]
+- some usability issues and bugs fixed in the JavaScript widget [keul]
 
 2.2.0 ~ 2012-10-23
 ------------------

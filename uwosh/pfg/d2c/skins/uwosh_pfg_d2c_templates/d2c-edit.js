@@ -1,10 +1,10 @@
 (function($){
 $(document).ready(function(){
-    var linkhtml = ' ( <a href="#" class="delete-d2c">X</a> )';
+    var linkhtml = ' <a href="#" class="delete-d2c"><img src="' + portal_url + '/delete_icon.gif" alt="X" /></a>';
     var form = $('<form><input type="submit" name="submit" value="Add New Type" /></form>');
     var submitbtn = form.find('input');
     var widget = $('.template-base_edit .kssattr-atfieldname-entryType');
-    var radios = widget.find('#entryType');
+    var radios = widget.find('[name=entryType]').parent();
     if(widget.size() == 1){
         $.ajax({
             url: '@@has-d2c-type-permission',
@@ -14,7 +14,7 @@ $(document).ready(function(){
                     widget.append(form);          
                     radios.find('label').filter(function(){
                         var html = $(this).html();
-                        return $(this).prev().attr('value') != 'FormSaveData2ContentEntry';
+                        return $(this).prev().is('input') && $(this).prev().attr('value') != 'FormSaveData2ContentEntry';
                     }).append(linkhtml);
                 }
             }
@@ -38,7 +38,7 @@ $(document).ready(function(){
                         var id = data.id;
                         var input = widget.find('input[value="' + id + '"]');
                         input.next().remove();
-						input.next().remove(); // one more for the BR
+                        input.next().remove(); // one more for the BR
                         input.remove();
                     }else{
                         alert('An error occurred trying to delete. "' + data.msg + '"');
@@ -64,12 +64,15 @@ $(document).ready(function(){
                     $('#kss-spinner').hide();
                     if(data.status == 'success'){
                         var input = $('<input type="radio" value="' + data.id + '" name="entryType" class="noborder blurrable" /> ');
-                        radios.append(input);
+                        var last = radios.find('br:last');
                         input[0].checked = true;
-                        radios.append(' <label> ' + data.title + linkhtml + '</label>');
-                        radios.append('<br />');
+                        last.after('<br />');
+                        last.after(' <label> ' + data.title + linkhtml + '</label>');
+                        last.after(input);
                     }else{
-                        alert('An error occurred trying to add. "' + data.msg + '"');
+                        if (window.console) {
+                            window.console.log('An error occurred trying to add. "' + data.msg + '"');
+                        }
                     }
                 }
             })
@@ -103,7 +106,9 @@ $(document).ready(function(){
                     field.append(button);
                     content.prepend(field);
                 }else{
-                    console.log('An error occurred trying to get available workflows. "' + data.msg + '"');
+                    if (window.console) {
+                        console.log('An error occurred trying to get available workflows. "' + data.msg + '"');
+                    }
                 }
             }
         });

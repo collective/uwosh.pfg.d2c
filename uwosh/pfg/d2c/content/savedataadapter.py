@@ -179,12 +179,15 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
         pt = getToolByName(self, 'portal_types')
         derived_types = {}
         for fti in pt.listTypeInfo():
-            if fti.getProperty('product') == 'uwosh.pfg.d2c':
+            # first item always "FormSaveData2ContentEntry"
+            if fti.getId()=='FormSaveData2ContentEntry':
+                first = fti
+            elif fti.getProperty('product') == 'uwosh.pfg.d2c':
                 derived_types[fti.getId()] = fti.getProperty('title')
         if "FormSaveData2ContentAdapter" in derived_types:
             del derived_types["FormSaveData2ContentAdapter"]
-
-        return DisplayList([(t[0], _(t[1])) for t in derived_types.items()])
+        return DisplayList([(first.getId(), _(first.getProperty('title')))] + \
+                                    [(t[0], _(t[1])) for t in derived_types.items()])
 
     # add the selected entry type to allowed types if it isn't
     def setEntryType(self, entry_type):
