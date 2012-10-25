@@ -148,7 +148,6 @@ class FormSaveData2ContentEntry(ATCTContent):
          Just in case the form has a File field called image and marked
         "as image"
         """
-        import pdb;pdb.set_trace()
         image = self.getField('image')
         if image and image.__class__.__name__=='XImageField':
             return self.getField('image').tag(self, **kwargs)
