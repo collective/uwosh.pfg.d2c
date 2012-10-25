@@ -1,3 +1,6 @@
+include *.rst
+include *.txt
+
 recursive-include uwosh *
 global-exclude *pyc
 recursive-include docs *
