@@ -20,6 +20,19 @@ except:
     from Products.ATContentTypes.content.folder import ATFolderSchema
     from Products.ATContentTypes.content.folder import ATFolder
 
+# Problematic interfaces on Plone 3
+toimplement = []
+try:
+    from plone.folder.interfaces import IOrderable
+    toimplement.append(IOrderable)
+except ImportError:
+    pass
+try:
+    from plone.app.folder.folder import IATUnifiedFolder
+    toimplement.append(IATUnifiedFolder)
+except ImportError:
+    pass
+
 from Products.PloneFormGen.content.actionAdapter import FormActionAdapter
 from Products.PloneFormGen.content.actionAdapter import FormAdapterSchema
 from Products.PloneFormGen.interfaces import IPloneFormGenActionAdapter
@@ -139,7 +152,8 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
 
     implements(IFormSaveData2ContentAdapter,
                IPloneFormGenActionAdapter,
-               IATFolder)
+               IATFolder,
+               *toimplement)
     schema = FormSaveData2ContentAdapterSchema
 
     meta_type = portal_type = 'FormSaveData2ContentAdapter'
