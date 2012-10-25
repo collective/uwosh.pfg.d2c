@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.2.1 ~ unreleased
+------------------
+
+- fix handling when getting image field fails
+
+
 2.2.0 ~ 2012-10-23
 ------------------
 

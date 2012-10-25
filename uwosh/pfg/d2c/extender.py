@@ -236,7 +236,7 @@ class ContentEntryExtender(object):
                 macro = getattr(getattr(field, 'widget', None), 'macro', None)
                 if 'XFileField' == klassname:
                     isImField = objfield.getField('isImage')
-                    if isImField.get(objfield):
+                    if isImField and isImField.get(objfield):
                         klass = XImageField
                     else:
                         klass = FIELDS[klassname]
