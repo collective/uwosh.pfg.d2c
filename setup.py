@@ -49,7 +49,6 @@ setup(name='uwosh.pfg.d2c',
         'Products.PloneFormGen',
         'archetypes.schemaextender',
         'Products.TALESField',
-        'archetypes.referencebrowserwidget'
       ],
       tests_require=tests_require,
       test_suite='uwosh.pfg.d2c.tests',

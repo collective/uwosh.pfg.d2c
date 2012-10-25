@@ -11,6 +11,8 @@ Changelog
 - fixed an issue with the "Add new type" popup if you press "cancel" [keul]
 - fixed issues when adding new save data types [keul]
 - some usability issues and bugs fixed in the JavaScript widget [keul]
+- removed dependency on archetypes.referencebrowserwidget (not used anywhere)
+  [keul]
 
 2.2.0 ~ 2012-10-23
 ------------------
