@@ -1,7 +1,7 @@
 (function($){
 $(document).ready(function(){
     var linkhtml = ' <a href="#" class="delete-d2c"><img src="' + portal_url + '/delete_icon.gif" alt="X" /></a>';
-    var form = $('<form><input type="submit" name="submit" value="Add New Type" /></form>');
+    var form = $('<form><input type="submit" name="submit" value="' + $('#d2c-i18n-messages .addNewType').text() + '" /></form>');
     var submitbtn = form.find('input');
     var widget = $('.template-base_edit .kssattr-atfieldname-entryType');
     var radios = widget.find('[name=entryType]').parent();
@@ -23,7 +23,7 @@ $(document).ready(function(){
     
     $('a.delete-d2c').live('click', function(){
         var link = $(this);
-        if(confirm('Are you sure you want to delete this type? If you have existing items of this type, it could screw things up!')){
+        if(confirm($('#d2c-i18n-messages .confirmDeletion').text())){
             $('#kss-spinner').show();
             $.ajax({
                 url: '@@delete-d2c-type',
@@ -50,7 +50,7 @@ $(document).ready(function(){
     });
 
     submitbtn.click(function(){
-        var name = prompt("Please enter a name for the type.");
+        var name = prompt($('#d2c-i18n-messages .newTypeName').text());
         if (name) {
             $('#kss-spinner').show();
             $.ajax({
@@ -80,8 +80,8 @@ $(document).ready(function(){
         return false;  
     });
 
-    var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>Assign Workflow Here</span>:</label><br /></div>');
-    var button = $('<button>Assign Here</button>');
+    var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>' + $('#d2c-i18n-messages .newWorkflow').text() + '</span>:</label><br /></div>');
+    var button = $('<button>' + $('#d2c-i18n-messages .assignHere').text() + '</button>');
     var content = $('#fieldset-default');
     if($('#archetypes-fieldname-avoidSecurityChecks').size() == 1){
         $('#kss-spinner').show();

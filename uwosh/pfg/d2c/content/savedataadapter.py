@@ -107,7 +107,8 @@ FormSaveData2ContentAdapterSchema = ATFolderSchema.copy() + \
                                       u"make sure the field names are the same in order "
                                       u"for the data to store correctly."
                               ),
-                format='radio'
+                format='radio',
+                macro="d2c-adapter-selection",
             ),
             vocabulary='entry_types'
         ),

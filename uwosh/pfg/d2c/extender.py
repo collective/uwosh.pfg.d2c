@@ -13,6 +13,8 @@ from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
 from Products.PloneFormGen.content.fields import HtmlTextField, \
     PlainTextField, FGFileField
 
+from uwosh.pfg.d2c import pfgMessageFactory as _
+
 from archetypes.schemaextender.field import ExtensionField
 from plone.memoize.instance import memoize
 from AccessControl import ClassSecurityInfo
@@ -275,8 +277,9 @@ class PFGFileFieldExtender(object):
     fields = [
         XBooleanField('isImage',
             widget=atapi.BooleanWidget(
-                label=u"Is Image",
-                description=u"Only to be used for d2c generated types")
+                label=_(u"Is Image"),
+                description=_(u"Only to be used for d2c generated types"),
+            )
         )
     ]
 

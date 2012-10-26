@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-10-24 15:10+0000\n"
+"POT-Creation-Date: 2012-10-26 09:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,32 @@ msgstr ""
 msgid "A form action adapter that will save form input data to a content type."
 msgstr ""
 
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:22
+msgid "Add New Type"
+msgstr ""
+
 #: ../profiles/default/types/FormSaveData2ContentEntry.xml
 msgid "An entry for the content data adapter."
+msgstr ""
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:29
+msgid "Assign Here"
+msgstr ""
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:28
+msgid "Assign Workflow Here"
+msgstr ""
+
+#: ../extender.py:280
+msgid "Is Image"
+msgstr ""
+
+#: ../extender.py:281
+msgid "Only to be used for d2c generated types"
+msgstr ""
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:27
+msgid "Please enter a name for the type."
 msgstr ""
 
 msgid "PloneFormGen Save Data to Content (d2c)"
@@ -39,53 +63,62 @@ msgstr ""
 msgid "Save Data to Content Entry"
 msgstr ""
 
+#. Default: "Are you sure you want to delete this type? If you have existing items of this type, it could screw things up!"
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:23
+msgid "confirm-deletion"
+msgstr ""
+
 #. Default: "A TALES expression that will be evaluated to determine the title for entry"
-#: ../content/savedataadapter.py:113
+#: ../content/savedataadapter.py:127
 msgid "help_dynamictitle_text"
 msgstr ""
 
 #. Default: "Avoid checking if the user has permission to create the content data. You will almost always want this checked; otherwise, anonymous users will most likely not be able to submit your forms."
-#: ../content/savedataadapter.py:56
+#: ../content/savedataadapter.py:69
 msgid "help_savecontentadapter_avoidsecuritychecks"
 msgstr ""
 
 #. Default: "Portal type to use for the saved data. Leave as default if you're unsure of what this does. If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly."
-#: ../content/savedataadapter.py:90
+#: ../content/savedataadapter.py:103
 msgid "help_savecontentadapter_entrytype"
 msgstr ""
 
 #. Default: "Generate nice ids from the title field. If this is unchecked, the object id will be generated from the date of creation. Respects avoid security checks setting."
-#: ../content/savedataadapter.py:125
+#: ../content/savedataadapter.py:139
 msgid "help_savecontentadapter_niceIds"
 msgstr ""
 
 #. Default: "Select a field to be used as the title of the entries. You will have to reindex previous form results for you to notice most changes. You can edit each form result to force reindexing."
-#: ../content/savedataadapter.py:71
+#: ../content/savedataadapter.py:84
 msgid "help_savecontentadapter_title"
 msgstr ""
 
 #. Default: "Dynamic title override"
-#: ../content/savedataadapter.py:111
+#: ../content/savedataadapter.py:125
 msgid "label_dynamictitle_text"
 msgstr ""
 
 #. Default: "Avoid Security Checks"
-#: ../content/savedataadapter.py:54
+#: ../content/savedataadapter.py:67
 msgid "label_savecontentadapter_avoidsecuritychecks"
 msgstr ""
 
 #. Default: "Saved entry content type"
-#: ../content/savedataadapter.py:87
+#: ../content/savedataadapter.py:100
 msgid "label_savecontentadapter_entrytype"
 msgstr ""
 
 #. Default: "Nice Ids"
-#: ../content/savedataadapter.py:123
+#: ../content/savedataadapter.py:137
 msgid "label_savecontentadapter_niceIds"
 msgstr ""
 
 #. Default: "Title Field"
-#: ../content/savedataadapter.py:69
+#: ../content/savedataadapter.py:82
 msgid "label_savecontentadapter_title"
+msgstr ""
+
+#: ../content/savedataadapter.py:190
+msgid "title"
 msgstr ""
 

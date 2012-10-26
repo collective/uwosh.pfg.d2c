@@ -81,6 +81,7 @@ class PlacefulWorkflow(BrowserView):
 
     def _getAvailableWorkflows(self, placeful):
         pw = getToolByName(self.context, 'portal_workflow')
+        ttool = getToolByName(self.context, 'translation_service')
         config = placeful.getWorkflowPolicyConfig(self.context)
         policy_id = None
         if config:
@@ -92,7 +93,8 @@ class PlacefulWorkflow(BrowserView):
             workflowpid = _builtin_policies.get(workflow.id, workflow.id)
             workflows.append({
                 'id': workflow.id,
-                'title': workflow.title,
+                'title': ttool.utranslate(workflow.title, domain='plone',
+                                          context=self.context),
                 'selected': workflowpid == policy_id
             })
         return json.dumps({
