@@ -50,6 +50,9 @@ save data content type. Normally, this is rather cumbersome to
 do; however, d2c now provides a nice widget to make this sort
 of action automatic (automatically create missing workflow policy).
 
+The new widget will be automatically rendered when CMFPlecafulWorfklow
+is installed in your site.
+
 
 Compatibility
 -------------
