@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.0b2 ~ Unreleased
+2.3.0b2 ~ 2012-11-26
 --------------------
 
 - fix rich text field use of default_output_type value[vangheem]
