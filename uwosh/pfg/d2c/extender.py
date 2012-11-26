@@ -38,7 +38,7 @@ except:
 # extra field attributes to copy over.
 extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators', 'fgDonationLevels',
-    'fgCost', 'fgRecurForever', 'fgAllowRecurringPayments'
+    'fgCost', 'fgRecurForever', 'fgAllowRecurringPayments', 'default_output_type'
 ]
 
 # instance values to copy over

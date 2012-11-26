@@ -4,6 +4,7 @@ Changelog
 2.3.0b2 ~ Unreleased
 --------------------
 
+- fix rich text field use of default_output_type value[vangheem]
 - restored finnish translation lost in the beta1 version [keul]
 - covered all remaining missing translations
   (also JavaScript messages) [keul]
