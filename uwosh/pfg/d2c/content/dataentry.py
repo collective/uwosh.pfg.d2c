@@ -149,7 +149,7 @@ class FormSaveData2ContentEntry(ATCTContent):
         "as image"
         """
         image = self.getField('image')
-        if image and image.__class__.__name__=='XImageField':
+        if image and image.__class__.__name__ == 'XImageField':
             return self.getField('image').tag(self, **kwargs)
 
     def __bobo_traverse__(self, REQUEST, name):
@@ -158,8 +158,14 @@ class FormSaveData2ContentEntry(ATCTContent):
         on content.
         """
         if name.startswith('image_'):
-            fieldname = 'image'
-            scale = name[len('image_'):]
+            name = name[len('image_'):]
+            split = name.rsplit('_', 1)
+            if len(split) == 2:
+                # has scale with it
+                fieldname, scale = split
+            else:
+                fieldname = name
+                scale = None
             field = self.getField(fieldname)
             image = None
             if field and \
