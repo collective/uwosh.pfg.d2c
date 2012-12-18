@@ -89,6 +89,10 @@ class XImageField(ExtensionField, ImageField):
     _properties = ImageField._properties.copy()
     _properties.update({'sizes': IMAGE_SIZES})
 
+    def set(self, instance, value, **kwargs):
+        if value == "DELETE_FILE":
+            value = "DELETE_IMAGE"
+        return super(XImageField, self).set(instance, value, **kwargs)
 
 class XStringVocabularyField(ExtensionField, StringVocabularyField):
     security = ClassSecurityInfo()

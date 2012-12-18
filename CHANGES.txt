@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.3.0b3 ~ unreleased
+--------------------
+
+- override set of image field to use DELETE_IMAGE
+  instead of DELETE_FILE [vangheem]
+
+
 2.3.0b2 ~ 2012-11-26
 --------------------
 
