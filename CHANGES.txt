@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.0b3 ~ unreleased
+2.3.0b3 ~ 2012-12-18
 --------------------
 
 - override set of image field to use DELETE_IMAGE
