@@ -11,6 +11,7 @@ from uwosh.pfg.d2c.config import PROJECTNAME
 from Products.ATContentTypes.content.base import ATCTContent
 from Products.ATContentTypes.content.schemata import ATContentTypeSchema
 from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntry
+from Products.PloneFormGen.interfaces import IPloneFormGenForm
 from zope.interface import implements
 
 from Products.CMFCore import permissions
@@ -46,7 +47,7 @@ class FormSaveData2ContentEntry(ATCTContent):
             adapter = self.getParentNode()
 
         form = adapter.getParentNode()
-        if getattr(form, 'portal_type', None) != 'FormFolder':
+        if not IPloneFormGenForm.providedBy(form):
             form = None
         return form
 
