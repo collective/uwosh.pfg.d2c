@@ -3,6 +3,8 @@ Changelog
 
 2.3.0b4 ~ unreleased
 --------------------
+- In FormSaveData2ContentEntry/getForm change the way to check the form: 
+  right now is not by portal_type but by interface [lucabel]
 
 2.3.0b3 ~ 2012-12-18
 --------------------
