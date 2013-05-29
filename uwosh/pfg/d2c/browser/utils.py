@@ -1,4 +1,9 @@
-from zope.app.component.hooks import getSite
+try:
+    # Plone < 4.3
+    from zope.app.component.hooks import getSite
+except ImportError:
+    # Plone >= 4.3
+    from zope.component.hooks import getSite # NOQA
 from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.Five import BrowserView
