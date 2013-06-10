@@ -3,5 +3,6 @@
     <import-step id="uwosh.pfg.d2c.install" version="2"
         handler="uwosh.pfg.d2c.exportimport.install"
         title="Installing step for uwosh.pfg.d2c">
+        <dependency step="skins"/>
     </import-step>
 </import-steps>

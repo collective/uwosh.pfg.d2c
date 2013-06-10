@@ -1,9 +1,11 @@
 Changelog
 =========
 
-2.3.2dev ~ unreleased
----------------------
+2.4.0 ~ unreleased
+------------------
 
+- fix d2c skin layer not being above PFG layer. Fixes issues with some fields.
+  [vangheem]
 
 2.3.1 ~ 2013-05-29
 ------------------

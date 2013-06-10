@@ -67,5 +67,12 @@
     handler=".upgrades.upgrade_image_scales"
     profile="uwosh.pfg.d2c:default" />
 
+  <gs:upgradeStep
+    title="uwosh.pfg.d2c upgrade skin layer"
+    description="uwosh.pfg.d2c fix skin layer"
+    source="*"
+    destination="2.4"
+    handler=".upgrades.upgrade_to_2_4"
+    profile="uwosh.pfg.d2c:default" />
 
 </configure>

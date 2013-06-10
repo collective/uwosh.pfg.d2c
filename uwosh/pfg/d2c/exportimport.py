@@ -1,4 +1,5 @@
 from Products.CMFCore.utils import getToolByName
+from uwosh.pfg.d2c.upgrades import default_profile
 
 
 def install(context):
@@ -11,6 +12,9 @@ def install(context):
     qi = getToolByName(site, 'portal_quickinstaller')
     if not qi.isProductInstalled('Products.PloneFormGen'):
         qi.installProduct('Products.PloneFormGen')
+        ps = getToolByName(site, 'portal_setup')
+        # make sure the d2c skin layer is above
+        ps.runImportStepFromProfile(default_profile, 'skins')
 
     types = getToolByName(site, 'portal_types')
     if 'FormFolder' in types.objectIds():

@@ -112,3 +112,7 @@ def upgrade_image_scales(context):
                 except IOError:
                     # bad image...
                     pass
+
+def upgrade_to_2_4(context):
+    context.runImportStepFromProfile(default_profile, 'skins')
+
