@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.4.0 ~ unreleased
+2.4.0 ~ 2013-06-10
 ------------------
 
 - fix d2c skin layer not being above PFG layer. Fixes issues with some fields.
