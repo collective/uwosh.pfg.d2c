@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.4.1 ~ unreleased
+2.4.1 ~ 2013-09-17
 ------------------
 
 - include Products.CMFCore permissions in zcml which will fix potential
