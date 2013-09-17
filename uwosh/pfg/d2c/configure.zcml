@@ -6,13 +6,15 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="uwosh.pfg.d2c">
 
+    <include package="Products.CMFCore" file="permissions.zcml" />
+
     <i18n:registerTranslations directory="locales"/>
 
     <permission
       id="uwosh.pfg.d2c.AddAdapter"
       title="uwosh.pfg.d2c: Add FormSaveData2ContentAdapter"
     />
-    
+
     <permission
       id="uwosh.pfg.d2c.AddEntry"
       title="uwosh.pfg.d2c: Add FormSaveData2ContentEntry"
@@ -27,7 +29,7 @@
     <adapter factory=".extender.PFGFileFieldExtender" 
       provides="archetypes.schemaextender.interfaces.ISchemaExtender"
       name="uwosh.pfg.d2c.filefieldextender" />
-    
+
     <cmf:registerDirectory name="uwosh_pfg_d2c_templates" />
 
     <!-- Register the installation GenericSetup extension profile -->
