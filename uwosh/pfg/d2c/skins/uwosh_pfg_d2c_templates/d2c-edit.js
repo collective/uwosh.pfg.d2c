@@ -3,7 +3,7 @@ $(document).ready(function(){
     var linkhtml = ' <a href="#" class="delete-d2c"><img src="' + portal_url + '/delete_icon.gif" alt="X" /></a>';
     var form = $('<form><input type="submit" name="submit" value="' + $('#d2c-i18n-messages .addNewType').text() + '" /></form>');
     var submitbtn = form.find('input');
-    var widget = $('.template-base_edit .kssattr-atfieldname-entryType');
+    var widget = $('.template-base_edit .kssattr-atfieldname-entryType,.template-base_edit #archetypes-fieldname-entryType');
     var radios = widget.find('[name=entryType]').parent();
     if(widget.size() == 1){
         $.ajax({
