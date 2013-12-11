@@ -92,7 +92,11 @@ class XImageField(ExtensionField, ImageField):
     def set(self, instance, value, **kwargs):
         if value == "DELETE_FILE":
             value = "DELETE_IMAGE"
-        return super(XImageField, self).set(instance, value, **kwargs)
+        try:
+            return super(XImageField, self).set(instance, value, **kwargs)
+        except:
+            pass
+
 
 class XStringVocabularyField(ExtensionField, StringVocabularyField):
     security = ClassSecurityInfo()
