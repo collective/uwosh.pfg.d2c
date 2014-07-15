@@ -120,14 +120,14 @@ class FormSaveData2ContentEntry(ATCTContent):
             return self.getId()
 
     security.declareProtected(permissions.View, 'getValue')
-    def getValue(self, field, default=None):
+    def getValue(self, field, default=None, **kwargs):
         """
         somewhat a replacement for the get generated methods.
         """
         schema = self.Schema()
         field = schema.get(field)
         if field:
-            return field.get(self)
+            return field.get(self, **kwargs)
         else:
             return default
 
