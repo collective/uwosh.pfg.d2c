@@ -5,8 +5,7 @@ from archetypes.schemaextender.interfaces import IBrowserLayerAwareExtender
 from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
-    FixedPointField, FileField, LinesField, IntegerField, ObjectField, \
-    BooleanField, ImageField
+    FixedPointField, LinesField, IntegerField, ObjectField, BooleanField
 from Products.Archetypes import atapi
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
@@ -21,6 +20,11 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import DisplayList
 from uwosh.pfg.d2c.interfaces import ILayer
 from uwosh.pfg.d2c.widgets import DonationWidget
+
+try:
+    from plone.app.blob.field import ImageField, BlobField as FileField
+except ImportError:
+    from Products.Archetypes.Field import ImageField, FileField
 
 try:
     import plone.app.imaging

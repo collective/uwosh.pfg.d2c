@@ -4,6 +4,8 @@ Changelog
 2.4.4 ~ unreleased
 ------------------
 
+- use plone.app.blob for Image and File Fields
+
 - be able to pass in arguments to getValue call
   [vangheem]
 
