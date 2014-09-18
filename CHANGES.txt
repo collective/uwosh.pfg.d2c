@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.4.5 ~ unreleased
+2.4.5 ~ 2014-09-18
 ------------------
 
 - fix image field support to only work on image file types
