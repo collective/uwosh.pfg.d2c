@@ -1,3 +1,4 @@
+import os
 from zope.component import adapts
 from zope.interface import implements
 from archetypes.schemaextender.interfaces import ISchemaExtender
@@ -6,6 +7,7 @@ from interfaces import IFormSaveData2ContentEntry
 from Acquisition import aq_inner
 from Products.Archetypes.Field import TextField, StringField, DateTimeField, \
     FixedPointField, LinesField, IntegerField, ObjectField, BooleanField
+from Products.Archetypes.Widget import ImageWidget
 from Products.Archetypes import atapi
 from Products.PloneFormGen.content.fieldsBase import LinesVocabularyField, \
     StringVocabularyField
@@ -27,7 +29,7 @@ except ImportError:
     from Products.Archetypes.Field import ImageField, FileField
 
 try:
-    import plone.app.imaging
+    import plone.app.imaging  # noqa
     IMAGE_SIZES = None
 except:
     IMAGE_SIZES = {'large': (768, 768),
@@ -42,7 +44,7 @@ except:
 # extra field attributes to copy over.
 extra_fields = [
     'widget', 'questionSet', 'answerSet', 'validators', 'fgDonationLevels',
-    'fgCost', 'fgRecurForever', 'fgAllowRecurringPayments', 'default_output_type'
+    'fgCost', 'fgRecurForever', 'fgAllowRecurringPayments', 'default_output_type'  # noqa
 ]
 
 # instance values to copy over
@@ -106,7 +108,7 @@ class XStringVocabularyField(ExtensionField, StringVocabularyField):
     security = ClassSecurityInfo()
 
     security.declarePublic('Vocabulary')
-    def Vocabulary(self, content_instance=None):
+    def Vocabulary(self, content_instance=None):  # noqa
         """
         Returns a DisplayList.
         """
@@ -220,6 +222,10 @@ CUSTOM_WIDGETS_FOR_MACROS = {
     'donationfield_widget': DonationWidget
 }
 
+CUSTOM_WIDGETS = {
+    XImageField: ImageWidget
+}
+
 
 class ContentEntryExtender(object):
     """
@@ -249,8 +255,16 @@ class ContentEntryExtender(object):
             if klassname in FIELDS:
                 macro = getattr(getattr(field, 'widget', None), 'macro', None)
                 if 'XFileField' == klassname:
+                    valid_image = False
+                    try:
+                        filename = getattr(context, field.getName()).filename
+                        ext = os.path.splitext(filename)[-1].strip('.').lower()
+                        if ext in ('png', 'gif', 'jpg', 'jpeg'):
+                            valid_image = True
+                    except:
+                        pass
                     isImField = objfield.getField('isImage')
-                    if isImField and isImField.get(objfield):
+                    if valid_image and isImField and isImField.get(objfield):
                         klass = XImageField
                     else:
                         klass = FIELDS[klassname]
@@ -267,14 +281,19 @@ class ContentEntryExtender(object):
 
                 if hasattr(objfield, 'getRequired'):
                     newfield.required = objfield.getRequired()
-                fields.append(newfield)
 
                 if macro in CUSTOM_WIDGETS_FOR_MACROS:
                     widget = CUSTOM_WIDGETS_FOR_MACROS[macro](
                         label=field.widget.label,
                         description=field.widget.description,
                         macro=macro)
-                    field.widget = widget
+                    newfield.widget = widget
+                elif klass in CUSTOM_WIDGETS:
+                    widget = CUSTOM_WIDGETS[klass](
+                        label=field.widget.label,
+                        description=field.widget.description)
+                    newfield.widget = widget
+                fields.append(newfield)
 
         return fields
 
@@ -287,7 +306,8 @@ class PFGFileFieldExtender(object):
     layer = ILayer
 
     fields = [
-        XBooleanField('isImage',
+        XBooleanField(
+            'isImage',
             widget=atapi.BooleanWidget(
                 label=_(u"Is Image"),
                 description=_(u"Only to be used for d2c generated types"),
