@@ -119,6 +119,10 @@ class FormSaveData2ContentEntry(ATCTContent):
         else:
             return self.getId()
 
+    security.declareProtected(permissions.View, 'Description')
+    def Description(self):
+        return ''
+
     security.declareProtected(permissions.View, 'getValue')
     def getValue(self, field, default=None, **kwargs):
         """
