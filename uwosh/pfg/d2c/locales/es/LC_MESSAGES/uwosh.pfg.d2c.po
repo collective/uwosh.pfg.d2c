@@ -1,0 +1,148 @@
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-26 09:41+0000\n"
+"PO-Revision-Date: 2015-03-17 23:33-0430\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: ES <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+"Language-Code: es\n"
+"Language-Name: Español\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+msgid "A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
+msgstr ""
+"Un adaptador para el producto PloneFormGen que guarda los datos desde un "
+"formulario en un real tipo de contenido. De esta manera. usted una sera "
+"posible de usar los permisos, flujo de trabajos, etc en el formulario de "
+"datos."
+
+#: ../profiles/default/types/FormSaveData2ContentAdapter.xml
+msgid "A form action adapter that will save form input data to a content type."
+msgstr ""
+"Un adaptador de acción de formulario que guardara la data ingresada en un "
+"formulario en tipos de contenidos."
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:22
+msgid "Add New Type"
+msgstr "Agregar nuevo tipo"
+
+#: ../profiles/default/types/FormSaveData2ContentEntry.xml
+msgid "An entry for the content data adapter."
+msgstr "Un elemento para el adaptador contenido como data."
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:29
+msgid "Assign Here"
+msgstr "Asigne aquí"
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:28
+msgid "Assign Workflow Here"
+msgstr "Asigne flujo de trabajo aquí"
+
+#: ../extender.py:280
+msgid "Is Image"
+msgstr "Es imagen"
+
+#: ../extender.py:281
+msgid "Only to be used for d2c generated types"
+msgstr "Solamente sera usado por tipos de contenidos d2c generados"
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:27
+msgid "Please enter a name for the type."
+msgstr "Por favor, ingrese un nombre para el tipo."
+
+msgid "PloneFormGen Save Data to Content (d2c)"
+msgstr "PloneFormGen Guardar Data a Contenido (d2c)"
+
+#: ../profiles/default/types/FormSaveData2ContentAdapter.xml
+msgid "Save Data to Content Adapter"
+msgstr "Adaptador Guardar Data a Contenido"
+
+#: ../profiles/default/types/FormSaveData2ContentEntry.xml
+msgid "Save Data to Content Entry"
+msgstr "Elemento Guardar Data a Contenido"
+
+#. Default: "Are you sure you want to delete this type? If you have existing items of this type, it could screw things up!"
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:23
+msgid "confirm-deletion"
+msgstr ""
+"¿Seguro que quieres borrar este tipo?. ¡Si usted tiene elementos existentes "
+"de este tipo, se podría enredar las cosas!"
+
+#. Default: "A TALES expression that will be evaluated to determine the title for entry"
+#: ../content/savedataadapter.py:127
+msgid "help_dynamictitle_text"
+msgstr ""
+"Una expresión TALES será evaluada para determinar el título del elemento"
+
+#. Default: "Avoid checking if the user has permission to create the content data. You will almost always want this checked; otherwise, anonymous users will most likely not be able to submit your forms."
+#: ../content/savedataadapter.py:69
+msgid "help_savecontentadapter_avoidsecuritychecks"
+msgstr ""
+"Evite comprobar si el usuario tiene permiso para crear la data de contenido. "
+"Es casi siempre quieren una revisión de esto; De lo contrario, los usuarios "
+"anónimos muy probablemente no será capaz de presentar sus formularios."
+
+#. Default: "Portal type to use for the saved data. Leave as default if you're unsure of what this does. If you select a plone standard type, you must make sure the field names are the same in order for the data to store correctly."
+#: ../content/savedataadapter.py:103
+msgid "help_savecontentadapter_entrytype"
+msgstr ""
+"Tipo de contenido debe usar para los datos guardados. Deja por defecto si no "
+"estás seguro de lo que esto hace. Si selecciona un tipo estándar de Plone, "
+"usted debe asegurarse que los nombres de campo sean los mismos a fin de que "
+"los datos que almacenan correctamente."
+
+#. Default: "Generate nice ids from the title field. If this is unchecked, the object id will be generated from the date of creation. Respects avoid security checks setting."
+#: ../content/savedataadapter.py:139
+msgid "help_savecontentadapter_niceIds"
+msgstr ""
+"Generar ids legibles del campo de título. Si esto es desmarcada, el ID de "
+"objeto se generará a partir de la fecha de creación. Respeta evitar ajuste "
+"los controles de seguridad."
+
+#. Default: "Select a field to be used as the title of the entries. You will have to reindex previous form results for you to notice most changes. You can edit each form result to force reindexing."
+#: ../content/savedataadapter.py:84
+msgid "help_savecontentadapter_title"
+msgstr ""
+"Seleccionar un campo para ser usado como el título de los elementos. Usted "
+"tendrá que indexar los resultados del formulario anteriores para que usted "
+"note la mayoría de los cambios. Puede editar cada resultado de forma de "
+"forzar a indexación."
+
+#. Default: "Dynamic title override"
+#: ../content/savedataadapter.py:125
+msgid "label_dynamictitle_text"
+msgstr "Sustitución de título dinámico"
+
+#. Default: "Avoid Security Checks"
+#: ../content/savedataadapter.py:67
+msgid "label_savecontentadapter_avoidsecuritychecks"
+msgstr "Evite Controles de Seguridad"
+
+#. Default: "Saved entry content type"
+#: ../content/savedataadapter.py:100
+msgid "label_savecontentadapter_entrytype"
+msgstr "Tipo de contenido elemento guardado"
+
+#. Default: "Nice Ids"
+#: ../content/savedataadapter.py:137
+msgid "label_savecontentadapter_niceIds"
+msgstr "Ids legibles"
+
+#. Default: "Title Field"
+#: ../content/savedataadapter.py:82
+msgid "label_savecontentadapter_title"
+msgstr "Campo Título"
+
+#: ../content/savedataadapter.py:190
+msgid "title"
+msgstr "título"
