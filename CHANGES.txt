@@ -4,6 +4,13 @@ Changelog
 2.4.7 ~ unreleased
 ------------------
 
+- Added German translation.
+  [acsr]
+
+
+2.4.7 ~ unreleased
+------------------
+
 - Added spanish translation.
   [macagua]
 
