@@ -7,6 +7,11 @@ Changelog
 - Added German translation.
   [acsr]
 
+- Fix bug where file attachments were created as non-blob files
+  stored in a blob field. This fixes
+  https://github.com/collective/uwosh.pfg.d2c/issues/20
+  [davisagli]
+
 
 2.4.7 ~ unreleased
 ------------------
