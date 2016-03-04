@@ -256,10 +256,7 @@ class FormSaveData2ContentAdapter(ATFolder, FormActionAdapter):
                     value = REQUEST.form.get('%s_amount' % name)
 
             if field.__class__ == FileField:
-                fieldobj = form.findFieldObjectByName(name)
-                isImField = fieldobj and fieldobj.getField('isImage')
-                if isImField and isImField.get(fieldobj):
-                    field = obj.getField(name)
+                field = obj.getField(name)
                 name += '_file'
                 value = REQUEST.form.get(name)
                 if hasattr(value, 'filename') and value.filename:
