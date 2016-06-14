@@ -4,6 +4,11 @@ Changelog
 2.5.0 ~ unreleased
 ------------------
 
+- Officially **dropped compatibility with Plone 3**
+
+- Plone 5 compatibility
+  [keul]
+
 - Tests migrated to plone.app.testing
   [keul]
 
