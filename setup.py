@@ -22,7 +22,11 @@ long_description = (
     + '\n'
     )
 
-tests_require = ['zope.testing']
+tests_require = [
+    'Products.PloneTestCase',
+    'plone.app.testing',
+    'plone.testing',
+]
 
 setup(name='uwosh.pfg.d2c',
       version=version,
@@ -32,13 +36,14 @@ setup(name='uwosh.pfg.d2c',
       long_description=long_description,
       classifiers=[
         'Framework :: Plone',
-        'Intended Audience :: Developers',
+        'Framework :: Plone :: 4.3',
+        'Framework :: Plone :: 5.0',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         ],
       keywords='ploneformgen plone forms adapter uwosh',
       author='Nathan Van Gheem',
       author_email='vangheem@gmail.com',
-      url='http://pypi.python.org/pypi/uwosh.pfg.d2c',
+      url='https://github.com/collective/uwosh.pfg.d2c/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['uwosh', 'uwosh.pfg'],

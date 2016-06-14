@@ -1,8 +1,11 @@
 Changelog
 =========
 
-2.4.7 ~ unreleased
+2.5.0 ~ unreleased
 ------------------
+
+- Tests migrated to plone.app.testing
+  [keul]
 
 - Added German translation.
   [acsr]
@@ -11,7 +14,6 @@ Changelog
   stored in a blob field. This fixes
   https://github.com/collective/uwosh.pfg.d2c/issues/20
   [davisagli]
-
 
 2.4.7 ~ unreleased
 ------------------
@@ -76,7 +78,7 @@ Changelog
 
 2.3.0b4 ~ 2013-01-24
 --------------------
-- In FormSaveData2ContentEntry/getForm change the way to check the form: 
+- In FormSaveData2ContentEntry/getForm change the way to check the form:
   right now is not by portal_type but by interface [lucabel]
 
 2.3.0b3 ~ 2012-12-18
@@ -237,7 +239,7 @@ Changelog
 - add alias to form findFieldObjectByName method on
   data entry type. This fixes selection widgets on
   content objects that were moved out of the adapter
-  directory. 
+  directory.
 
 
 1.3.1 ~ 2012-01-10
@@ -286,7 +288,7 @@ Changelog
 
 - fixed max value validator.
   [vangheem]
-     
+
 
 1.2.6 ~ 2011-06-30
 ------------------
@@ -326,7 +328,7 @@ Changelog
 
 - Bugfix: anonymous TALES title override did not always
   work due to insufficient permissions. User is now
-  elevated to "Owner" in the current context, allowing for more 
+  elevated to "Owner" in the current context, allowing for more
   useful TALES expressions. [saffe]
 
 
@@ -377,14 +379,14 @@ Changelog
   lines field was used for the title field. Convert all value
   fields to string for the title.
   [vangheem]
-    
+
 
 0.8 (2010-10-30)
 ----------------
 
 - add support for pfg datagridfield
   [vangheem]
-  
+
 
 0.7 (2010-08-04)
 ----------------
@@ -394,16 +396,16 @@ Changelog
 - index object properly after values are set
 
 - allow you to specify which field to use for the title
- 
+
 
 0.6 (2010-07-31)
 ----------------
 
 - added autoinclude entry point
 
-- only use _finishConstruction method if it's available since in newer 
+- only use _finishConstruction method if it's available since in newer
   versions of CMFCore, it's not there.
-   
+
 
 0.5
 ---
@@ -421,7 +423,7 @@ Changelog
 - added permissions for adding content
 
 - More fixes for the rating scale field. Should work as expected now.
- 
+
 
 0.4
 ---
@@ -429,7 +431,7 @@ Changelog
 - fixed widgets not working correctly.
 
 - memoize the call to get the fields just in case it gets slow
- 
+
 
 0.3 (2010-07-27)
 ----------------

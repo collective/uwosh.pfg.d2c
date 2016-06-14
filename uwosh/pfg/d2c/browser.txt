@@ -1,40 +1,42 @@
 Demonstrating using the save content adapter.
 
- - add adapter
- 
- - select adapter
-
- - test adapter with all fields
- 
- - test adapter with(out) avoiding security checks
-
- - test with creating different content types
-
- - event triggering
+- add adapter
+- select adapter
+- test adapter with all fields
+- test adapter with(out) avoiding security checks
+- test with creating different content types
+- event triggering
 
 Being a doctest, we can tell a story here.
 
 First, we must perform some setup. We use the testbrowser that is shipped
-with Five, as this provides proper Zope 2 integration. Most of the 
+with Five, as this provides proper Zope 2 integration. Most of the
 documentation, though, is in the underlying zope.testbrower package.
 
-    >>> from Products.Five.testbrowser import Browser
-    >>> browser = Browser()
+    >>> from plone.app.testing import TEST_USER_NAME
+    >>> from plone.app.testing import TEST_USER_PASSWORD
+    >>> from plone.app.testing import TEST_USER_ID
+    >>> portal_owner = TEST_USER_NAME
+    >>> default_password = TEST_USER_PASSWORD
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> portal_url = portal.portal_url()
+    >>> request = layer['request']
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
     >>> browser.handleErrors = False
-    >>> portal_url = self.portal.absolute_url()
 
 The following is useful when writing and debugging testbrowser tests. It lets
 us see all error messages in the error_log.
 
-    >>> self.portal.error_log._ignored_exceptions = ()
+    >>> portal.error_log._ignored_exceptions = ()
 
 With that in place, we can go to the portal front page and log in. We will
-do this using the default user from PloneTestCase:
+do this using the default users:
 
-    >>> from Products.PloneTestCase.setup import portal_owner, default_password
     >>> browser.open(portal_url + '/login')
 
-We have the login portlet, so let's use that.
+We have the login form, so let's use that.
 
     >>> browser.getControl(name='__ac_name').value = portal_owner
     >>> browser.getControl(name='__ac_password').value = default_password
@@ -44,16 +46,19 @@ And we ensure that we get the friendly logged-in message:
 
     >>> "You are now logged in" in browser.contents
     True
-      
+
 Add the form
 
-  >>> browser.open(self.portal.absolute_url())
+  >>> browser.open(portal_url)
+  >>> browser.getLink('Form Folder').click()
+  >>> # BBB
+  >>> browser.open(portal_url)
   >>> browser.getLink('Form Folder').click()
   >>> browser.getControl(name="title").value = "test-form"
   >>> browser.getControl(name="actionAdapter:list").value = []
   >>> browser.getControl("Save").click()
-  >>> form = self.portal['test-form']
-  
+  >>> form = portal['test-form']
+
 
 Add the adapter
 
@@ -69,8 +74,8 @@ Enable the adapter
   >>> browser.getControl(name="actionAdapter:list").value = ['results']
   >>> browser.getControl("Save").click()
   >>> adapter = form['results']
-  
-  
+
+
 Now, we'll add all interesting fields to the form.
 
 Checkbox
@@ -79,42 +84,42 @@ Checkbox
   >>> browser.getLink(text="Checkbox Field").click()
   >>> browser.getControl(name="title").value = 'checkbox'
   >>> browser.getControl("Save").click()
-  
+
 Date/Time
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Date/Time Field").click()
   >>> browser.getControl(name="title").value = 'datetime'
   >>> browser.getControl("Save").click()
-  
+
 Decimal Number
-  
+
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Decimal Number Field").click()
   >>> browser.getControl(name="title").value = 'decimal'
   >>> browser.getControl("Save").click()
-  
+
 Lines Field
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Lines Field").click()
   >>> browser.getControl(name="title").value = 'lines'
   >>> browser.getControl("Save").click()
-  
+
 Password
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Password Field").click()
   >>> browser.getControl(name="title").value = 'password'
   >>> browser.getControl("Save").click()
-  
+
 Rating
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink(text="Rating-Scale Field").click()
   >>> browser.getControl(name="title").value = 'rating'
   >>> browser.getControl("Save").click()
-  
+
 Selection Field
 
   >>> browser.open(form.absolute_url())
@@ -122,19 +127,19 @@ Selection Field
   >>> browser.getControl(name="title").value = 'selection'
   >>> browser.getControl(name="fgVocabulary:lines").value = 'one\ntwo\nthree'
   >>> browser.getControl("Save").click()
-  
+
 
 Fill out the fields and make sure they get saved.
 
   >>> browser.open(form.absolute_url())
-  >>> browser.getLink(text="test-form").click()
+  >>> browser.open(portal_url + "/test-form")
   >>> browser.getLink(text="View").click()
-  
+
   >>> browser.getControl(name="replyto").value = "foo@bar.com"
   >>> browser.getControl(name="topic").value = "Hello"
   >>> browser.getControl(name="comments").value = "This is awesome."
   >>> browser.getControl(name="checkbox:boolean").value = True
-  
+
   >>> browser.getControl(name="datetime_year").value = ['2010']
   >>> browser.getControl(name="datetime_month").value = ['01']
   >>> browser.getControl(name="datetime_day").value = ['01']
@@ -145,84 +150,87 @@ Fill out the fields and make sure they get saved.
   >>> browser.getControl(name="decimal").value = "1.0"
   >>> browser.getControl(name="lines:lines").value = "hello"
   >>> browser.getControl(name="password").value = "mypassword"
-  
+
   >>> browser.getControl(name="rating.1:record").value = ['Strongly disagree']
   >>> browser.getControl(name="rating.2:record").value = ['Strongly agree']
-  
+
   >>> browser.getControl(name="selection").value = ["one"]
-  
+
   >>> browser.getControl("Submit").click()
-  
+
 
 Check that the results were saved and go to them.
 
   >>> len(adapter.objectIds()) == 1
   True
-  
+
   >>> result = adapter.values()[0]
   >>> browser.open(result.absolute_url())
-  
+
   >>> 'foo@bar.com' in browser.contents
   True
-  
+
   >>> 'Hello' in browser.contents
   True
-  
+
   >>> 'This is awesome.' in browser.contents
   True
-  
+
   >>> 'hello this is my title' in browser.contents
   True
-  
+
   >>> schema = result.Schema()
   >>> schema.get('rating').get(result)
   {'1': 'Strongly disagree', '2': 'Strongly agree'}
-  
+
 
 Now let's make the form public and make sure it still creates the result when
 not logged in.
 
   >>> browser.open(form.absolute_url())
   >>> browser.getLink('Publish').click()
-  >>> browser.open(self.portal.absolute_url() + '/logout')
-  
+  >>> browser.open(portal.absolute_url() + '/logout')
+
   >>> browser.open(form.absolute_url())
   >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
   >>> browser.getControl(name="topic").value = "Hello Again"
   >>> browser.getControl(name="comments").value = "This is cool."
   >>> browser.getControl("Submit").click()
-  
+
   >>> len(adapter.objectIds()) == 2
   True
-  
-  
+
+
 let's login and make the adapter not avoid security permissions
-  
+
   >>> browser.open(portal_url + '/login')
   >>> browser.getControl(name='__ac_name').value = portal_owner
   >>> browser.getControl(name='__ac_password').value = default_password
   >>> browser.getControl(name='submit').click()
-  
+
   >>> browser.open(adapter.absolute_url())
   >>> browser.getLink("Edit").click()
   >>> browser.getControl(name="avoidSecurityChecks:boolean").value = None
   >>> browser.getControl(name="form.button.save").click()
-  
-  
+
+
 We'll log out again and try submitting the form.
 
-  >>> browser.open(self.portal.absolute_url() + '/logout')
+  >>> browser.open(portal_url + '/logout')
 
   >>> browser.open(form.absolute_url())
   >>> browser.getControl(name="replyto").value = "foo1@bar1.com"
   >>> browser.getControl(name="topic").value = "Hello Again"
   >>> browser.getControl(name="comments").value = "This is cool."
   >>> browser.getControl("Submit").click()
+  Traceback (most recent call last):
+  ...
+  Unauthorized: Cannot create FormSaveData2ContentEntry
 
   >>> len(adapter.objectIds()) == 2
   True
-  
-  
+
+
 Let's try out the functionality of saving as different content types.
 
 Login first...
@@ -231,16 +239,16 @@ Login first...
   >>> browser.getControl(name='__ac_name').value = portal_owner
   >>> browser.getControl(name='__ac_password').value = default_password
   >>> browser.getControl(name='submit').click()
-  
+
 
 Next, let's copy the FormSaveData2ContentEntry entry first and use
 that.
 
-  >>> browser.open(self.portal.absolute_url() + '/portal_types/manage_main')
+  >>> browser.open(portal_url + '/portal_types/manage_main')
   >>> browser.getControl(name="ids:list").value = ['FormSaveData2ContentEntry']
   >>> browser.getControl(name="manage_copyObjects:method").click()
   >>> browser.getControl(name="manage_pasteObjects:method").click()
-  >>> browser.open(self.portal.absolute_url() + '/portal_types/copy_of_FormSaveData2ContentEntry/manage_propertiesForm')
+  >>> browser.open(portal_url + '/portal_types/copy_of_FormSaveData2ContentEntry/manage_propertiesForm')
   >>> browser.getControl(name="title:string").value = "My New D2C Content Type"
   >>> browser.getControl(name="manage_editProperties:method").click()
 
@@ -299,7 +307,7 @@ Set up an event subscriber to listen to FormSaveData2ContentEntryFinalizedEvent 
   >>> handler = EntryAddedHandler()
 
 Add it to subscriber list:
-  
+
   >>> import zope.component
   >>> import zope.component.event # needed for the event system to start
   >>> gsm = zope.component.getGlobalSiteManager()
@@ -307,7 +315,7 @@ Add it to subscriber list:
   >>> from uwosh.pfg.d2c.interfaces import IFormSaveData2ContentEntryFinalizedEvent
   >>> gsm.registerHandler(handler, [IFormSaveData2ContentEntry, IFormSaveData2ContentEntryFinalizedEvent])
 
-Fill in yet another entry form to fire an event. 
+Fill in yet another entry form to fire an event.
 
   >>> browser.open(form.absolute_url())
   >>> browser.getControl(name="replyto").value = "foo3@bar3.com"
@@ -327,7 +335,7 @@ Let's add a new TALES expression override to generate a custom entry title.
   >>> browser.getLink("Edit").click()
   >>> browser.getControl(name="dynamicTitle").value = "python:object.getValue('replyto') + ': ' + object.getValue('topic')"
   >>> browser.getControl(name="form.button.save").click()
- 
+
 See that it works:
 
   >>> browser.open(form.absolute_url())
@@ -341,7 +349,7 @@ See that it works:
 
   >>> "asker@from.com: I have a question" in browser.contents
   True
-  
+
 Log out again and submit to check that everything works anonymously. First disable security checks.
 
   >>> browser.open(adapter.absolute_url())
@@ -349,7 +357,7 @@ Log out again and submit to check that everything works anonymously. First disab
   >>> browser.getControl(name="avoidSecurityChecks:boolean").value = True
   >>> browser.getControl(name="form.button.save").click()
 
-  >>> browser.open(self.portal.absolute_url() + "/logout")
+  >>> browser.open(portal_url + "/logout")
   >>> browser.open(form.absolute_url())
   >>> browser.getControl(name="replyto").value = "anon@net.fi"
   >>> browser.getControl(name="topic").value = "question"
