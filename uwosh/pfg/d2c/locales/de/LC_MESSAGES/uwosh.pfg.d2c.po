@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: uwosh.pfg.d2c 2.4.7\n"
-"POT-Creation-Date: 2012-10-26 09:41+0000\n"
+"POT-Creation-Date: 2016-06-14 13:56+0000\n"
 "PO-Revision-Date: 2015-07-19 15:23 UTC\n"
 "Last-Translator: Armin Stross-Radschinski<developer@acsr.de>\n"
 "Language-Team: \n"
@@ -22,7 +22,11 @@ msgstr ""
 msgid "A PloneFormGen adapter that will save the data from a form to an actual content type. This way you can still use permissions, workflows, etc on the form data."
 msgstr "Ein PloneFormGen Adapter der die Daten aus einem Formular in einen echten Artikeltyp speichert. Hierdurch können Zugriffsrechte, Arbeitsabläufe usw. mit jedem Formulareintrag verwendet werden."
 
-#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:22
+#: ../profiles/default/types/FormSaveData2ContentAdapter.xml
+msgid "A form action adapter that will save form input data to a content type."
+msgstr ""
+
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:21
 msgid "Add New Type"
 msgstr "Neuen Artikeltyp hinzufügen"
 
@@ -30,23 +34,23 @@ msgstr "Neuen Artikeltyp hinzufügen"
 msgid "An entry for the content data adapter."
 msgstr "Ein Eintrag für den Dateninhalts Adapter"
 
-#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:29
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:28
 msgid "Assign Here"
 msgstr "Hier zuweisen"
 
-#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:28
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:27
 msgid "Assign Workflow Here"
 msgstr "Hier einen Arbeitsablauf zuweisen"
 
-#: ../extender.py:280
+#: ../extender.py:312
 msgid "Is Image"
 msgstr "Ist Bild"
 
-#: ../extender.py:281
+#: ../extender.py:313
 msgid "Only to be used for d2c generated types"
 msgstr "Nur zur Verwendung mit von d2c erzeugten Artikeltypen"
 
-#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:27
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:26
 msgid "Please enter a name for the type."
 msgstr "Bitte geben sie einen Namen für den Artikeltyp ein"
 
@@ -62,7 +66,7 @@ msgid "Save Data to Content Entry"
 msgstr "Als Inhalt gespeicherte Daten"
 
 #. Default: "Are you sure you want to delete this type? If you have existing items of this type, it could screw things up!"
-#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:23
+#: ../skins/uwosh_pfg_d2c_templates/d2c-adapter-selection.pt:22
 msgid "confirm-deletion"
 msgstr "Sind sie sicher, dass sie diesen Artikeltp löschen möchten? Wenn Objekte von diesem Typ weiter existieren kann es zu Komplikationen kommen."
 
@@ -115,8 +119,4 @@ msgstr "Sprechende Kurznamen"
 #: ../content/savedataadapter.py:82
 msgid "label_savecontentadapter_title"
 msgstr "Titel Feld"
-
-#: ../content/savedataadapter.py:190
-msgid "title"
-msgstr "Titel"
 

@@ -1,6 +1,8 @@
 (function($){
 $(document).ready(function(){
-    var linkhtml = ' <a href="#" class="delete-d2c"><img src="' + portal_url + '/delete_icon.gif" alt="X" /></a>';
+    var portal_url = window.portal_url || $('body').data('portal-url');
+    var _authenticator = $('[name="_authenticator"]').val();
+    var linkhtml = ' <a href="#" class="delete-d2c"><img src="' + portal_url + '/delete_type_icon.png" alt="X" /></a>';
     var form = $('<form><input type="submit" name="submit" value="' + $('#d2c-i18n-messages .addNewType').text() + '" /></form>');
     var submitbtn = form.find('input');
     var widget = $('.template-base_edit .kssattr-atfieldname-entryType,.template-base_edit #archetypes-fieldname-entryType');
@@ -11,7 +13,7 @@ $(document).ready(function(){
             dataType: 'json',
             success: function(data){
                 if(data.hasPermission){
-                    widget.append(form);          
+                    widget.append(form);
                     radios.find('label').filter(function(){
                         var html = $(this).html();
                         return $(this).prev().is('input') && $(this).prev().attr('value') != 'FormSaveData2ContentEntry';
@@ -20,15 +22,16 @@ $(document).ready(function(){
             }
         });
     }
-    
-    $('a.delete-d2c').live('click', function(){
+
+    $('form[name="edit_form"]').on('click', 'a.delete-d2c', function(){
         var link = $(this);
         if(confirm($('#d2c-i18n-messages .confirmDeletion').text())){
             $('#kss-spinner').show();
             $.ajax({
                 url: '@@delete-d2c-type',
                 data: {
-                    id: link.parent().prev().attr('value')
+                    id: link.parent().prev().attr('value'),
+                    _authenticator: _authenticator
                 },
                 type: 'POST',
                 dataType: 'json',
@@ -46,7 +49,7 @@ $(document).ready(function(){
                 }
             });
         }
-        return false; 
+        return false;
     });
 
     submitbtn.click(function(){
@@ -56,7 +59,8 @@ $(document).ready(function(){
             $.ajax({
                 url : '@@add-d2c-type',
                 data : {
-                    name: name
+                    name: name,
+                    _authenticator: _authenticator
                 },
                 type: 'POST',
                 dataType: 'json',
@@ -77,7 +81,7 @@ $(document).ready(function(){
                 }
             })
         }
-        return false;  
+        return false;
     });
 
     var field = $('<div id="set-workflow-field" class="field"><label class="formQuestion"><span>' + $('#d2c-i18n-messages .newWorkflow').text() + '</span>:</label><br /></div>');
@@ -119,7 +123,9 @@ $(document).ready(function(){
             url: '@@d2c-assign-workflow',
             type: 'POST',
             data: {
-                id: $('#set-workflow-field select').val()
+                id: $('#set-workflow-field select').val(),
+                _authenticator: _authenticator
+
             },
             dataType: 'json',
             success: function(data){
@@ -131,7 +137,7 @@ $(document).ready(function(){
                 }
             }
         })
-        return false; 
+        return false;
     });
 });
 })(jQuery)

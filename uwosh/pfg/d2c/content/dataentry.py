@@ -1,7 +1,7 @@
-from Products.CMFCore.utils import getToolByName
 """Implements a data content entry type for use by the save data adapter.
 """
 
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from AccessControl.SecurityManagement import \
     newSecurityManager, getSecurityManager, setSecurityManager
@@ -16,10 +16,7 @@ from zope.interface import implements
 
 from Products.CMFCore import permissions
 from Products.CMFCore.Expression import getExprContext
-try:
-    from zope.component.hooks import getSite
-except ImportError:
-    from zope.app.component.hooks import getSite
+from zope.component.hooks import getSite
 
 FormSaveData2ContentEntrySchema = ATContentTypeSchema.copy()
 FormSaveData2ContentEntrySchema.delField('title')
